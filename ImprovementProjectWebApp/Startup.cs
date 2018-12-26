@@ -42,12 +42,12 @@ namespace ImprovementProjectWebApp
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-            //services.AddMvc();
-            services.AddMvc().AddRazorPagesOptions(options =>
-            {
-                //options.Conventions.AddPageRoute("/t1/index.html", "");
-                options.RootDirectory = "/t1/index.html";
-            });
+            services.AddMvc();
+            //services.AddMvc().AddRazorPagesOptions(options =>
+            //{
+            //    options.Conventions.AddPageRoute("/t1/index.html", "");
+            //    options.RootDirectory = "/t1/index.html";
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
