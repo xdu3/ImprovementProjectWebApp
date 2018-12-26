@@ -1,0 +1,140 @@
+﻿@model ImprovementProjectWebApp.Models.WorkoutDatailVM.ExerciseSelectorVM
+@{
+    ViewData["Title"] = "EditDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="col-md-6">
+    <h2>Workout Plan</h2>
+
+    <div>
+        <div>
+            @if (ViewBag.Err != null)
+            {
+                <div class="alert alert-danger">
+                    <strong>Danger!</strong> @ViewBag.Err
+                </div>
+            }
+                <form asp-action="EditDetail">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div id="partExercisesChange">
+                        @Html.Partial("_EditExSelectorPV.cshtml", Model.PartExercise)
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="@Model.WorkoutPlan.OtherTypeExercise" id="otherTypeExercise" onclick="otherTypeExerciseChecked()" /> @Html.DisplayNameFor(model => model.WorkoutPlan.OtherTypeExercise)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.WorkoutPlan.Des" class="control-label"></label>
+                        <input asp-for="@Model.WorkoutPlan.Des" class="form-control" />
+                        <span asp-validation-for="@Model.WorkoutPlan.Des" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="@Model.WorkoutPlan.Id" class="control-label"></label>
+                        <input asp-for="@Model.WorkoutPlan.Id" class="form-control" />
+                        <span asp-validation-for="@Model.WorkoutPlan.Id" class="text-danger"></span>
+                    </div>
+                    <div id="SetsRepsDiv">
+                        <div class="form-group">
+                            <label asp-for="@Model.WorkoutPlan.Sets" class="control-label"></label>
+                            <input asp-for="@Model.WorkoutPlan.Sets" class="form-control" id="SetsInput" />
+                            <span asp-validation-for="@Model.WorkoutPlan.Sets" class="text-danger"></span>
+                            <br />
+                            <button type="button" class="btn btn-primary" onclick="setNumber(0)">3</button>
+                            <button type="button" class="btn btn-primary" onclick="setNumber(1)">6</button>
+                            <button type="button" class="btn btn-primary" onclick="setNumber(2)">+1</button>
+                            <button type="button" class="btn btn-primary" onclick="setNumber(3)">+5</button>
+                            <button type="button" class="btn btn-danger" onclick="setNumber(4)">0</button>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="@Model.WorkoutPlan.ProgressiveOverload" id="ProGOL" /> @Html.DisplayNameFor(model => model.WorkoutPlan.ProgressiveOverload)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:none;">
+                        <div class="form-group">
+                            <label asp-for="@Model.WorkoutPlan.ExerciseId" class="control-label"></label>
+                            <input asp-for="@Model.WorkoutPlan.ExerciseId" class="form-control" />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="@Model.WorkoutPlan.PlanId" class="control-label"></label>
+                            <input asp-for="@Model.WorkoutPlan.PlanId" class="form-control" />
+                        </div>
+                    </div>
+                    @if (Model.WorkoutPlan != null)
+                    {
+                        <div class="form-group">
+                            <input type="submit" value="Edit" class="btn btn-default" />
+                        </div>
+                    }
+                </form>
+        </div>
+
+    </div>
+</div>
+@*<div class="col-lg-6">
+    @if (Model.ListPlanSetsReps != null)
+    {
+        @Html.Partial("_ListWorkoutPlanPV.cshtml", Model.ListPlanSetsReps)
+    }
+</div>*@
+<div class="clearfix"></div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<script>
+    window.onload = otherTypeExerciseChecked;
+    function otherTypeExerciseChecked() {
+        if ($("#otherTypeExercise").prop('checked')) {
+            $("#SetsInput").val(0);
+
+            $("#ProGOL").prop('checked', false)
+            $("#SetsRepsDiv").hide()
+
+        }
+        else {
+            //$("#SetsInput").prop('disabled', false);
+            //$("#RepsInput").prop('disabled', false);
+            $("#SetsRepsDiv").show()
+        }
+    }
+
+    function setNumber(a) {
+        var b = parseInt($('#SetsInput').val());
+        switch (a) {
+            case 0:
+                $('#SetsInput').val(3);
+
+                break;
+            case 1:
+                $('#SetsInput').val(6);
+
+                break;
+            case 2:
+                $('#SetsInput').val(b + 1);
+
+                break;
+            case 3:
+                $('#SetsInput').val(b + 5);
+
+                break;
+            case 4:
+                $('#SetsInput').val(0);
+
+                break;
+            default:
+                alert("Some Mistake Here");
+                break;
+
+        }
+
+    }
+</script>

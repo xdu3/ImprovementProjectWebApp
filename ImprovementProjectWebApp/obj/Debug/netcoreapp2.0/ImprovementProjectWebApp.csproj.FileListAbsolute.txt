@@ -1,0 +1,36 @@
+C:\Users\Administrator\Desktop\webapp\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.deps.json
+C:\Users\Administrator\Desktop\webapp\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.runtimeconfig.json
+C:\Users\Administrator\Desktop\webapp\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.runtimeconfig.dev.json
+C:\Users\Administrator\Desktop\webapp\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.dll
+C:\Users\Administrator\Desktop\webapp\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.pdb
+C:\Users\Administrator\Desktop\webapp\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.csprojAssemblyReference.cache
+C:\Users\Administrator\Desktop\webapp\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\webapp\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\Administrator\Desktop\webapp\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\webapp\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\webapp\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.dll
+C:\Users\Administrator\Desktop\webapp\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.pdb
+C:\Users\Administrator\Desktop\webapp\IpBack\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.deps.json
+C:\Users\Administrator\Desktop\webapp\IpBack\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.runtimeconfig.json
+C:\Users\Administrator\Desktop\webapp\IpBack\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.runtimeconfig.dev.json
+C:\Users\Administrator\Desktop\webapp\IpBack\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.dll
+C:\Users\Administrator\Desktop\webapp\IpBack\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.pdb
+C:\Users\Administrator\Desktop\webapp\IpBack\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.csprojAssemblyReference.cache
+C:\Users\Administrator\Desktop\webapp\IpBack\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\webapp\IpBack\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\Administrator\Desktop\webapp\IpBack\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\webapp\IpBack\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\webapp\IpBack\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.dll
+C:\Users\Administrator\Desktop\webapp\IpBack\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.pdb
+C:\Users\Administrator\Desktop\webapp\IpBack - 副本\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.csprojAssemblyReference.cache
+C:\Users\Administrator\Desktop\webapp\IpBack - 副本\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\webapp\IpBack - 副本\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\Administrator\Desktop\webapp\IpBack - 副本\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\webapp\IpBack - 副本\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\webapp\IpBack - 副本\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.dll
+C:\Users\Administrator\Desktop\webapp\IpBack - 副本\ImprovementProjectWebApp\ImprovementProjectWebApp\obj\Debug\netcoreapp2.0\ImprovementProjectWebApp.pdb
+C:\Users\Administrator\Desktop\webapp\IpBack - 副本\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.deps.json
+C:\Users\Administrator\Desktop\webapp\IpBack - 副本\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.runtimeconfig.json
+C:\Users\Administrator\Desktop\webapp\IpBack - 副本\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.runtimeconfig.dev.json
+C:\Users\Administrator\Desktop\webapp\IpBack - 副本\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.dll
+C:\Users\Administrator\Desktop\webapp\IpBack - 副本\ImprovementProjectWebApp\ImprovementProjectWebApp\bin\Debug\netcoreapp2.0\ImprovementProjectWebApp.pdb

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ImprovementProjectWebApp.Models.CheckInQA>
+@{
+    ViewData["Title"] = "ViewUserCheckInQA";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>View User Check In Q&A</h2>
+<h4>@Model.FirstOrDefault().ApplicationUser.UserName</h4>
+<div class="list-group col-lg-12">
+    @foreach (var item in Model)
+    {
+        <a class="list-group-item col-lg-4">@item.CreatedDate.ToString("yyyy MMMM dd")</a>
+
+    }
+
+</div>
+<div class="clearfix"></div>

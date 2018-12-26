@@ -1,0 +1,41 @@
+﻿@model IList<ImprovementProjectWebApp.Models.IntroQA>
+@{
+    ViewData["Title"] = "IntroAnswerView";
+}
+
+<h2>IntroAnswerView</h2>
+<div class="list-group col-lg-12">
+    @{
+        foreach (var item in Model)
+        {
+    <div class="list-group-item col-lg-6">
+        <div class="list-group-item list-group-item-secondary col-lg-12 ">
+            <label>Question: @item.IntroQuestion.Question</label>
+            <br />
+        </div>
+        <div class="list-group-item list-group-item-primary col-lg-12 ">
+            @if (item.Answer != null)
+            {
+                <label>Answer: @item.Answer</label>
+                <br />
+            }
+            else
+            {
+                <label>User have not input anything yet</label>
+                <br />
+
+            }
+        </div>
+        @if (item.Answer != null)
+        { 
+            <div class="list-group-item list-group-item-primary col-lg-12 ">
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </div>
+         }
+        </div>
+        }
+    }
+</div>
+<div class="clearfix"></div>

@@ -1,0 +1,86 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>aspnet-ImprovementProjectWebApp-0C91718F-7BDA-4BE9-9F5D-B3CA34942B2D</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20181120065717_addCustomerProfileIdInAppUser.cs" />
+    <Compile Remove="Data\Migrations\20181120065717_addCustomerProfileIdInAppUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20181120070023_addCustomerProfileIdInAppUserFix.cs" />
+    <Compile Remove="Data\Migrations\20181120070023_addCustomerProfileIdInAppUserFix.Designer.cs" />
+    <Compile Remove="Data\Migrations\20181120070639_addCustomerProfileIdInAppUser.cs" />
+    <Compile Remove="Data\Migrations\20181120070639_addCustomerProfileIdInAppUser.Designer.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.2" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\bootstrap4\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\lib\bootstrap4\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap4\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\lib\bootstrap4\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap4\css\bootstrap.css.map" />
+    <None Include="wwwroot\lib\bootstrap4\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap4\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\lib\bootstrap4\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\lib\bootstrap4\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\lib\bootstrap4\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap4\js\bootstrap.js" />
+    <None Include="wwwroot\lib\bootstrap4\js\bootstrap.js.map" />
+    <None Include="wwwroot\lib\bootstrap4\js\bootstrap.min.js" />
+    <None Include="wwwroot\lib\bootstrap4\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\t1\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\t1\js\bootstrap.js" />
+    <None Include="wwwroot\t1\js\counterup.min.js" />
+    <None Include="wwwroot\t1\js\easing.js" />
+    <None Include="wwwroot\t1\js\easy-responsive-tabs.js" />
+    <None Include="wwwroot\t1\js\jquery-2.1.4.min.js" />
+    <None Include="wwwroot\t1\js\jquery.flexslider.js" />
+    <None Include="wwwroot\t1\js\jquery.magnific-popup.js" />
+    <None Include="wwwroot\t1\js\move-top.js" />
+    <None Include="wwwroot\t1\js\responsiveslides.min.js" />
+    <None Include="wwwroot\t1\js\SmoothScroll.min.js" />
+    <None Include="wwwroot\t1\js\waypoints.min.js" />
+    <None Include="wwwroot\t2\fonts\customicon\Icons.svg" />
+    <None Include="wwwroot\t2\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\t2\js\animate.js" />
+    <None Include="wwwroot\t2\js\bootstrap.min.js" />
+    <None Include="wwwroot\t2\js\custom.js" />
+    <None Include="wwwroot\t2\js\flexslider\jquery.flexslider.js" />
+    <None Include="wwwroot\t2\js\flexslider\setting.js" />
+    <None Include="wwwroot\t2\js\google-code-prettify\prettify.js" />
+    <None Include="wwwroot\t2\js\jquery.easing.1.3.js" />
+    <None Include="wwwroot\t2\js\jquery.fancybox-media.js" />
+    <None Include="wwwroot\t2\js\jquery.fancybox.pack.js" />
+    <None Include="wwwroot\t2\js\jquery.flexslider.js" />
+    <None Include="wwwroot\t2\js\jquery.isotope.min.js" />
+    <None Include="wwwroot\t2\js\jquery.js" />
+    <None Include="wwwroot\t2\js\jquery.magnific-popup.min.js" />
+    <None Include="wwwroot\t2\js\modernizr.custom.js" />
+    <None Include="wwwroot\t2\js\portfolio\jquery.quicksand.js" />
+    <None Include="wwwroot\t2\js\portfolio\setting.js" />
+    <None Include="wwwroot\t2\js\quicksand\jquery.quicksand.js" />
+    <None Include="wwwroot\t2\js\quicksand\setting.js" />
+    <None Include="wwwroot\t2\materialize\fonts\roboto\Roboto-Bold.woff2" />
+    <None Include="wwwroot\t2\materialize\fonts\roboto\Roboto-Light.woff2" />
+    <None Include="wwwroot\t2\materialize\fonts\roboto\Roboto-Medium.woff2" />
+    <None Include="wwwroot\t2\materialize\fonts\roboto\Roboto-Regular.woff2" />
+    <None Include="wwwroot\t2\materialize\fonts\roboto\Roboto-Thin.woff2" />
+    <None Include="wwwroot\t2\materialize\js\materialize.js" />
+    <None Include="wwwroot\t2\materialize\js\materialize.min.js" />
+  </ItemGroup>
+
+</Project>

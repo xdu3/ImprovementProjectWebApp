@@ -1,0 +1,47 @@
+﻿
+<div style="height:10px;"></div>
+<ul class="nav nav-pills nav-stacked col-lg-3">
+
+    <li class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "/Customer/WorkoutList" ? " active" : "")">
+        <a class=" LeftSection" asp-controller="Customer" asp-action="WorkoutList">
+            健身计划
+        </a>
+    </li>
+    <li class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "/Customer/ViewMealPlan" ? " active" : "")">
+        <a class=" LeftSection" asp-controller="Customer" asp-action="ViewMealPlan">
+            饮食计划
+        </a>
+    </li>
+    <li class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "/Customer/CheckInView" ? " active" : "")">
+        <a class=" LeftSection" asp-controller="Customer" asp-action="CheckIn">
+            打卡
+        </a>
+    </li>
+    <li class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "/Customer/CheckInDetail" ? " active" : "")">
+        <a class=" LeftSection" asp-controller="Customer" asp-action="CheckInDetail">
+            打卡信息
+        </a>
+    </li>
+    <li class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "/Customer/AnswerIntroQA" ? " active" : "")">
+        <a class=" LeftSection" asp-controller="Customer" asp-action="AnswerIntroQA">
+            初始问题
+        </a>
+    </li>
+    <li class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "/Customer/ViewCustomer" ? " active" : "")">
+        <a class=" LeftSection" asp-controller="Customer" asp-action="ViewCustomer">
+            用户信息
+        </a>
+    </li>
+    <li class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "/Customer/ViewGallery" ? " active" : "")">
+        <a asp-controller="Customer" asp-action="ViewGallery">图片墙</a>
+    </li>
+    @*<a class="list-group-item LeftSection" asp-action="Index" asp-controller="Exercises">
+            Exercises Manage
+        </a>
+        <a class="list-group-item LeftSection" asp-action="SearchCustomer" asp-controller="Dashboard">
+            Customer View
+        </a>
+        <a class="list-group-item LeftSection" asp-action="Index" asp-controller="Plans">
+            Plan Controller
+        </a>*@
+</ul>

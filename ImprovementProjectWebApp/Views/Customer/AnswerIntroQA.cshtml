@@ -1,0 +1,101 @@
+﻿@model ImprovementProjectWebApp.Models.Customer.AnswerIntroQAVM
+@{
+    ViewData["Title"] = "AnswerIntroQA";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<h2>AnswerIntroQA</h2>
+<div>
+    @{
+        int count = 0;
+        int LastId = 0;
+        foreach (var intq in Model.IntroQuestions)
+        {
+
+            count++;
+    <a asp-action="AnswerIntroQA" asp-route-CurQId="@intq.Id" asp-route-LastQId="@LastId" class="list-group-item col-lg-2">
+        问题 @count
+        @if (Model.IntroQAs.Where(i => i.IntroQuestionId == intq.Id).Count() == 0)
+        {
+            <span class="badge badge-danger">未完成</span>
+
+        }
+
+    </a>
+            intq.Id = LastId;
+        }
+    }
+            <div class="clearfix"></div>
+</div>
+@{
+    if (Model.IntroQA == null)
+    {
+<div>
+    <div class="col-lg-6 row">
+
+        问题： @Model.IntroQ.Question
+        <br />
+        答案：
+        <br />
+
+
+        <input id="QustionId" name="QustionId" value="@Model.CurQId" style="display:none;" />
+
+        <textarea id="Answer" rows="5" name="Answer" class="form-control">
+
+                </textarea>
+    </div>
+    <div class="clearfix"></div>
+    <br />
+    <a class="btn btn-default" asp-action="Index" asp-controller="Customer">返回</a>
+    <input value="提交" class="btn btn-default" onclick="AnswerIntroQACreate()" />
+
+</div>
+    }
+    else
+    {
+
+        <div>
+
+            问题： @Model.IntroQ.Question
+            <br />
+            答案：
+            <br />
+            @Model.IntroQA.Answer
+            <br /><br />
+                  <div class="col-lg-12">
+                      <a asp-action="DeleteIntroQA" class="btn btn-danger col-lg-2 col-lg-offset-10" asp-controller="Customer" asp-route-IntroQAId=" @Model.IntroQA.Id">删除</a>
+                  </div>
+
+         </div>
+
+    }
+}
+        <div class="col-lg-12">
+
+            <a class="btn btn-default col-lg-2 col-lg-offset-10" asp-action="Index" asp-controller="Customer">返回</a>
+        </div>
+<environment include="Development">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</environment>
+<script>
+    function AnswerIntroQACreate() {
+        var QustionId = $("#QustionId").val();
+        var Answer = $("#Answer").val();
+        $.ajax({
+            url: '@Url.Action("AnswerIntroQACreate", "Customer")',
+            type: "POST",
+            data: {
+                "QustionId": QustionId,
+                "Answer": Answer
+            },
+            success: function (data) {
+                location.reload();
+
+            },
+            error: function () { alert('Selected Part Error'); }
+        });
+    }
+</script>

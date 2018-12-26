@@ -1,0 +1,83 @@
+﻿@*@model ImprovementProjectWebApp.Models.PartExerciseViewModels.UserPlanVM*@
+@model IList<ImprovementProjectWebApp.Models.AppUserPlan>
+@{
+    ViewData["Title"] = "SelectOrAddPlan";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<p>User Name: @ViewBag.UserName</p>
+<p>Current Plan Number: @Model.Count()</p>
+@if (ViewBag.Err != null)
+{
+    <div class="alert alert-danger">
+        <strong>Danger!</strong> @ViewBag.Err
+    </div>
+}
+<div class="list-group">
+    @{
+        var x = Model.GroupBy(m => m.TrackId);
+        foreach (var item in x)
+        {
+
+    <div class="list-group-item col-lg-12">
+        <p class="col-lg-8">Period: @item.FirstOrDefault().StartDate.ToString("yyyy MMMM dd") - @item.LastOrDefault().EndDate.ToString("yyyy MMMM dd")</p><a class="col-lg-4 btn btn-danger" asp-controller="Dashboard" asp-action="DeleteListAppUserPlan" asp-route-TrackId="@item.FirstOrDefault().TrackId" asp-route-UserId="@item.FirstOrDefault().ApplicationUserId">Delete</a>
+        <p class="col-lg-12">Lock Status :@item.FirstOrDefault().IfLock</p>
+        <p class="col-lg-12">Price :@item.FirstOrDefault().Price</p>
+
+        @{
+            int count = 1;
+            foreach (var i in item)
+            {
+                if (i.Plan.PlanName != "未完成")
+                {
+        <div class="col-lg-3 list-group-item">
+            <p>@i.Plan.PlanName</p>
+            <a asp-action="CreateDetail" class=" btn btn-success col-lg-12" asp-controller="WorkoutPlansDetail" asp-route-appUserPlanId="@i.Id">View Workout</a>
+            @if (i.MealPlan.Default == true)
+            {
+                <a asp-action="AddMealPlan" class="btn btn-warning col-lg-12" asp-controller="Dashboard" asp-route-UserId="@i.ApplicationUserId" asp-route-AppUserPlanId="@i.Id">Add Meal Plan</a>
+            }
+            else
+            {
+                <a asp-action="ViewMealPlan" class="btn btn-success col-lg-6" asp-controller="Dashboard" asp-route-UserId="@i.ApplicationUserId" asp-route-AppUserPlanId="@i.Id">View Meal Plan</a>
+                <a asp-action="DeleteMealPlan" class="btn btn-warning col-lg-6" asp-controller="Dashboard" asp-route-UserId="@i.ApplicationUserId" asp-route-AppUserPlanId="@i.Id">Delete Meal Plan</a>
+            }
+
+            <a asp-action="Disconnect" class="btn btn-danger col-lg-12" asp-controller="Dashboard" asp-route-appUserPlanId="@i.Id">Disconnect</a>
+
+        </div>
+                }
+                else
+                {
+        <div class="col-lg-4 list-group-item">
+            <p>Phase @count</p>
+            <a asp-action="AddPhasePlan" class="btn btn-warning col-lg-12" asp-controller="Dashboard" asp-route-UserId="@i.ApplicationUserId" asp-route-AppUserPlanId="@i.Id">Add Phase Plan</a>
+            <a asp-action="ConnectToTem" class="btn btn-warning col-lg-12" asp-controller="Dashboard" asp-route-UserId="@i.ApplicationUserId" asp-route-AppUserPlanId="@i.Id">Connect To Template</a>
+            @if (i.MealPlan.Default == true)
+            {
+                <a asp-action="AddMealPlan" class="btn btn-warning col-lg-12" asp-controller="Dashboard"  asp-route-AppUserPlanId="@i.Id">Add Meal Plan</a>
+            }
+            else
+            {
+                <a asp-action="ViewMealPlan" class="btn btn-success col-lg-12" asp-controller="Dashboard" asp-route-AppUserPlanId="@i.Id">View Meal Plan</a>
+
+            }
+        </div>
+                    }
+
+                }
+            count++;
+            }
+     </div>
+            
+        }
+
+        }
+    </div>
+
+<div class="clearfix"></div>
+
+<br />
+<a class="btn btn-default" asp-controller="AppUserPlans" asp-action="CreateRelationship" asp-route-UserId="@ViewBag.UserId">Add Plan</a>
+<br />
+

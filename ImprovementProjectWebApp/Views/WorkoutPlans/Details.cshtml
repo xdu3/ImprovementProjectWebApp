@@ -1,0 +1,60 @@
+﻿@model ImprovementProjectWebApp.Models.WorkoutPlan
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>WorkoutPlan</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PlanName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PlanName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sets)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sets)
+        </dd>        
+        <dt>
+            @Html.DisplayNameFor(model => model.OtherTypeExercise)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OtherTypeExercise)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Des)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Des)
+        </dd>
+        @*<dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Id)
+        </dd>*@
+        <dt>
+            @Html.DisplayNameFor(model => model.Exercise)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Exercise.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="AddWorkoutPlanView" asp-route-PlanName="@Model.PlanName"  asp-route-UserId="@Model.UserId">Add More</a>
+    @*<a asp-action="Index">Back to List</a>*@
+</div>

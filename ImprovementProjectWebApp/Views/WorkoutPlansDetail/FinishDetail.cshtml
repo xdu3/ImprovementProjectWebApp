@@ -1,0 +1,55 @@
+﻿@model IList<ImprovementProjectWebApp.Models.Reps>
+@{
+    ViewData["Title"] = "FinishDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>FinishDetail</h2>
+<div>
+    <h4>WorkoutPlan</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().WorkoutPlan.Sets)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstOrDefault().WorkoutPlan.Sets)
+        </dd>
+        <dt>
+            Reps
+        </dt>
+        <dd>
+            @foreach(var item in Model)
+            {
+            <span> @item.num</span>   
+            }            
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().WorkoutPlan.OtherTypeExercise)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstOrDefault().WorkoutPlan.OtherTypeExercise)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().WorkoutPlan.Des)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstOrDefault().WorkoutPlan.Des)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().WorkoutPlan.Exercise)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstOrDefault().WorkoutPlan.Exercise.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().WorkoutPlan.Plan)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstOrDefault().WorkoutPlan.Plan.PlanName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="CreateDetail" asp-route-appUserPlanId="@ViewBag.AppUserId">back</a>
+</div>

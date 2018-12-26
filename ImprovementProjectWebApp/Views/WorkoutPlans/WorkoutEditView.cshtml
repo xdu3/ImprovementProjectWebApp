@@ -1,0 +1,213 @@
+﻿@model ImprovementProjectWebApp.Models.PartExerciseViewModels.WorkoutExercise
+
+@{
+    ViewData["Title"] = "EditWorkoutPlanView";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Workout Edit</h2>
+
+<h4>WorkoutPlan</h4>
+<hr />
+<div class="col-lg-6">
+    <div class="row">
+        <div class="">
+            @if (Model.PartExercise.Err != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @Model.PartExercise.Err
+                </div>
+            }
+            <form asp-action="WorkoutEdit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="workoutplanDetailDiv">
+                    <div id="partExercisesChange">
+                        @Html.Partial("_ExerciseSeletorForEditView.cshtml", Model.PartExercise)
+                    </div>
+                    <div>
+                        @*hidden area hidden:hidden*@
+                        <div class="form-group">
+                            <label asp-for="@Model.WorkoutPlan.UserId" class="control-label"></label>
+                            <input asp-for="@Model.WorkoutPlan.UserId" class="form-control" value="@Model.WorkoutPlan.UserId" />
+                        </div>
+                        <div class="form-group">
+
+                            <label asp-for="@Model.WorkoutPlan.PlanTrackId" class="control-label"></label>
+                            <input asp-for="@Model.WorkoutPlan.PlanTrackId" class="form-control" value="@Model.WorkoutPlan.PlanTrackId" />
+
+                        </div>
+                        <div class="form-group planName">
+                            <label asp-for="@Model.WorkoutPlan.PlanName" class="control-label"></label>
+                            <input asp-for="@Model.WorkoutPlan.PlanName" class="form-control" id="PlanName" value="@Model.WorkoutPlan.PlanName" />
+                            <span asp-validation-for="@Model.WorkoutPlan.PlanName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.WorkoutPlan.Id" class="control-label">Workout ID</label>
+                            <input asp-for="@Model.WorkoutPlan.Id" class="form-control" value="@Model.WorkoutPlan.Id" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.WorkoutPlan.ExerciseId" class="control-label"></label>
+                            <input asp-for="@Model.WorkoutPlan.ExerciseId" class="form-control" id="ExID" />
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="@Model.WorkoutPlan.OtherTypeExercise" id="otherTypeExercise" onclick='otherTypeExerciseChecked()' /> @Html.DisplayNameFor(model => model.WorkoutPlan.OtherTypeExercise)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="@Model.WorkoutPlan.Des" class="control-label"></label>
+                        <input asp-for="@Model.WorkoutPlan.Des" class="form-control" id="DesInput" />
+                        <span asp-validation-for="@Model.WorkoutPlan.Des" class="text-danger"></span>
+                    </div>
+
+                    <div id="SetsRepsDiv">
+                        <div class="form-group">
+                            <label asp-for="@Model.WorkoutPlan.Sets" class="control-label"></label>
+                            <input asp-for="@Model.WorkoutPlan.Sets" class="form-control" id="SetsInput" value="0" onchange="setsChange(this)" />
+                            <span asp-validation-for="@Model.WorkoutPlan.Sets" class="text-danger"></span>
+                            <br />
+                            <button type="button" class="btn btn-primary" onclick="setNumber(0)">3</button>
+                            <button type="button" class="btn btn-primary" onclick="setNumber(1)">6</button>
+                            <button type="button" class="btn btn-primary" onclick="setNumber(2)">+1</button>
+                            <button type="button" class="btn btn-primary" onclick="setNumber(3)">+5</button>
+                            <button type="button" class="btn btn-danger" onclick="setNumber(4)">0</button>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="@Model.ProgressiveOverload" id="progressiveOverload" /> @Html.DisplayNameFor(model => model.ProgressiveOverload)
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+
+                </div>
+
+                <div class="form-group">
+
+                    <div class="row btnDiv">
+
+                        <div class="col-lg-3 btnPreDiv"></div>
+                        @if (Model.CreateBTNShow == true)
+                        {
+                            <input type="submit" value="Save" class="btn btn-primary col-lg-offset-6 col-lg-3 createBTN" id="CreateBTn" name="WorkoutEdit" />
+                        }
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="clearfix"></div>
+<script>
+
+    //function Check() {
+        
+    //}
+    window.onload = otherTypeExerciseChecked;
+    function otherTypeExerciseChecked() {
+        if ($("#otherTypeExercise").prop('checked')) {
+            $("#SetsInput").val(0);
+            $("#SetsInput").prop('disabled', true);
+            $("#RepsInput").val(0);
+            $("#RepsInput").prop('disabled', true); // checked
+            $("#SetsRepsDiv").hide()
+        }
+        else {
+            $("#SetsInput").prop('disabled', false);
+            $("#RepsInput").prop('disabled', false);
+            $("#SetsRepsDiv").show()
+        }
+    }
+
+    //======================part and ex btn click===============================================
+    @*function partBtnClick(a) {
+        var partIndex = $(".partBtn").index(a);
+        $.ajax({
+            url: '@Url.Action("SelectPart", "WorkoutPlans")',
+            type: "POST",
+            data: {
+                "selectedPart": a.value
+            },
+            success: function (data) {
+
+                $('#partExercisesChange').html(data);
+                $(".exercisesUl").show();
+                $(".partBtn").removeClass().addClass("partBtn btn btn-default");
+                $(".partBtn").eq(partIndex).removeClass().addClass("partBtn btn btn-primary");
+            },
+            error: function () { alert('Selected Part Error'); }
+         });
+
+    };
+
+    function exBtnClick(a) {
+       $.ajax({
+            url: '@Url.Action("SelectExercise", "WorkoutPlans")',
+            type: "POST",
+           data: {
+               "selectedExercise": a.value
+            },
+           success: function (data) {
+               $("#ExID").val(data);
+            },
+            error: function () { alert('Select Exercise error'); }
+        });
+        $(".exercisesBtn").removeClass().addClass("exercisesBtn btn btn-default");
+        $(a).removeClass().addClass("exercisesBtn btn btn-primary");
+        $('.createBTN').show();
+    };
+
+    function preBTNClick() {
+        location.reload();
+    }*@
+
+    function setNumber(a) {
+        var b = parseInt($('#SetsInput').val());
+        switch (a) {
+            case 0:
+                $('#SetsInput').val(3);
+                setsChange(3);
+                break;
+            case 1:
+                $('#SetsInput').val(6);
+                setsChange(6);
+                break;
+            case 2:
+                $('#SetsInput').val(b + 1);
+                setsChange(b + 1);
+                break;
+            case 3:
+                $('#SetsInput').val(b + 5);
+                setsChange(b + 5);
+                break;
+            case 4:
+                $('#SetsInput').val(0);
+                setsChange(0);
+                break;
+
+            default:
+                alert("Some Mistake Here");
+                break;
+
+        }
+
+    }
+
+</script>

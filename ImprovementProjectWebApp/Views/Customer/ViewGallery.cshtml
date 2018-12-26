@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ImprovementProjectWebApp.Models.CheckInImgs>
+@{
+    ViewData["Title"] = "ViewGallery";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<h2>用户图片</h2>
+<ul class="nav nav-pills nav-justified"></ul>
+@{
+    var Images = Model.GroupBy(m => m.CheckInQA);
+    @foreach (var item in Images)
+    {
+
+        <div class="col-lg-12 list-group-item">
+            <h4>
+                @item.FirstOrDefault().CheckInQA.CreatedDate.ToString("yyyy MMMM dd") - @item.FirstOrDefault().CheckInQA.EndDate.ToString("yyyy MMMM dd")
+            </h4>
+            @foreach (var i in item)
+            {
+                <div class="col-lg-3">
+
+                    <div class="list-group-item list-group-item-info">
+                        @switch (i.ImgPart)
+                        {
+                            case 0:
+                                <span>正面</span>
+                                break;
+                            case 1:
+                                <span>背面</span>
+                                break;
+                            case 2:
+                                <span>左面</span>
+                                break;
+                            case 3:
+                                <span>右面</span>
+                                break;
+
+                        }
+                    </div>
+                    <div class=" list-group-item">
+                        <img src="@i.ImgURL" alt="Alternate Text" width="100%" />
+                    </div>
+
+                </div>
+            }
+        </div>
+    }
+}
+<div class="clearfix"></div>
+<br />
+<div class="col-lg-12">
+
+    <a class="btn btn-default col-lg-2 col-lg-offset-10" asp-action="Index" asp-controller="Customer">返回</a>
+</div>

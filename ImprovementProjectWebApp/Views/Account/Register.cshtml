@@ -1,0 +1,77 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" enctype="multipart/form-data">
+            <h4>Create a new account.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group col-lg-6">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group col-lg-6">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-lg-6">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group col-lg-6" data-toggle="buttons">
+                <label asp-for="Gender"></label>
+                <br />
+                <label class="btn btn-primary active">
+                    <input type="radio" name="Gender" id="option1" checked value="男"> 男
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="Gender" id="option2" value="女"> 女
+                </label>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+
+
+            <div class="form-group col-lg-6">
+                <label asp-for="WeChatNumber"></label>
+                <input asp-for="WeChatNumber" class="form-control" />
+                
+            </div>
+            <div class="form-group col-lg-6">
+                <label asp-for="WeChatQRCode"></label>
+                <input asp-for="WeChatQRCode" type="file" id="fUpload" name="files"  class="form-control" />
+            </div>
+
+
+
+            <div class="form-group col-lg-6">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group col-lg-6">
+                <label>
+                    重复密码
+                </label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="clearfix"></div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

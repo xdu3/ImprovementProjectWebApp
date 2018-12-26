@@ -1,0 +1,107 @@
+﻿@model ImprovementProjectWebApp.Models.Customer.CheckInVM
+
+
+@{
+    ViewData["Title"] = "CheckInView";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+
+
+<h2>打卡</h2>
+<div class="alert alert-success" role="alert">
+    打卡成功！请完成打卡问题！
+</div>
+<div>
+    @{ var count = 1;
+        foreach (var item in Model.CheckInQADetails)
+        {
+    <a asp-action="CheckInView" asp-controller="Customer" asp-route-CheckInDetailId="@item.Id" class="list-group-item col-lg-2">
+        问题 @count
+        @if (string.IsNullOrEmpty(item.Answer))
+        {
+            <span class="badge badge-danger">未完成</span>
+
+        }
+
+    </a>
+            count++;
+        } }
+</div>
+<div class="clearfix"></div>
+<div>
+    @if (Model.CheckInQADetail.Answer == null)
+    {
+        <div>
+            <div class="col-lg-6 row">
+                问题：@Model.CheckInQADetail.CheckInQuestion.Question
+                <br />
+
+                <br />
+                id: @Model.CheckInQADetail.Id   <br />
+                Create Date: @Model.CheckInQADetail.CheckInQA.CreatedDate
+                <br />
+                <input id="CheckInQADetailId" name="QustionId" value="@Model.CheckInQADetail.Id" style="display:none;" />
+                答案：
+                <br />
+                <textarea id="Answer" rows="5" name="Answer" class="form-control">
+
+            </textarea>
+            </div>
+            <div class="clearfix"></div>
+            <br />
+            <div>
+                <a class="btn btn-default" asp-action="Index" asp-controller="Customer">返回</a>
+                <input value="提交" class="btn btn-default" onclick="CheckInQADetailEdit()" />
+                <a class="btn btn-default" asp-action="UpLoadImg" asp-controller="Customer" asp-route-CheckInQAId="@Model.CheckInQADetail.CheckInQAId">上传图片</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div>
+            问题：@Model.CheckInQADetail.CheckInQuestion.Question
+            <br />
+
+            <br />
+            id: @Model.CheckInQADetail.Id   <br />
+            Create Date: @Model.CheckInQADetail.CheckInQA.CreatedDate
+
+            答案：
+            <br />
+            <p>@Model.CheckInQADetail.Answer</p>
+            <br />
+            <a class="btn btn-default col-lg-4" asp-action="Index" asp-controller="Customer">返回</a>
+            <input value="提交" class="btn btn-default col-lg-4" onclick="AnswerIntroQACreate()" />
+            <a class="btn btn-default col-lg-4" asp-action="UpLoadImg" asp-controller="Customer"  asp-route-CheckInQAId="@Model.CheckInQADetail.CheckInQAId">上传图片</a>
+        </div>
+
+    }
+</div>
+
+<environment include="Development">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</environment>
+<script>
+    function CheckInQADetailEdit() {
+        var CheckInQADetailId = $("#CheckInQADetailId").val();
+
+        var Answer = $("#Answer").val();
+
+        $.ajax({
+            url: '@Url.Action("AnswerCheckInQ", "Customer")',
+            type: "POST",
+            data: {
+                "CheckInQADetailId": CheckInQADetailId,
+                "Answer": Answer
+            },
+            success: function (data) {
+                location.reload();
+
+            },
+            error: function () { alert('Selected Part Error'); }
+        });
+    }
+</script>

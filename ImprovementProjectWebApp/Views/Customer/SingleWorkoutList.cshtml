@@ -1,0 +1,15 @@
+﻿@model ImprovementProjectWebApp.Models.AppUserPlan
+
+    @{
+        ViewData["Title"] = "SingleWorkoutList";
+        Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    }
+
+    <h2>SingleWorkoutList</h2>
+
+    <div class="list-group col-lg-12">
+
+            <a asp-controller="Customer" asp-action="CheckWorkoutList" class="col-lg-3 list-group-item" asp-route-PlanId="@Model.PlanId">@Model.Plan.PlanName</a>
+
+
+    </div>

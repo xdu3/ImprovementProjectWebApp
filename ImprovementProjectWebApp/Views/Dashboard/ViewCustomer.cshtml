@@ -1,0 +1,14 @@
+﻿@model ImprovementProjectWebApp.Models.ApplicationUser
+@{
+    ViewData["Title"] = "ViewCustomer";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h2>ViewCustomer</h2>
+<p>@Model.UserName</p>
+<div class="list-group">
+    <a asp-action="ViewPlan" asp-route-id="@Model.Id" class="list-group-item col-lg-4">View Plan</a>
+    <a asp-controller="IntroQAs" asp-action="AdminIntroAnswerView" asp-route-id="@Model.Id" class="list-group-item col-lg-4">View Intro Answers</a>
+    <a asp-controller="Dashboard" asp-action="ViewUserCheckInQA" asp-route-UserId="@Model.Id" class="list-group-item col-lg-4">View Check In Answers</a>
+</div>

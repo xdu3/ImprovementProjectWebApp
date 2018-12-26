@@ -1,0 +1,47 @@
+﻿@model ImprovementProjectWebApp.Models.PartExerciseViewModels.PartExercise
+@{
+    ViewData["Title"] = "ExerciseSeletor";
+}
+
+<div class="list-group col-lg-12">
+    @foreach (var item in Model.BodyParts)
+    {
+
+        @*<input  name="name" type="button"  class="list-group-item col-lg-2 partBtn" value="@Html.DisplayFor(modelItem => item.Name)" onclick="partBtnClick(this)" />*@
+        @if (item.Id != Model.SelectPartId)
+        {
+
+            <a class="list-group-item col-lg-2 partBtn btn" asp-action="AddWorkoutPlanView" asp-route-Id="@Model.PlanID" asp-route-UserId="@Model.UserId" asp-route-PartId="@item.Id" asp-route-PlanName="@Model.PlanName">@Html.DisplayFor(modelItem => item.Name)</a>
+        }
+        else
+        {
+
+            <a class="list-group-item col-lg-2 partBtn btn active" asp-action="AddWorkoutPlanView" asp-route-PlanName="@Model.PlanName" asp-route-UserId="@Model.UserId" asp-route-PartId="@item.Id" >@Html.DisplayFor(modelItem => item.Name)</a>
+        }
+    }
+
+</div>
+<div class="clearfix"></div>
+<hr />
+<div class="list-group col-lg-12">
+    @if (Model.Exercises != null)
+    {
+        @foreach (var item in Model.Exercises)
+        {
+            @if (item.Id != Model.SelectExerciseId)
+            {
+
+                <a class="list-group-item col-lg-2 partBtn btn" asp-action="AddWorkoutPlanView" asp-route-PlanName="@Model.PlanName" asp-route-UserId="@Model.UserId" asp-route-ExId="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+            }
+            else
+            {
+                <a class="list-group-item col-lg-2 partBtn btn active" asp-action="AddWorkoutPlanView" asp-route-PlanName="@Model.PlanName" asp-route-UserId="@Model.UserId" asp-route-ExId="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+
+            }
+        }
+    }
+</div>
+<hr />
+<div class="clearfix"></div>
+
+

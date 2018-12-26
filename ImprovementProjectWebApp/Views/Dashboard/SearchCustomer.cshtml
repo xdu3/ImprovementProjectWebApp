@@ -1,0 +1,42 @@
+﻿@model IList<ImprovementProjectWebApp.Models.ApplicationUser>
+@{
+    ViewData["Title"] = "SearchCustomer";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="list-group col-lg-10">
+    <h2>SearchCustomer</h2>
+    <form asp-controller="WorkoutPlans" asp-action="SearchCustomer">
+        Customer:
+        <div class="row">
+            <div class="col-lg-10">
+                <input type="text" name="SearchString" class="form-control">
+            </div>
+            <div class="col-lg-2">
+                <input type="submit" value="Search" class="btn btn-default" />
+            </div>
+        </div>
+    </form>
+    <br />
+    <ul class="list-group">
+
+        @*<li class="list-group-item list-group-item-primary col-lg-12 ">*@
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item col-lg-4">
+                <div class="">
+                    <strong class=""> Customer Name:</strong>
+                    <p class="">
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </p>
+                    <div class="col-lg-offset-8">
+                        <a asp-action="ViewCustomer" asp-route-id="@item.Id">View</a>
+                    </div>
+                </div>
+            </li>
+        }
+        @*</li>*@
+
+    </ul>
+    <div class="clearfix"></div>
+</div>

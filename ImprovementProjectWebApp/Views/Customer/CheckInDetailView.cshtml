@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ImprovementProjectWebApp.Models.CheckInQADetail>
+@{
+    ViewData["Title"] = "CheckInDetailView";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<h2>CheckInDetailView</h2>
+@foreach (var item in Model)
+{
+    <p>
+        @item.CheckInQA.CreatedDate
+    </p>
+<p>
+    @item.CheckInQuestion.Question
+</p>
+<p>
+    @item.Answer
+</p>
+
+    }
+
