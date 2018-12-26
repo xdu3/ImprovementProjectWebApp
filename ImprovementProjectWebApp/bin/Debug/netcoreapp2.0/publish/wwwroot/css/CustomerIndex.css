@@ -1,0 +1,191 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: #f1f2f6;
+}
+
+.containerNew {
+    /*position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);*/
+    width: 1140px;
+    /*height: 500px;*/
+    display: flex;
+    padding: 0 ;
+    margin: 0 auto;
+}
+
+    .containerNew .box {
+        position: relative;
+        width: 285px;
+        height: 570px;
+        background: #ccc;
+        transition: 0.5s;
+    }
+
+        .containerNew .box:hover {
+            transform: scale(1.1);
+            z-index: 1;
+            box-shadow: 0 5px 20px rgba(0,0,0,1);
+        }
+
+        .containerNew .box .thumb {
+            position: absolute;
+            width: 100%;
+            height: 285px;
+            overflow: hidden;
+        }
+
+        .containerNew .box:nth-child(odd) .thumb {
+            bottom: 0;
+            left: 0;
+        }
+
+        .containerNew .box .thumb img {
+            width: 100%;
+        }
+
+        .containerNew .box .details {
+            position: absolute;
+            width: 100%;
+            height: 285px;
+            overflow: hidden;
+            background: #262626;
+        }
+
+        .containerNew .box:nth-child(even) .details {
+            bottom: 0;
+            left: 0;
+        }
+
+        .containerNew .box:nth-child(1) .details {
+            background: #ffa502;
+        }
+
+        .containerNew .box:nth-child(2) .details {
+            background: #ff6348;
+        }
+
+        .containerNew .box:nth-child(3) .details {
+            background: #ff4757;
+        }
+
+        .containerNew .box:nth-child(4) .details {
+            background: #747d8c ;
+        }
+
+        .box2 .box:nth-child(1) .details {
+            background: #2ed573;
+        }
+
+.box2 .box:nth-child(2) .details {
+    background: #1e90ff;
+}
+
+.box2 .box:nth-child(3) .details {
+    background: #3742fa;
+}
+
+.box2 .box:nth-child(4) .details {
+    background: #2f3542 !important;
+}
+/*#x2 {
+    background: #262626 !important;
+}
+
+#x3 {
+    background: #d9e1e8 !important;
+}*/
+
+        .containerNew .box .details .content {
+            position: absolute;
+            top: calc(50% + 16px);
+            transform: translateY(-50%);
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            transition: 0.5s;
+        }
+
+        .containerNew .box:hover .details .content {
+            top: calc(50%);
+        }
+
+        .containerNew .box .details .content .fa {
+            font-size: 80px;
+            color: #fff;
+        }
+
+        .containerNew .box .details .content h3 {
+            margin: 0;
+            padding: 0;
+            padding: 10px 0;
+            color: #fff;
+        }
+
+        .containerNew .box .details .content a {
+            display: inline-block;
+            
+            padding: 5px 20px;
+            color: #fff;
+            border: 2px solid #fff;
+            text-decoration: none;
+            transition: 0.5s;
+            border-radius: 20px;
+            transform: scale(0);
+        }
+
+        .containerNew .box:hover .details .content a {
+            transform: scale(1);
+        }
+
+        .containerNew .box .details .content a:hover {
+            background: #fff;
+            color: #262626;
+        }
+
+@media(max-width: 1000px) {
+    .containerNew {
+        width: 100%;
+        height: auto;
+        /*padding: 20px;*/
+        box-sizing: border-box;
+    }
+
+        .containerNew .box {
+            height: 380px;
+        }
+
+            .containerNew .box .thumb {
+                display: none;
+            }
+}
+
+@media(max-width: 768px) {
+    .containerNew {
+        display: initial;
+    }
+
+        .containerNew .box {
+            width: 50%;
+            height: 285px;
+            float: left;
+        }
+}
+
+@media(max-width: 480px) {
+    .containerNew {
+        top: 0;
+        left: 0;
+        transform: translate(0);
+    }
+
+        .containerNew .box {
+            width: 100%;
+            height: 285px;
+            float: none;
+        }
+}
