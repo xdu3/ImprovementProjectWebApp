@@ -1,6 +1,21 @@
-﻿
+﻿@model ImprovementProjectWebApp.Models.DashboardVM.DIndexVM
+
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewData["Title"] = "Index";
 }
+<div class="col-lg-6">
+    <a asp-controller="Dashboard" asp-action="MemberList" asp-route-MemberCondition="0" class="list-group-item">
+        Total Member: @Model.CurUser
+    </a>
+    <a asp-controller="Dashboard" asp-action="MemberList" asp-route-MemberCondition="1" class="list-group-item">Member Without Plan: @Model.UserWithoutPlan</a>
+    <a asp-controller="Dashboard" asp-action="MemberList" asp-route-MemberCondition="2" class="list-group-item">Member Expired: @Model.UserExpired</a>
+    <a asp-controller="Dashboard" asp-action="MemberList" asp-route-MemberCondition="3" class="list-group-item">User About To Expired: @Model.UserAboutToExpired</a>
 
+    <a asp-controller="Dashboard" asp-action="MemberList" asp-route-MemberCondition="4" class="list-group-item">Meal Plan Required: <span class="badge badge-pill badge-primary">@Model.MealPlanRequired</span></a>
+    <a asp-controller="Dashboard" asp-action="MemberList" asp-route-MemberCondition="5" class="list-group-item">Workout Plan Required: <span class="badge badge-pill badge-primary">@Model.WorkoutPlanRequried</span></a>
+    <a asp-controller="Dashboard" asp-action="MemberList" asp-route-MemberCondition="6" class="list-group-item">Customer Need To Contact: <span class="badge badge-pill badge-primary">@Model.CustomerNeedToContact</span></a>
+    <a asp-controller="Dashboard" asp-action="UnsolvedQuestions" class="list-group-item">Unsolved User Questions<span class="badge badge-pill badge-primary">@Model.Qustions</span></a>
+    <a asp-controller="Dashboard" asp-action="GetAllQuestion" class="list-group-item">User Qustions</a>
+    <a asp-controller="Dashboard" asp-action="DailyCheckIn" class="list-group-item">Daily Check In</a>
+</div>

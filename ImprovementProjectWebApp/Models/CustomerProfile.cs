@@ -23,7 +23,7 @@ namespace ImprovementProjectWebApp.Models
         [Required]
         [Display(Name = "微信号")]
         public string WeChatNumber { get; set; }
-        [Required]
+
         [Display(Name = "微信二维码")]
         public byte[] WeChatQRCode { get; set; }
         [Required]

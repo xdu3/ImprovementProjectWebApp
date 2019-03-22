@@ -1,0 +1,126 @@
+﻿@model ImprovementProjectWebApp.Models.Customer.CheckInImgsVM
+
+    @{
+        ViewData["Title"] = "UpLoadImgV2";
+        Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    }
+
+    <h2>照片</h2>
+    <div class="col-lg-12">
+        @{
+            foreach (var item in Model.AllCheckInImgs)
+            {
+                if (item.ImgURL != null)
+                {
+                    <div class="col-lg-3 list-group-item">
+                        @if (item.ImgPart == 0)
+                        {
+                            <label>正面照片</label>
+                        }
+                        else if (item.ImgPart == 1)
+                        {
+                            <label>背面照片</label>
+                        }
+                        else if (item.ImgPart == 2)
+                        {
+                            <label>左面照片</label>
+                        }
+                        else if (item.ImgPart == 3)
+                        {
+                            <label>右面照片</label>
+                        }
+                        else
+                        {
+                            <label>错误</label>
+
+                        }
+                        <img src="@item.ImgURL" alt="Alternate Text" width="100%" />
+                        <a class="btn btn-danger btn-block" asp-controller="Customer" asp-action="DeleteCheckInPic" asp-route-CheckInImgsId="@item.Id" asp-route-CheckInQAId="@item.CheckInQAId" style="margin-top:5px" onclick="return confirm('您确定要删除这张照片？');">X</a>
+
+                    </div>
+
+
+                }
+
+            }
+
+        }
+    </div>
+    <div class="col-lg-12">
+        @{
+            bool havePart = false;
+            foreach (var item in Model.AllCheckInImgs)
+            {
+                if (item.ImgURL == null)
+                {
+                    if (!havePart)
+                    {
+                    <form asp-action="UpLoadImgPost" enctype="multipart/form-data" method="post">
+                        <br />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @if (item.ImgPart == 0)
+                                {
+                                    <label>正面照片</label>
+                                }
+                                else if (item.ImgPart == 1)
+                                {
+                                    <label>背面照片</label>
+                                }
+                                else if (item.ImgPart == 2)
+                                {
+                                    <label>左面照片</label>
+                                }
+                                else if (item.ImgPart == 3)
+                                {
+                                    <label>右面照片</label>
+                                }
+                                else
+                                {
+                                    <label>错误</label>
+
+                                }
+                            </div>
+                            <div class="col-md-12">
+                                <input type="file" id="fUpload" name="files" multiple class="form-control" />
+                            </div>
+                            <div class="col-md-12">
+                                <input id="CheckInQAId" type="hidden" name="CheckInQAId" value="@item.CheckInQAId" class="form-control" />
+                            </div>
+                            <div class="col-md-12">
+                                <input id="CheckInImgsId" type="hidden" name="CheckInImgsId" value="@item.Id" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="padding-top:10px;">
+                                <input type="submit" id="btnUpload" value="上传" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </form>
+                        }
+                        havePart = true;
+                    }
+
+                }
+
+            }
+    </div>
+    @if(Model.CheckInQADetails != null)
+    {
+    <br />
+    <div class="col-lg-12 list-group-item">
+        @foreach (var i in Model.CheckInQADetails)
+        {
+            <p><strong>
+    Question: @i.CheckInQuestion.Question
+                </strong>
+            </p>
+            <p>
+                Answer: @i.Answer
+            </p>
+           @*<p>@i.Id</p>*@
+        }
+    </div>
+    <a asp-action="EditQAD" asp-controller="Customer" asp-route-CheckInQAId="@Model.CheckInQADetails.FirstOrDefault().CheckInQAId" class="btn btn-warning btn-block col-lg-12" >修改答案 </a>
+    }

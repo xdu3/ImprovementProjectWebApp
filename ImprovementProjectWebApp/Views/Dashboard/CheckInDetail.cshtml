@@ -1,0 +1,65 @@
+﻿@model ImprovementProjectWebApp.Models.DashboardVM.CheckInDetailVM
+@{
+    ViewData["Title"] = "CheckInDetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Check In Detail</h2>
+@*@if (Model.ifCheckInVMs != null)
+    {
+        <ul class="nav nav-pills nav-justified">
+            @foreach (var item in Model.ifCheckInVMs)
+            {
+                @if (item.IfCheckIn == true)
+                {
+                    <li>
+                        <a class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "Customer/CheckInDetail?CheckinQAId=" + item.CheckInQA.Id ? " active" : "")" asp-controller="Customer" asp-action="CheckInDetail" asp-route-CheckinQAId="@item.CheckInQA.Id">
+                            @item.CheckInQA.CreatedDate.ToString("yyyy MMMM dd")
+
+                        </a>
+                    </li>
+                }
+
+            }
+        </ul>
+    }*@
+@if (Model.IMGUrl != null)
+{
+    <div class="list-group-item col-lg-12">
+        @foreach (var i in Model.IMGUrl)
+        {
+            @if (i != null)
+            {
+                <div class="list-group-item col-lg-3">
+                    <img src="@i" alt="Alternate Text" width="100%" />
+                </div>
+            }
+        }
+    </div>
+}
+@if (Model.CheckInQADetails != null)
+{
+    <div class="list-group-item col-lg-12">
+        <div class="list-group-item col-lg-6">
+            <p>问题：初始体重</p>
+            <p>答案： @Model.IntroQA.Answer</p>
+        </div>
+        @foreach (var i in Model.CheckInQADetails)
+        {
+            <div class="list-group-item col-lg-6">
+                <p>问题： @i.CheckInQuestion.Question</p>
+                <p>答案： @i.Answer</p>
+            </div>
+
+        }
+    </div>
+}
+
+<div class="clearfix"></div>
+<br />
+<div class="col-lg-12">
+
+    <a class="btn btn-default col-lg-2 col-lg-offset-10" asp-action="ViewUserCheckInQA" asp-controller="Dashboard" asp-route-UserId="@ViewBag.UserId">返回</a>
+</div>
+
+

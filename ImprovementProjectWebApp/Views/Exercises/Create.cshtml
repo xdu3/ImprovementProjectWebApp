@@ -5,31 +5,41 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-    <h2>Create</h2>
+<h2>Create</h2>
 
-    <h4>Exercise</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="BodyPartId" class="control-label"></label>
-                    <select asp-for="BodyPartId" class="form-control" asp-items="ViewBag.BodyPartId"></select>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </form>
-        </div>
+<h4>Exercise</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExURl" class="control-label"></label>
+                <input asp-for="ExURl" class="form-control" />
+                <span asp-validation-for="ExURl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExURl2" class="control-label"></label>
+                <input asp-for="ExURl2" class="form-control" />
+                <span asp-validation-for="ExURl2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BodyPartId" class="control-label"></label>
+                <select asp-for="BodyPartId" class ="form-control" asp-items="ViewBag.BodyPartId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
     </div>
+</div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 

@@ -9,5 +9,6 @@ namespace ImprovementProjectWebApp.Models.Customer
     {
         public CheckInImgs CurCheckInImgs {get;set;}
         public List<CheckInImgs> AllCheckInImgs { get; set; }
+        public List<CheckInQADetail> CheckInQADetails { get; set; }
     }
 }

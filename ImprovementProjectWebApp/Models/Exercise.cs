@@ -14,6 +14,8 @@ namespace ImprovementProjectWebApp.Models
         [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }
+        public string ExURl { get; set; }
+        public string ExURl2 { get; set; }
         [Required]
         [Display(Name = "Part")]
         public int BodyPartId { get; set; }

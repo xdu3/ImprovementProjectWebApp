@@ -1,0 +1,14 @@
+﻿@model ImprovementProjectWebApp.Models.DashboardVM.ViewCheckInDateVM
+
+@{
+    ViewData["Title"] = "ViewCheckInDate";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>ViewCheckInDate</h2>
+
+@foreach(var item in Model.userCheckInDates)
+{
+    <p>@item.CheckInDate</p>
+
+}

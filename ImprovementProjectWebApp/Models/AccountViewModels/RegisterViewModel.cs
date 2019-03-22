@@ -14,7 +14,12 @@ namespace ImprovementProjectWebApp.Models.AccountViewModels
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "用户名至少要4位。", MinimumLength = 4)]
+        [Display(Name = "用户名")]
+        public string UserName { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "密码至少要6位。", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "密码")]
         public string Password { get; set; }
@@ -37,7 +42,8 @@ namespace ImprovementProjectWebApp.Models.AccountViewModels
         public byte[] WeChatQRCode { get; set; }
         [Required]
         public DateTime StartDate { get; set; }
-
+        [Required]
+        public DateTime Birthday { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]

@@ -1,0 +1,89 @@
+﻿@model ImprovementProjectWebApp.Models.DashboardVM.ViewWeekPlanVM
+
+@{
+    ViewData["Title"] = "ViewWeekPlan";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>ViewWeekPlan</h2>
+<h4>Week plan name: @Model.WeekPlan.Name</h4>
+<div>
+
+    <div class="list-group">
+        @foreach (var item in Model.WeekPlan.Plans)
+        {
+            <div class="list-group-item col-lg-12">
+                <div class="col-lg-2">
+                    <h5>Day: @item.DayPlanNum</h5>
+                    <h5>@item.DayPlanDate.ToString("yyyy MMMM dd")</h5>
+                </div>
+
+                <div class=" col-lg-10">
+                    @if (item.Name != "休息日")
+                    {
+                        @foreach (var i in item.WorkoutPlans)
+                        {
+                            <div class="list-group-item col-lg-12">
+                                <p style="margin:0;">
+                                    <strong>
+                                        @i.Exercise.Name
+                                        @if (i.Sets != 0)
+                                        {
+                                            <span>(@i.Sets 组)</span>
+
+                                        }
+                                    </strong>
+                                    @if (i.OtherTypeExercise != true)
+                                    {
+                                        @*<span>@i.Sets</span>*@
+                                        foreach (var ii in i.Reps)
+                                        {
+                                            if (ii.num != -1)
+                                            {
+                                                <span class="badge badge-primary">@ii.num</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-primary">力竭</span>
+
+                                            }
+                                        }
+                                        if (!string.IsNullOrEmpty(i.Des))
+                                        {
+                                            <span>(@i.Des)</span>
+
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <span>: @i.Des</span>
+
+                                    }
+                                </p>
+                            </div>
+
+
+                        }
+                    }
+                    else
+                    {
+                        <div class="list-group-item-info col-lg-12">
+                            <h3 style="margin:20px;">休息日</h3>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div>
+<div class="col-lg-12">
+    <br /><br />
+    <a class="btn btn-default col-lg-2 col-lg-offset-10" asp-action="AddTemplate" asp-controller="Dashboard" asp-route-UserId="@Model.UserId"
+       asp-route-AppUserPlanId="@Model.AppUserPlanId">返回</a>
+</div>
+

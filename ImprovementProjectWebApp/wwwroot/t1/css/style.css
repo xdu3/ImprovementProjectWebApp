@@ -225,7 +225,7 @@ li#callbacks1_s3 {
     line-height: 28px;
     color: #fff;
     letter-spacing: 1px;
-    font-size: 14px;
+    font-size: 53px;
     width: 70%;
     margin: 0 auto;
 }
@@ -491,7 +491,7 @@ li#callbacks1_s3 {
 
 /*-- stats --*/
 .stats {
-    background: url(../images/b3.jpg) no-repeat fixed;
+    background: url(../images/c3.jpg) no-repeat fixed;
     background-size: cover;
 }
 

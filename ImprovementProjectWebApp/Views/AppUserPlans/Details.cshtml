@@ -11,7 +11,6 @@
     <h4>AppUserPlan</h4>
     <hr />
     <dl class="dl-horizontal">
-
         <dt>
             @Html.DisplayNameFor(model => model.StartDate)
         </dt>
@@ -40,18 +39,11 @@
             @Html.DisplayNameFor(model => model.ApplicationUser)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Plan)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Plan.PlanName)
+            @Html.DisplayFor(model => model.ApplicationUser.Email)
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a> |
-    <a asp-action="ViewPlan" asp-controller="Dashboard" asp-route-id="@Model.ApplicationUserId">Back to Customer</a>
+    <a asp-action="Index">Back to List</a>
 </div>

@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/ImprovementProjectWebApp",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:32230/",
       "sslPort": 44385
@@ -17,7 +21,7 @@
       }
     },
     "ImprovementProjectWebApp": {
-      "commandName": "Project",
+      "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

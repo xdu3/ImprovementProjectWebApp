@@ -7,65 +7,75 @@
 <h2>健身计划</h2>
 @if (Model.Count() != 0)
 {
-<h4>@Model.FirstOrDefault().WorkoutPlan.Plan.PlanName</h4>
-<div class="list-group ">
-    @foreach (var item in Model)
-    {
-    <div class="list-group-item box1 col-lg-4">
-        <div class="list-group-item col-lg-12">
-            @item.WorkoutPlan.Exercise.Name
-        </div>
-        @if (item.WorkoutPlan.OtherTypeExercise == true)
-        {
-            <div class="list-group-item col-lg-12 ">
-               *这是一个特殊的运动 
-            </div>
-            <div class="list-group-item col-lg-12 ">
-                描述: @Html.DisplayFor(modelItem => item.WorkoutPlan.Des)
-            </div>
-
-        }
-        else
-        {
-            <div class="list-group-item col-lg-12">
-                组数: @Html.DisplayFor(modelItem => item.WorkoutPlan.Sets)
-            </div>
-            <div class="list-group-item col-lg-12">
-                <div class="repOl">
-                    个数:
-                </div>
-
-                    @foreach (var rep in item.Reps)
+    <h4>计划名： @Model.FirstOrDefault().WorkoutPlan.Plan.Name</h4>
+    <div class="list-group ">
+        @{
+            var count = 1;
+            foreach (var item in Model)
+            {
+                <div class="list-group-item box1 col-lg-4">
+                    <div class="list-group-item col-lg-12">
+                        动作 @count : @item.WorkoutPlan.Exercise.Name
+                    </div>
+                    @if (item.WorkoutPlan.OtherTypeExercise == true)
                     {
-                        if (rep.num == -1)
-                        {
-                            <span>力竭</span>
-
-                        }
-                        else
-                        { 
-                        <div class="repOl1">
-                            @Html.DisplayFor(modelItem => rep.num)
+                        <div class="list-group-item col-lg-12 ">
+                            *这是一个特殊的运动
                         </div>
-                        }
+                        <div class="list-group-item col-lg-12 ">
+                            描述: @Html.DisplayFor(modelItem => item.WorkoutPlan.Des)
+                        </div>
+
                     }
+                    else
+                    {
+                        <div class="list-group-item col-lg-12">
+                            组数: @Html.DisplayFor(modelItem => item.WorkoutPlan.Sets)
+                        </div>
+                        <div class="list-group-item col-lg-12">
+                            <div class="repOl">
+                                个数:
+                            </div>
 
-                <div class="clearfix"></div>
-            </div>
-            <div class="clearfix"></div>
+                            @foreach (var rep in item.Reps)
+                            {
+                                if (rep.num == -1)
+                                {
+                                    <span>力竭</span>
+
+                                }
+                                else
+                                {
+                                    <div class="repOl1">
+                                        @Html.DisplayFor(modelItem => rep.num)
+                                    </div>
+                                }
+                            }
+
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
 
 
+
+                    }
+                </div>
+                count++;
+            }
 
         }
     </div>
-    }
-</div>
+    <div class="col-lg-12">
+        <br /><br />
+        <a asp-action="WorkoutList" asp-controller="Customer" class="btn btn-primary col-lg-2 col-lg-offset-10 ">返回</a>
+    </div>
 }
+
 else
 {
-<div>
-    计划还没有完成，请期待。
-</div>
+    <div>
+        计划还没有完成，请期待。
+    </div>
 
 }
 <div class="clearfix"></div>
@@ -87,5 +97,4 @@ else
     .deletebtn {
         margin: 0;
     }
-
 </style>

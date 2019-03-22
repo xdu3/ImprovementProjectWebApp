@@ -1,0 +1,40 @@
+﻿@model ImprovementProjectWebApp.Models.CheckInQADetail
+@{
+    ViewData["Title"] = "EditCheckInQADetail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>EditCheckInQADetail</h2>
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="EditCheckInQADetail" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+
+                <textarea asp-for="Answer" class="form-control" rows="6"></textarea>
+                <span asp-validation-for="Answer" class="text-danger"></span>
+            </div>
+            <div style="display:none;">
+                <div class="form-group">
+
+                    <input asp-for="CheckInQAId" class="form-control" />
+
+                </div>
+                <div class="form-group">
+
+                    <input asp-for="CheckInQuestionId" class="form-control" />
+
+                </div>
+                <div class="form-group">
+
+                    <input asp-for="Id" class="form-control" />
+
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-default btn btn-default col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-12 col-xs-12" />
+            </div>
+        </form>
+    </div>
+</div>

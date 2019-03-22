@@ -1,42 +1,76 @@
-﻿@model IEnumerable<ImprovementProjectWebApp.Models.AppUserPlan>
+﻿@model IEnumerable<ImprovementProjectWebApp.Models.Plan>
 @{
     ViewData["Title"] = "WorkoutList";
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
+@if (Model.Count() == 0)
+{
+    <h2>您的健身计划还没有完成，请您耐心等待</h2>
 
-<h2>健身计划</h2>
-<div class="list-group col-lg-12">
-    @{
-        var x = Model.GroupBy(m => m.TrackId);
-        foreach (var i in x)
-        {
-            <div class="list-group-item col-lg-12">
-                @{
+}
+else
+{
+    <h2>健身计划</h2>
+    <div class="list-group col-lg-12">
 
-                    int count = 1;
-                    foreach (var item in i)
-                    {
-                        @if (item.StartDate <= DateTime.Today && item.EndDate > DateTime.Today)
-                        {
-                            <div class="col-lg-6">
-                                <br />
-                                <p>@item.StartDate.ToString("yyyy MMMM dd") - @item.EndDate.ToString("yyyy MMMM dd")</p>
-                                <p>Phase @count</p>
-                                <a asp-controller="Customer" asp-action="CheckWorkoutList" class="col-lg-12 list-group-item" asp-route-PlanId="@item.PlanId">@item.Plan.PlanName</a>
+        @{
 
-                            </div>
-                            count++;
-                        }
-                    }
+            var x = Model.GroupBy(m => m.WeekPlan);
+            int count = 1;
 
+
+                foreach (var item in x)
+                {
+                    <div class="list-group-item col-lg-12">
+                        <div class=" col-lg-2">
+                            <h4>周 @count</h4>
+                            @*<p>@item.FirstOrDefault().WeekPlan.Name</p>*@
+                        </div>
+                        <div class=" col-lg-10">
+                            @{
+
+
+                                @for (int i = 1; i <= 7; i++)
+                                {
+                                    bool have = false;
+                                    foreach (var z in item)
+                                    {
+                                        @if (z.DayPlanNum == i)
+                                        {
+                                            if (z.Name == "休息日")
+                                            {
+
+                            <div class="list-group-item list-group-item-info">第 @i 天: 休息日</div>
+                                            }
+                                            else
+                                            {
+                                                <a class="list-group-item " asp-controller="Customer" asp-action="CheckWorkoutList_V2" asp-route-PlanId="@z.Id">第 @i 天: @z.Name</a>
+                                            }
+
+                                            have = true;
+                                        }
+                                    }
+                                    if (have != true)
+                                    {
+                                                <div class="list-group-item list-group-item-info">第 @i 天: 休息日</div>
+                                    }
+                                }
+
+                            }
+                        </div>
+                    </div>
+                    count++;
                 }
-            </div>
-        }
-    }
-</div>
-<div class="clearfix"></div>
-<br />
-<div class="col-lg-12">
+            }
 
-    <a class="btn btn-default col-lg-2 col-lg-offset-10" asp-action="Index" asp-controller="Customer">返回</a>
+
+
+    </div>
+    <div class="clearfix"></div>
+    <br />
+}
+
+<div class="">
+
+    <a class="btn btn-default col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-12 col-xs-12"  asp-action="Index" asp-controller="Customer">返回</a>
 </div>

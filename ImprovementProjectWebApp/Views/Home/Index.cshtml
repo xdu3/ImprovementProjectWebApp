@@ -1,11 +1,928 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@{
     ViewData["Title"] = "Home Page";
+    Layout = null;
 }
-<br />
-<br />
-<div class="list-group col-lg-12">
-    <a href="~/t1/index.html" class="col-lg-3 list-group-item">Home Templete1</a>
-    <a href="~/t2/index.html" class="col-lg-3 list-group-item">Home Templete2</a>
-    <a asp-action="Index" asp-controller="Dashboard" class="col-lg-3 list-group-item">Dashboard</a>
-    <a asp-action="Index" asp-controller="Customer" class="col-lg-3 list-group-item">Customer View</a>
-</div>
+@inject SignInManager<ApplicationUser> SignInManager
+<!--
+    Author: W3layouts
+    Author URL: http://w3layouts.com
+    License: Creative Commons Attribution 3.0 Unported
+    License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html lang="en">
+<!-- Head -->
+<head>
+    <title>AR Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    @*<meta name="keywords" content="Fit Club a Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+        Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />*@
+
+    <!-- for Coaches css -->
+    <link href="~/t1/css/easy-responsive-tabs.css" rel='stylesheet' type='text/css' />
+    <!-- //for Coaches css -->
+    <!-- testimonials css -->
+    <link rel="stylesheet" href="~/t1/css/flexslider.css" type="text/css" media="screen" property="" /><!-- flexslider css -->
+    <!-- //testimonials css -->
+    <!-- default css files -->
+    <link rel="stylesheet" href="~/t1/css/bootstrap.css" type="text/css" media="all">
+    <link rel="stylesheet" href="~/t1/css/style.css" type="text/css" media="all">
+    <link rel="stylesheet" href="~/t1/css/font-awesome.min.css" />
+    <!-- default css files -->
+    <!--web font-->
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
+    <!--//web font-->
+
+</head>
+
+<!-- Body -->
+<body>
+
+    <!-- banner -->
+    <div class=" banner">
+        <div class="wthree-different-dot">
+            <!-- header -->
+            <div class="header">
+                <div class="container">
+                    <div class="header-mdl agileits-logo">
+                        <!-- header-two -->
+                        <h1><a asp-controller="Home" asp-action="index">AR Project</a></h1>
+                    </div>
+                    <div class="header-nav">
+                        <!-- header-three -->
+                        <nav class="navbar navbar-default">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
+                            <!-- top-nav -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                    <li><a asp-controller="Customer" asp-action="index" class="scroll" data-hover="Home">主页</a></li>
+                                    <li><a href="#about" class="scroll" data-hover="About">关于我们</a></li>
+                                    @*<li>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#testimonials" class="scroll" data-hover="Testimonials">Testimonials</a></li>
+                <li><a href="#pricing" class="scroll" data-hover="Pricing tables">Pricing tables</a></li>
+            </ul>
+        </li>*@
+                                    <li><a href="#coaches" class="scroll" data-hover="Coaches">教练</a></li>
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        <li><a asp-action="Index" asp-controller="Customer" class="scroll">用户</a></li>
+
+                                        @*<li>
+            <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
+                        <button asp-action="Logout" asp-controller="Account" class="scroll" type="submit">登出</button>
+            </form>
+                    </li>*@
+                                        <li>
+
+                        <a asp-action="AtagLogout" asp-controller="Account" class="scroll" type="submit">登出</a>
+
+                    </li>
+
+                                    }
+                                    else
+                                    {
+                                        <li><a asp-action="Login" asp-controller="Account" class="scroll">登陆</a></li>
+
+                                    }
+                                </ul>
+
+                                <div class="clearfix"> </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- //header -->
+            <!-- banner slider -->
+            <div class="banner-top">
+                <div class="slider">
+                    <div class="callbacks_container">
+                        <ul class="rslides callbacks callbacks1" id="slider4">
+                            <li>
+                                <div class="wthree-different-dot">
+                                    <div class="banner_text">
+                                        <div class="container">
+                                            <h2>HARD WORK</h2>
+                                            <p>努力</p>
+                                            <div class="thim-click-to-bottom">
+                                                <a href="#about" class="scroll">
+                                                    <i class="fa  fa-long-arrow-down"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="wthree-different-dot">
+                                    <div class="banner_text">
+                                        <div class="container">
+                                            <h3>PATIENCE</h3>
+                                            <p>耐心</p>
+                                            <div class="thim-click-to-bottom">
+                                                <a href="#about" class="scroll">
+                                                    <i class="fa  fa-long-arrow-down"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="wthree-different-dot">
+                                    <div class="banner_text">
+                                        <div class="container">
+                                            <h3>PASSION</h3>
+                                            <p>热情</p>
+                                            <div class="thim-click-to-bottom">
+                                                <a href="#about" class="scroll">
+                                                    <i class="fa  fa-long-arrow-down"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="wthree-different-dot">
+                                    <div class="banner_text">
+                                        <div class="container">
+                                            <h3>SELF-DISCIPLINE</h3>
+                                            <p>自律</p>
+                                            <div class="thim-click-to-bottom">
+                                                <a href="#about" class="scroll">
+                                                    <i class="fa  fa-long-arrow-down"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- banner slider -->
+
+        </div>
+    </div>
+    <!-- //banner -->
+    <!-- Modal pop-up -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4>Fit club</h4>
+                    <img src="~/t1/images/b2.jpg" alt=" " class="img-responsive">
+                    <h5>Success your business </h5>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting.</p>
+                </div>
+            </div>
+            <!-- //Modal content-->
+        </div>
+    </div>
+    <!-- //Modal pop-up -->
+    <!-- about -->
+    <section class="about" id="about">
+        <div class="container">
+            <h3 class="heading">AR<span>计划</span></h3>
+            <div class="col-md-8 about-left">
+                <div class="about-left-grids">
+                    <h3>什么是AR计划？</h3>
+                    <div class="about-left-top">
+                        <div class="col-md-2 gridicon">
+                            <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-md-4 gridtext">
+                            <h4>Aesthetic Revolution</h4>
+                            <p>AR 为Aesthetic Revolution的缩写。Aesthetic：美学的 Revolution: 革命.</p>
+                        </div>
+                        <div class="col-md-2 gridicon">
+                            <i class="fa fa-anchor" aria-hidden="true"></i>
+
+                        </div>
+                        <div class="col-md-4 gridtext">
+                            <h4>美学革命</h4>
+                            <p>Aesthetic Revolution且意为美学革命。  </p>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="about-left-bottom">
+                        <div class="col-md-2 gridicon">
+                            <i class="fa fa-compass" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-md-4 gridtext">
+                            <h4>量身打造</h4>
+                            <p>我们团队的宗旨便是为您量身打造一套属于自己身材的AR计划！</p>
+                        </div>
+                        @*<div class="col-md-2 gridicon">
+                                <i class="fa fa-child" aria-hidden="true"></i>
+                            </div>*@
+                        @*<div class="col-md-4 gridtext">
+                                <h4>Body workout</h4>
+                                <p>Lorem ipsum dolor sit amet, enim sit consectetur adipiscing elit. Inest</p>
+                            </div>*@
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 about-right">
+                <img src="~/t1/images/about.jpg" alt="" />
+            </div>
+            <div class="clearfix"></div>
+
+            <!-- about bottom grids -->
+            <div class="about-btm-wthree">
+                <div class="col-md-4">
+                    <div class="about-w3-grids">
+                        <h4>怎么才算是一套完整的塑形计划呢？</h4>
+                        <p class="para-agileits-w3layouts">健身成功的秘诀三分在练七分在吃。一套完整的塑形计划首先是需要一套精心设计的饮食，配合上一份合理的训练，才能在最短的时间内达到预期的效果。 </p>
+                        <br />
+                        <br />
+                        <br />
+                        @*<a href="#" data-toggle="modal" data-target="#myModal">Read More <span class="fa fa-long-arrow-right"></span></a>*@
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="about-w3-grids grid1">
+                        <h4>AR计划的宗旨</h4>
+                        <p class="para-agileits-w3layouts">我们AR教练团相信，每个人的身体都是独特的，所以也需要独特的训练模式和饮食计划来打造属于自己的完美身材。我们拒绝千篇一律的健身计划！您的每一份计划都是我们每一位教练呕心沥血的成果。只要您有一颗想要身材逆袭的心，就来加入我们的这场美学革命吧！ </p>
+                        @*<a href="#" data-toggle="modal" data-target="#myModal">Read More <span class="fa fa-long-arrow-right"></span></a>*@
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="about-w3-grids grid2">
+                        <h4>为什么要选择AR网络教练？</h4>
+                        <p class="para-agileits-w3layouts">相信很多人都有过健身房请私人教练的经验，虽然说在健身房练得很好很努力，可是效果却不是特别理想。原因是很多私人教练只注重的“练”，却没有关注“吃”。健身塑形，“吃”重于“练”。怎么吃，吃什么都是很是决定成功与否的关键。AR教练们会从吃到练带您走向完美身材！ </p>
+                        @*<a href="#" data-toggle="modal" data-target="#myModal">Read More <span class="fa fa-long-arrow-right"></span></a>*@
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <!-- //about bottom grids -->
+
+        </div>
+    </section>
+    <!-- about -->
+    <!-- Our Classes -->
+    @*<section class="popular_classes" id="classes">
+            <div class="container">
+                <h3 class="heading">Our <span>Classes</span></h3>
+                <div class="classes_grids">
+                    <div class="col-md-4">
+                        <div class="classes_grid1">
+                            <img src="images/c1.jpg" alt="popular cakes" />
+                            <h3>Beginner Classes</h3>
+                            <p>Vestibulum volutpat faucibus semper int Proin ultricies vestibulum velit.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="classes_grid1">
+                            <img src="images/c2.jpg" alt="popular cakes" />
+                            <h3>Personal Training</h3>
+                            <p>Vestibulum volutpat faucibus semper int Proin ultricies vestibulum velit.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="classes_grid1">
+                            <img src="images/c3.jpg" alt="popular cakes" />
+                            <h3>Gymnastic Classes</h3>
+                            <p>Vestibulum volutpat faucibus semper int Proin ultricies vestibulum velit.</p>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="classes_bottom_grids">
+                        <div class="col-md-4">
+                            <div class="classes_grid1">
+                                <img src="images/c4.jpg" alt="popular cakes" />
+                                <h3>Barbell Training</h3>
+                                <p>Vestibulum volutpat faucibus semper int Proin ultricies vestibulum velit.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="classes_grid1">
+                                <img src="images/c5.jpg" alt="popular cakes" />
+                                <h3>6pack workout</h3>
+                                <p>Vestibulum volutpat faucibus semper int Proin ultricies vestibulum velit.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="classes_grid1">
+                                <img src="images/c6.jpg" alt="popular cakes" />
+                                <h3>Crossfit Classes</h3>
+                                <p>Vestibulum volutpat faucibus semper int Proin ultricies vestibulum velit.</p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </section>*@
+    <!-- //Our Classes -->
+    <!-- stats -->
+    <section class="stats" id="stats">
+        <div class="wthree-different-dot1">
+            <div class="container">
+                <h3 class="heading">春节 <span>特惠</span></h3>
+                <div class="agileits_stats_grids">
+                    <div class="col-md-3 col-xs-4 agileinfo_stats">
+                        <div class="agileinfo_stats_grid">
+                            <p class="counter">1000</p>
+                            <h3>元</h3>
+                            <h3>4周计划</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-4 agileinfo_stats mid-w3l-stat">
+                        <div class="agileinfo_stats_grid">
+                            <p class="counter">2700</p>
+                            <h3>元</h3>
+                            <h3>12周计划</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-4 agileinfo_stats mid-w3l-stat">
+                        <div class="agileinfo_stats_grid">
+                            <p class="counter">800</p>
+                            <h3>元</h3>
+                            <h3>4周学生计划</h3>
+                            <h6 style="color:white;">（22岁或以下）</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-4 agileinfo_stats mid-w3l-stat">
+                        <div class="agileinfo_stats_grid">
+                            <p class="counter">2200</p>
+                            <h3>元</h3>
+                            <h3>12周学生计划</h3>
+                            <h6 style="color:white;">（22岁或以下）</h6>
+                        </div>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- //stats -->
+    <!-- agents section -->
+    <section class="demo" id="coaches">
+        <div class="container">
+            <h3 class="heading">AR <span>教练团</span></h3>
+            <div id="verticalTab">
+                <ul class="resp-tabs-list">
+                    <li>
+                        <div class="col-md-4 tab1">
+                            <img src="~/t1/images/s1.jpg" alt="" />
+                        </div>
+                        <div class="col-md-8 tab1">
+                            <h3>陈桦业 （Eddie）</h3>
+                            <h4>教练</h4>
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>
+                    <li>
+                        <div class="col-md-4 tab1">
+                            <img src="~/t1/images/s4.jpg" alt="" />
+                        </div>
+                        <div class="col-md-8 tab1">
+                            <h3>张博炜（Neal）</h3>
+                            <h4>教练</h4>
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>
+                    <li>
+                        <div class="col-md-4 tab1">
+                            <img src="~/t1/images/s2.jpg" alt="" />
+                        </div>
+                        <div class="col-md-8 tab1">
+                            <h3>杜鑫</h3>
+                            <h4>教练</h4>
+                        </div>
+                        <div class="clearfix"></div>
+                    </li>
+                    @*<li>
+                            <div class="col-md-4 tab1">
+                                <img src="~/t1/images/s3.jpg" alt="" />
+                            </div>
+                            <div class="col-md-8 tab1">
+                                <h3>mary lindey</h3>
+                                <h4>Fit club trainer</h4>
+                            </div>
+                            <div class="clearfix"></div>
+                        </li>*@
+                </ul>
+                <div class="resp-tabs-container">
+                    <div>
+                        <div class="col-md-7 tabs-right1">
+                            <h3>陈桦业 （Eddie）</h3>
+                            <h4>教练</h4>
+                            <ul class="social">
+                                <li><a href="https://www.weibo.com/u/6612375421"><i class="fa fa-weibo"></i></a></li>
+                                @*<li><a href="#"><i class="fa fa-wechat"></i></a></li>*@
+                                <li><a href="https://www.instagram.com/eddiespaghetti_114/?utm_source=ig_profile_share&igshid=qshjjhywjk4r"><i class="fa fa-instagram"></i></a></li>
+                                @*<li><a href="#"><i class="fa fa-google-plus"></i></a></li>*@
+                            </ul>
+                            <div class="tab-bottom">
+                                @*<p><i class="fa fa-map-marker" aria-hidden="true"></i>4615 50 Ave, Lloydminster, Canada</p>*@
+                                <p><i class="fa fa-envelope" aria-hidden="true"></i><a href="mailto:huaye91@gmail.com">huaye91@gmail.com</a></p>
+                                @*<p><i class="fa fa-phone" aria-hidden="true"></i>+120 233 455 7654</p>*@
+                            </div>
+
+                            <p>
+                                陈桦业 （Eddie）
+                                我从2009开始进入健身房，2014年接受系统的饮食和力量训练。从2015年开始比赛，2017年在加拿大国家级比赛中获得季军。2018年在多伦多和温哥华的IFBB职业卡资格赛中两次获得第四名。现为Muscle Insider北美区和Muscle & Fitness中国区健身杂志模特。
+                            </p>
+                            <p>
+                                自2016年开始从事网络塑形教练，持有ISSA (International Sports Sciences Association)颁发的私教证书。
+                            </p>
+
+                        </div>
+                        <div class="col-md-5 tabs-right2">
+                            <img src="~/t1/images/s11.jpg" alt="" />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div>
+                        <div class="col-md-7 tabs-right1">
+                            <h3>张博炜（Neal）</h3>
+                            <h4>教练</h4>
+                            <ul class="social">
+                                <li><a href="#"><i class="fa fa-weibo"></i></a></li>
+                                <li><a href="#"><i class="fa fa-wechat"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            </ul>
+                            <div class="tab-bottom">
+                                @*<p><i class="fa fa-map-marker" aria-hidden="true"></i>4615 50 Ave, Lloydminster, Canada</p>*@
+                                <p><i class="fa fa-envelope" aria-hidden="true"></i><a href="mailto:haojiubujian3101@gmail.com">haojiubujian3101@gmail.com</a></p>
+                                @*<p><i class="fa fa-phone" aria-hidden="true"></i>+010 233 455 6789</p>*@
+                            </div>
+
+                            <p>11年开始健身</p>
+                            <p> 8年健身经验，2年私教经验，University of Alberta 兼修运动学营养学，有丰富的健身理论知识及营养学知识。</p>
+                            <p> 持有Continual Professional Development (CPD)证书，canfitpro （CFP）加拿大私人教练证书。</p>
+
+                        </div>
+                        <div class="col-md-5 tabs-right2">
+                            <img src="~/t1/images/s44.jpg" alt="" />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div>
+                        <div class="col-md-7 tabs-right1">
+                            <h3>杜鑫</h3>
+                            <h4>教练</h4>
+                            <ul class="social">
+                                <li><a href="#"><i class="fa fa-weibo"></i></a></li>
+                                <li><a href="#"><i class="fa fa-wechat"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            </ul>
+                            <div class="tab-bottom">
+                                @*<p><i class="fa fa-map-marker" aria-hidden="true"></i>4615 50 Ave, Lloydminster, Canada</p>*@
+                                <p><i class="fa fa-envelope" aria-hidden="true"></i><a href="mailto:dx3081@gmail.com">dx3081@gmail.com</a></p>
+                                @*<p><i class="fa fa-phone" aria-hidden="true"></i>+210 927 633 2468</p>*@
+                            </div>
+
+                            <p>12年开始健身</p>
+                            <p> 三举成绩 硬拉450lb 深蹲405lb 卧推225lb </p>
+                            <p> 7年健身经验， YMCA健康和健身计划助理1年经验 </p>
+                            <p>持有Continual Professional Development (CPD)证书 canfitpro （CFP）加拿大私人教练证书。</p>
+
+                        </div>
+                        <div class="col-md-5 tabs-right2">
+                            <img src="~/t1/images/s22.jpg" alt="" />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    @*<div>
+                        <div class="col-md-7 tabs-right1">
+                            <h3>mary lindey</h3>
+                            <h4>Coach : Fit club trainer</h4>
+                            <ul class="social">
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
+                            <div class="tab-bottom">
+                                <p><i class="fa fa-map-marker" aria-hidden="true"></i>4615 50 Ave, Lloydminster, Canada</p>
+                                <p><i class="fa fa-envelope" aria-hidden="true"></i><a href="mailto:mail@example.com">mail@example.com</a></p>
+                                <p><i class="fa fa-phone" aria-hidden="true"></i>+105 967 254 7834</p>
+                            </div>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisthn cingelit. Vestibulum nibh urna, euismod ut ornare non, volutpat vel tortor. Integer laoreet placerat suscipit dolor sit amet.</p>
+
+                        </div>*@
+                    <div class="col-md-5 tabs-right2">
+                        <img src="~/t1/images/s33.jpg" alt="" />
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- //agents section -->
+    <!-- Clients -->
+    <section class="clients-main" id="testimonials">
+        <div class="wthree-different-dot1">
+            <div class="container">
+                <!-- Owl-Carousel -->
+                <h3 class="heading">健身<span>格言</span> </h3>
+                <div class="cli-ent">
+                    <section class="slider">
+                        <div class="flexslider">
+                            <ul class="slides">
+                                <li>
+                                    <div class="item g1">
+                                        <div class="agile-dish-caption">
+                                            <img class="lazyOwl" src="~/t1/images/s1.jpg" alt="" />
+                                            <h5>陈桦业</h5>
+                                            <h4>Find something you love and let it kill you</h4>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                        @*<p class="para-w3-agile"><span class="fa fa-quote-left" aria-hidden="true"></span> Phasellus iaculis sapien in tellus gravida, a placerat lacus elementum. Nulla vitae lacus nec elit mollis pretium. Sed sed nunc lectus. Integer vehicula elit eget dignissim congue. Aliquam sed ultricies tortor. Curabitur ut odio vestibulum consectetur adipisthn</p>*@
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item g1">
+                                        <div class="agile-dish-caption">
+                                            <img class="lazyOwl" src="~/t1/images/s2.jpg" alt="" />
+                                            <h5>杜鑫</h5>
+                                            <h4>No pain no gain</h4>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                        @*<p class="para-w3-agile"><span class="fa fa-quote-left" aria-hidden="true"></span> Phasellus iaculis sapien in tellus gravida, a placerat lacus elementum. Nulla vitae lacus nec elit mollis pretium. Sed sed nunc lectus. Integer vehicula elit eget dignissim congue. Aliquam sed ultricies tortor. Curabitur ut odio vestibulum consectetur adipisthn</p>*@
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item g1">
+                                        <div class="agile-dish-caption">
+                                            <img class="lazyOwl" src="~/t1/images/s4.jpg" alt="" />
+                                            <h5>张博炜</h5>
+                                            <h4>Be consistent. </h4>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                        @*<p class="para-w3-agile"><span class="fa fa-quote-left" aria-hidden="true"></span> Phasellus iaculis sapien in tellus gravida, a placerat lacus elementum. Nulla vitae lacus nec elit mollis pretium. Sed sed nunc lectus. Integer vehicula elit eget dignissim congue. Aliquam sed ultricies tortor. Curabitur ut odio vestibulum consectetur adipisthn</p>*@
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+                <!--// Owl-Carousel -->
+            </div>
+        </div>
+    </section>
+    <!--// Clients -->
+    <!-- pricing plans -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h3 class="heading">收费 <span>标准</span></h3>
+            <div class="w3l-pricing-grids">
+                <div class="agileits-pricing-grid first">
+                    <div class="pricing_grid">
+                        <div class="pricing-top">
+                            <h3>4周计划</h3>
+                        </div>
+                        <div class="wthree-pricing-info">
+                            <p><span>1500</span>元</p>
+                        </div>
+                        <div class="pricing-bottom">
+                            <div class="pricing-bottom-bottom">
+                                <p><span class="fa fa-check"></span><span>健身</span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>饮食 </span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>在线 </span> 指导</p>
+                                <p><span class="fa fa-times"></span><span>线下 </span> 指导</p>
+
+                            </div>
+                            @*<div class="buy-button">
+                                    <a class="popup-with-zoom-anim" href="#small-dialog">Buy Now</a>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="agileits-pricing-grid second">
+                    <div class="pricing_grid">
+                        <div class="pricing-top blue-top">
+                            <h3>12周计划</h3>
+                        </div>
+                        <div class="wthree-pricing-info blue-top">
+                            <p><span>4000</span>元</p>
+                        </div>
+                        <div class="pricing-bottom">
+                            <div class="pricing-bottom-bottom blue-pricing-bottom-top">
+                                <p><span class="fa fa-check"></span><span>健身</span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>饮食 </span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>在线 </span> 指导</p>
+                                <p><span class="fa fa-times"></span><span>线下 </span> 指导</p>
+                            </div>
+                            @*<div class="buy-button">
+                                    <a class="popup-with-zoom-anim" href="#small-dialog">Buy Now</a>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="agileits-pricing-grid third">
+                    <div class="pricing_grid">
+                        <div class="pricing-top green-top">
+                            <h3>4周学生计划 <span class="badge badge-pill badge-info">(22岁或以下)</span></h3>
+
+                        </div>
+                        <div class="wthree-pricing-info green-top">
+                            <p><span>1300</span>元</p>
+                        </div>
+                        <div class="pricing-bottom">
+                            <div class="pricing-bottom-bottom green-pricing-bottom-top">
+                                <p><span class="fa fa-check"></span><span>健身</span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>饮食 </span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>在线 </span> 指导</p>
+                                <p><span class="fa fa-times"></span><span>线下 </span> 指导</p>
+                            </div>
+                            @*<div class="buy-button">
+                                    <a class="popup-with-zoom-anim" href="#small-dialog">Buy Now</a>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="agileits-pricing-grid fourth">
+                    <div class="pricing_grid">
+                        <div class="pricing-top yellow-top">
+                            <h3>12周学生计划<span class="badge badge-pill badge-info">(22岁或以下)</span></h3>
+                        </div>
+                        <div class="wthree-pricing-info yellow-top">
+                            <p><span>3400</span>元</p>
+                        </div>
+                        <div class="pricing-bottom">
+                            <div class="pricing-bottom-bottom yellow-pricing-bottom-top">
+                                <p><span class="fa fa-check"></span><span>健身</span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>饮食 </span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>在线 </span> 指导</p>
+                                <p><span class="fa fa-times"></span><span>线下 </span> 指导</p>
+                            </div>
+                            @*<div class="buy-button">
+                                    <a class="popup-with-zoom-anim" href="#small-dialog">Buy Now</a>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </section>
+    <!-- //pricing plans -->
+    <!--pop-up-grid-->
+    <div id="popup">
+        <div id="small-dialog" class="mfp-hide">
+            <div class="signin-form profile">
+                <h3>Sign Up</h3>
+                <div class="login-form">
+                    <form action="#" method="post">
+                        <input type="text" name="name" placeholder="Username" required="">
+                        <input type="email" name="email" placeholder="E-mail" required="">
+                        <input type="password" name="password" placeholder="Password" required="">
+                        <input type="password" name="password" placeholder="Confirm Password" required="">
+                        <input type="submit" value="Sign Up">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--pop-up-grid-->
+    <!-- contact -->
+    <section class="w3ls-section contact" id="contact">
+        <div class="container">
+            <div class="w3ls-title">
+                <h3 class="heading">联系<span>我们</span></h3>
+            </div>
+
+
+            <div class="contact_wthreerow agileits-w3layouts">
+
+                @*<div class="col-md-7 w3l_contact_form">
+                    <h4>Contact Form</h4>
+                    <form action="#" method="post">
+                        <input type="text" name="Name" value="Name" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Name';}"
+                               required="">
+                        <input type="email" name="Email" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email';}"
+                               required="">
+                        <input type="text" name="Phone" value="Phone" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Phone';}"
+                               required="">
+                        <textarea name="Message" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message...';}" required="">Message...</textarea>
+                        <input type="submit" value="Submit">
+                    </form>*@
+            </div>
+            <div class="col-md-12 agileits_w3layouts_contact_gridl">
+                <div class="agileits_mail_grid_right_grid">
+                    @*<h4>联系方式</h4>
+                        <p>Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur. Nunc id dui vitae urna tincidunt varius.</p>*@
+                    <div class="col-lg-4">
+                        <p style="text-align:center;">AR计划客服微信</p>
+                        <img src="~/images/ARkefu.jpg" alt="Alternate Text" />
+                    </div>
+                    <ul class="contact_info col-lg-offset-4 col-lg-4">
+                        @*<li><span class="fa fa-map-marker" aria-hidden="true"></span>1234k Avenue, 4th block, 3FB, New Jersey.</li>*@
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <li><span class="fa fa-envelope" aria-hidden="true"></span><a href="mailto:aesrev@outlook.com">aesrev@outlook.com</a></li>
+                        <li><span class="fa fa-phone" aria-hidden="true"></span>+1(781) 782 5357</li>
+                        <li><span class="fa fa-globe" aria-hidden="true"></span><a href="www.aesrev.com">www.aesrev.com</a></li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        </div>
+    </section>
+    <!-- //contact -->
+    <!-- footer -->
+    <section class="footer">
+        <div class="container">
+            <div class="agileinfo-grids">
+                <div class="agile-grid-left agile-grid-right">
+                    <h4>Keep Updated On Social Media</h4>
+                    <div class="social">
+                        <ul>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                            <li><a href="#"><i class="fa fa-vk"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            @*<div class="agile-nav">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#about" class="scroll">About</a></li>
+                        <li><a href="#classes" class="scroll">Classes</a></li>
+                        <li><a href="#coaches" class="scroll">Our Coaches</a></li>
+                        <li><a href="#testimonials" class="scroll">Testimonials</a></li>
+                        <li><a href="#pricing" class="scroll">Pricing Plans</a></li>
+                        <li><a href="#contact" class="scroll">Contact us</a></li>
+                    </ul>
+                </div>*@
+        </div>
+    </section>
+    <!-- //footer -->
+    <!-- copyright -->
+    @*<div class="copyright">
+            <div class="container">
+                <p>© 2018 Fit club. All Rights Reserved | Design by <a href="http://w3layouts.com/"> W3layouts</a> </p>
+            </div>
+        </div>*@
+    <!-- //copyright -->
+    <!-- Default-JavaScript-File -->
+    <script type="text/javascript" src="~/t1/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="~/t1/js/bootstrap.js"></script>
+    <!-- //Default-JavaScript-File -->
+    <!-- Responsive tabs for coachhes section -->
+    <script src="~/t1/js/easy-responsive-tabs.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#horizontalTab').easyResponsiveTabs({
+                type: 'default', //Types: default, vertical, accordion
+                width: 'auto', //auto or any width like 600px
+                fit: true,   // 100% fit in a container
+                closed: 'accordion', // Start closed if in accordion view
+                activate: function (event) { // Callback function if tab is switched
+                    var $tab = $(this);
+                    var $info = $('#tabInfo');
+                    var $name = $('span', $info);
+                    $name.text($tab.text());
+                    $info.show();
+                }
+            });
+            $('#verticalTab').easyResponsiveTabs({
+                type: 'vertical',
+                width: 'auto',
+                fit: true
+            });
+        });
+    </script>
+    <!-- //Responsive tabs for coachhes section -->
+    <!-- scrolling script -->
+    <script type="~/t1/text/javascript">
+        jQuery(document).ready(function($) {
+            $(".scroll").click(function(event){
+                event.preventDefault();
+                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+            });
+        });
+    </script>
+    <!-- //scrolling script -->
+    <!--banner Slider starts Here-->
+    <script src="~/t1/js/responsiveslides.min.js"></script>
+    <script>
+        // You can also use "$(window).load(function() {"
+        $(function () {
+            // Slideshow 4
+            $("#slider4").responsiveSlides({
+                auto: true,
+                pager: true,
+                nav: true,
+                speed: 500,
+                namespace: "callbacks",
+                before: function () {
+                    $('.events').append("<li>before event fired.</li>");
+                },
+                after: function () {
+                    $('.events').append("<li>after event fired.</li>");
+                }
+            });
+
+        });
+    </script>
+    <!--banner Slider ends Here-->
+    <!-- Pop-up for pricing tables -->
+    <script src="~/t1/js/jquery.magnific-popup.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $('.popup-with-zoom-anim').magnificPopup({
+                type: 'inline',
+                fixedContentPos: false,
+                fixedBgPos: true,
+                overflowY: 'auto',
+                closeBtnInside: true,
+                preloader: false,
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-zoom-in'
+            });
+
+        });
+    </script>
+    <!-- //Pop-up for pricing tables -->
+    <!-- Stats-Number-Scroller-Animation-JavaScript -->
+    <script src="~/t1/js/waypoints.min.js"></script>
+    <script src="~/t1/js/counterup.min.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $('.counter').counterUp({
+                delay: 10,
+                time: 1000
+            });
+        });
+    </script>
+    <!-- //Stats-Number-Scroller-Animation-JavaScript -->
+    <!-- flexSlider --><!-- for testimonials -->
+    <script defer src="~/t1/js/jquery.flexslider.js"></script>
+    <script type="text/javascript">
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                start: function (slider) {
+                    $('body').removeClass('loading');
+                }
+            });
+        });
+    </script>
+    <!-- //flexSlider --><!-- for testimonials -->
+    <!-- Smooth scrolling -->
+    <script src="~/t1/js/SmoothScroll.min.js"></script>
+    <script type="text/javascript" src="~/t1/js/move-top.js"></script>
+    <script type="text/javascript" src="~/t1/js/easing.js"></script>
+    <!-- here stars scrolling icon -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /*
+                var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+                };
+            */
+
+            $().UItoTop({ easingType: 'easeOutQuart' });
+
+        });
+    </script>
+    <!-- //here ends scrolling icon -->
+    <!-- //Smooth scrolling -->
+
+</body>
+<!-- //Body -->
+
+</html>

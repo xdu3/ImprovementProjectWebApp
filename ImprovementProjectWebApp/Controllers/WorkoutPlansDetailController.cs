@@ -166,45 +166,46 @@ namespace ImprovementProjectWebApp.Controllers
         }
 
 
-        public IActionResult CreateDetail(int appUserPlanId,int PartId,int ExId,string Err)
+        public IActionResult CreateDetail(int PlanId, int PartId, int ExId, string Err)
         {
             ViewData["Err"] = Err;
             ExerciseSelectorVM ESVM = new ExerciseSelectorVM();
-            
+
             PartExercise PE = new PartExercise();
-            AppUserPlan AUP = _context.AppUserPlans.Where(a => a.Id == appUserPlanId).FirstOrDefault();
-            ESVM.IfTemplate = _context.Plans.Where(p => p.Id == AUP.PlanId).FirstOrDefault().IfTemplate;
-            if(PartId!= 0||ExId !=0)
+
+            //WeekPlan weekPlan = _context.WeekPlan.Where(w => w.Id == WeekPlanId).FirstOrDefault();
+
+            if (PartId != 0 || ExId != 0)
             {
                 ESVM.IfTemplate = false;
             }
             PE.BodyParts = _context.BodyPart.ToList();
             PE.SelectPartId = PartId;
             PE.SelectExerciseId = ExId;
-            PE.AppUserPlanId = appUserPlanId;
-            if (PartId>0 )
+            PE.PlanId = PlanId;
+            if (PartId > 0)
             {
                 PE.Exercises = _context.Exercise.Where(e => e.BodyPartId == PartId).ToList();
             }
             else
             {
-                if(ExId>0)
+                if (ExId > 0)
                 {
                     PE.SelectPartId = _context.Exercise.Where(e => e.Id == ExId).Select(e => e.BodyPartId).FirstOrDefault();
                     PE.Exercises = _context.Exercise.Where(x => x.BodyPartId == (_context.Exercise.Where(e => e.Id == ExId).Select(e => e.BodyPartId).FirstOrDefault())).ToList();
                     WorkoutPlan WP = new WorkoutPlan();
-                    WP.PlanId = AUP.PlanId;                    
+                    WP.PlanId = PlanId;
                     WP.ExerciseId = ExId;
                     ESVM.WorkoutPlan = WP;
                 }
             }
             ESVM.PartExercise = PE;
             //================list workout plan PV================
-            int planId = _context.AppUserPlans.Where(a => a.Id == appUserPlanId).Select(a => a.PlanId).FirstOrDefault();
-            List<WorkoutPlan> wps = _context.WorkoutPlan.Include(w=>w.Plan).Include(w=>w.Exercise).Where(w => w.PlanId == planId).ToList();
+
+            List<WorkoutPlan> wps = _context.WorkoutPlan.Include(w => w.Plan).Include(w => w.Exercise).Where(w => w.PlanId == PlanId).ToList();
             if (wps.Count != 0)
             {
-                List<Reps> reps = _context.Reps.Include(r => r.WorkoutPlan).Where(r => r.WorkoutPlan.PlanId == planId).ToList();
+                //List<Reps> reps = _context.Reps.Include(r => r.WorkoutPlan).Where(r => r.WorkoutPlan.PlanId == planId).ToList();
                 List<PlanSetsReps> planSetsReps = new List<PlanSetsReps>();
                 foreach (var planReps in wps)
                 {
@@ -215,6 +216,8 @@ namespace ImprovementProjectWebApp.Controllers
                 }
                 ESVM.ListPlanSetsReps = planSetsReps;
             }
+            ESVM.UserID = _context.Plans.Where(w => w.Id == PlanId).Select(w => w.WeekPlan.AppUserPlan.ApplicationUserId).FirstOrDefault();
+            ESVM.WeekPlanId = _context.Plans.Where(w => w.Id == PlanId).Select(w => w.WeekPlanId).FirstOrDefault();
             return View(ESVM);
         }
 
@@ -223,24 +226,24 @@ namespace ImprovementProjectWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateDetail( WorkoutPlan workoutPlan)
+        public async Task<IActionResult> CreateDetail(WorkoutPlan workoutPlan)
         {
-            int PId = workoutPlan.PlanId;
-            int appUserPlanId = _context.AppUserPlans.Where(a => a.PlanId == PId).FirstOrDefault().Id;
+            int PlanId = workoutPlan.PlanId;
+            int WeekPlanId = PlanId;
             if (ModelState.IsValid)
             {
-                if(workoutPlan.OtherTypeExercise == false && workoutPlan.Sets == 0)
+                if (workoutPlan.OtherTypeExercise == false && workoutPlan.Sets == 0)
                 {
                     int ExId = workoutPlan.ExerciseId;
                     string Err = "Set Can't be 0.";
-                    return RedirectToAction("CreateDetail", new { appUserPlanId, ExId, Err});
+                    return RedirectToAction("CreateDetail", new { PlanId, ExId, Err });
 
                 }
                 _context.Add(workoutPlan);
 
                 await _context.SaveChangesAsync();
-                if (workoutPlan.ProgressiveOverload == false&& workoutPlan.OtherTypeExercise ==false)
-                {                    
+                if (workoutPlan.ProgressiveOverload == false && workoutPlan.OtherTypeExercise == false)
+                {
                     int workoutPlanId = workoutPlan.Id;
                     return RedirectToAction("RepsView", new { workoutPlanId });
                 }
@@ -264,17 +267,17 @@ namespace ImprovementProjectWebApp.Controllers
 
                     }
                     _context.SaveChanges();
-                    return RedirectToAction("CreateDetail", new { appUserPlanId });
+                    return RedirectToAction("CreateDetail", new { PlanId });
                     // there is no situation workoutSets is 0
-                    
+
                 }
             }
-            return RedirectToAction("CreateDetail", new { appUserPlanId });
+            return RedirectToAction("CreateDetail", new { PlanId });
         }
 
         public IActionResult EditDetail(int WorkoutPlanId, int PartId, int ExId, string Err)
         {
-            
+
             ViewData["Err"] = Err;
             ExerciseSelectorVM ESVM = new ExerciseSelectorVM();
             PartExercise PE = new PartExercise();
@@ -302,17 +305,19 @@ namespace ImprovementProjectWebApp.Controllers
                     PE.Exercises = _context.Exercise.Where(x => x.BodyPartId == (_context.Exercise.Where(e => e.Id == ExId).Select(e => e.BodyPartId).FirstOrDefault())).ToList();
                     //WP.PlanId = AUP.PlanId;
                     PE.SelectExerciseId = ExId;
-                    
+                    ESVM.WorkoutPlan.ExerciseId = ExId;
                 }
             }
             ESVM.PartExercise = PE;
+            ESVM.UserID = _context.WorkoutPlan.Where(w => w.Id == WorkoutPlanId).Select(w => w.Plan.WeekPlan.AppUserPlan.ApplicationUserId).FirstOrDefault();
+            ESVM.WeekPlanId = _context.WorkoutPlan.Where(w => w.Id == WorkoutPlanId).Select(w => w.Plan.WeekPlanId).FirstOrDefault();
             return View(ESVM);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditDetail(WorkoutPlan workoutPlan)
         {
-            int AUPID = _context.AppUserPlans.Where(a => a.PlanId == workoutPlan.PlanId).FirstOrDefault().Id;
+            int PlanId = workoutPlan.PlanId;
             if (ModelState.IsValid)
             {
                 if (workoutPlan.OtherTypeExercise == false && workoutPlan.Sets == 0)
@@ -328,7 +333,7 @@ namespace ImprovementProjectWebApp.Controllers
                 if (workoutPlan.ProgressiveOverload == false)
                 {
                     int workoutPlanId = workoutPlan.Id;
-                    return RedirectToAction("RepsView", new { workoutPlanId });
+                    return RedirectToAction("RepsView", new { workoutPlanId = workoutPlan.Id });
                 }
                 else
                 {
@@ -350,12 +355,12 @@ namespace ImprovementProjectWebApp.Controllers
 
                     }
                     _context.SaveChanges();
-                    return RedirectToAction("CreateDetail", new { appUserPlanId = AUPID });
+                    return RedirectToAction("CreateDetail", new { PlanId });
                     // there is no situation workoutSets is 0
 
                 }
             }
-            return RedirectToAction("CreateDetail", new { appUserPlanId = AUPID });
+            return RedirectToAction("CreateDetail", new { PlanId });
         }
 
 
@@ -388,9 +393,10 @@ namespace ImprovementProjectWebApp.Controllers
                 _context.Reps.Add(reps);
             }
             _context.SaveChanges();
+            int PlanId = _context.WorkoutPlan.Select(w => w.PlanId).FirstOrDefault();
             //string planName = _context.WorkoutPlan.Where(x => x.Id == workoutPlanId).FirstOrDefault().PlanName;
             //string userId = _context.WorkoutPlan.Where(x => x.Id == workoutPlanId).FirstOrDefault().UserId;
-            return Json("success");
+            return Json("PlanId");
         }
 
         public ActionResult FinishDetail(int? id)
@@ -399,27 +405,28 @@ namespace ImprovementProjectWebApp.Controllers
             {
                 return NotFound();
             }
-            List<Reps> repsAndWorkoutPlan = _context.Reps.Include(r => r.WorkoutPlan).ThenInclude(w=>w.Plan).Include(r => r.WorkoutPlan).ThenInclude(w => w.Exercise).Where(r => r.WorkoutPlanId == id).ToList();
-            int PlanId = repsAndWorkoutPlan.FirstOrDefault().WorkoutPlan.PlanId;
-            int appUserId = _context.AppUserPlans.Where(a => a.PlanId == PlanId).FirstOrDefault().Id;
-            ViewData["AppUserId"] = appUserId;
-            if (repsAndWorkoutPlan == null)
-            {
-                return NotFound();
-            }
+            //List<Reps> repsAndWorkoutPlan = _context.Reps.Include(r => r.WorkoutPlan).ThenInclude(w => w.Plan).Include(r => r.WorkoutPlan).ThenInclude(w => w.Exercise).Where(r => r.WorkoutPlanId == id).ToList();
+            //int PlanId = repsAndWorkoutPlan.FirstOrDefault().WorkoutPlan.PlanId;
+            //ViewData["PlanId"] = PlanId;
+            //if (repsAndWorkoutPlan == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return View(repsAndWorkoutPlan);
+            //return View(repsAndWorkoutPlan);
+            int PlanId = _context.WorkoutPlan.Where(w => w.Id == id).Select(w=>w.PlanId).FirstOrDefault();
+            return RedirectToAction("CreateDetail", new { PlanId });
         }
 
         public async Task<IActionResult> WorkoutPlanDelete(int id)
         {
             var workoutPlan = await _context.WorkoutPlan.SingleOrDefaultAsync(m => m.Id == id);
             _context.Reps.RemoveRange(_context.Reps.Where(r => r.WorkoutPlanId == id));
-            int PId = _context.WorkoutPlan.Where(w => w.Id == id).FirstOrDefault().PlanId;
-            int appUserPlanId = _context.AppUserPlans.Where(a => a.PlanId == PId).FirstOrDefault().Id;
+            int PlanId = _context.WorkoutPlan.Where(w => w.Id == id).FirstOrDefault().PlanId;
+
             _context.WorkoutPlan.Remove(workoutPlan);
             await _context.SaveChangesAsync();
-            return RedirectToAction("CreateDetail", new { appUserPlanId });
+            return RedirectToAction("CreateDetail", new { PlanId });
         }
     }
 }

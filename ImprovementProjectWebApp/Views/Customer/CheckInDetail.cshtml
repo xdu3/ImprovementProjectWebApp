@@ -13,7 +13,7 @@
         {
             <li>
                 <a class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "Customer/CheckInDetail?CheckinQAId="+item.CheckInQA.Id ? " active" : "")" asp-controller="Customer" asp-action="CheckInDetail" asp-route-CheckinQAId="@item.CheckInQA.Id">
-                    @item.CheckInQA.CreatedDate.ToString("yyyy MMMM dd") - @item.CheckInQA.EndDate.ToString("yyyy MMMM dd")
+                    @item.CheckInQA.CreatedDate.ToString("yyyy MMMM dd")
 
                 </a>
             </li>
@@ -52,5 +52,5 @@
     <br />
 <div class="col-lg-12">
 
-    <a class="btn btn-default col-lg-2 col-lg-offset-10" asp-action="Index" asp-controller="Customer">返回</a>
+    <a class="btn btn-default col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-12 col-xs-12" asp-action="Index" asp-controller="Customer">返回</a>
 </div>

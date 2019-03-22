@@ -5,8 +5,9 @@
 }
 
 <div class="list-group col-lg-10">
+
     <h2>SearchCustomer</h2>
-    <form asp-controller="WorkoutPlans" asp-action="SearchCustomer">
+    <form asp-controller="Dashboard" asp-action="SearchCustomer">
         Customer:
         <div class="row">
             <div class="col-lg-10">
@@ -25,9 +26,28 @@
         {
             <li class="list-group-item col-lg-4">
                 <div class="">
-                    <strong class=""> Customer Name:</strong>
+                    <h5>
+                        <strong class=""> Customer Name:</strong>
+                    </h5>
                     <p class="">
-                        @Html.DisplayFor(modelItem => item.UserName)
+                        Username:
+                        <strong>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </strong>
+                    </p>
+                    <p class="">
+                        Name:
+                        @if (item.CustomerProfiles.FirstOrDefault() != null)
+                        {
+                            <strong>
+                                @Html.DisplayFor(modelItem => item.CustomerProfiles.FirstOrDefault().Name)
+                            </strong>
+                        }
+                        else
+                        {
+                            <strong>Null</strong>
+
+                        }
                     </p>
                     <div class="col-lg-offset-8">
                         <a asp-action="ViewCustomer" asp-route-id="@item.Id">View</a>

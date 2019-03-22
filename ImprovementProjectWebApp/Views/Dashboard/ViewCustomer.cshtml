@@ -11,4 +11,8 @@
     <a asp-action="ViewPlan" asp-route-id="@Model.Id" class="list-group-item col-lg-4">View Plan</a>
     <a asp-controller="IntroQAs" asp-action="AdminIntroAnswerView" asp-route-id="@Model.Id" class="list-group-item col-lg-4">View Intro Answers</a>
     <a asp-controller="Dashboard" asp-action="ViewUserCheckInQA" asp-route-UserId="@Model.Id" class="list-group-item col-lg-4">View Check In Answers</a>
+    <a asp-controller="Dashboard" asp-action="ViewUserProfile" asp-route-UserId="@Model.Id" class="list-group-item col-lg-4">View User Profile</a>
+    <a asp-controller="Dashboard" asp-action="ViewCheckInDate" asp-route-UserId="@Model.Id" class="list-group-item col-lg-4">View Check In Date</a>
+    <a asp-controller="Dashboard" asp-action="ViewCheckIn" asp-route-UserId="@Model.Id" class="list-group-item col-lg-4">View Check In </a>
+   
 </div>

@@ -17,12 +17,12 @@ namespace ImprovementProjectWebApp.Models
         public DateTime CreatedDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool Active { get; set; }
-
-        [Required]
-        [Display(Name = "AppUserPlan")]
-        public int AppUserPlanId { get; set; }
-        [ForeignKey("AppUserPlanId")]
-        public virtual AppUserPlan AppUserPlan { get; set; }
-
+        public bool IntroCheckInQA { get; set; }
+        [Display(Name = "User")]
+        public string ApplicationUserId { get; set; }
+        [ForeignKey("ApplicationUserId")]
+        public virtual ApplicationUser ApplicationUser { get; set; }
+        public IEnumerable<CheckInQADetail> CheckInQADetails { get; set; }
+        public IEnumerable<CheckInImgs> CheckInImgs { get; set; }
     }
 }

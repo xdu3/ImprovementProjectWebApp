@@ -121,8 +121,9 @@
 
         .containerNew .box .details .content h3 {
             margin: 0;
-            padding: 0;
-            padding: 10px 0;
+            /*padding: 0;*/
+
+            padding: 0 0 10px 0;
             color: #fff;
         }
 
@@ -135,7 +136,7 @@
             text-decoration: none;
             transition: 0.5s;
             border-radius: 20px;
-            transform: scale(0);
+            transform: scale(1);
         }
 
         .containerNew .box:hover .details .content a {

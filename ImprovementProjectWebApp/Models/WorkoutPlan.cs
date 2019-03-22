@@ -43,6 +43,6 @@ namespace ImprovementProjectWebApp.Models
         public int PlanId { get; set; }
         [ForeignKey("PlanId")]
         public virtual Plan Plan { get; set; }
-
+        public IEnumerable<Reps> Reps { get; set; }
     }
 }

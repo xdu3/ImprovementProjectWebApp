@@ -1,0 +1,95 @@
+﻿@model ImprovementProjectWebApp.Models.Customer.CheckWorkoutList_V2VM
+@{
+    ViewData["Title"] = "CheckWorkoutList_V2";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+<h2>健身计划</h2>
+<h5>*动作链接正在补充中，请您耐心等待。</h5>
+@if (Model!=null && Model.Plan != null)
+{
+<div class="list-group">
+    
+        <div class="list-group-item col-lg-12">
+            <div class="col-lg-2">
+                <h5>Day: @Model.Plan.DayPlanNum</h5>
+                @*<h5>@Model.Plan.DayPlanDate.ToString("yyyy MMMM dd")</h5>
+                    dayPlanDate it is gonna fix after this plan
+                    *@
+                @*<h5>Plan Name: @Model.Plan.Name</h5>*@
+            </div>
+
+            <div class=" col-lg-10">
+                @if (Model.Plan.Name != "休息日")
+                {
+                    @foreach (var i in Model.Plan.WorkoutPlans)
+                    {
+                        <div class="list-group-item col-lg-10">
+                            <p style="margin:0;">
+                                <strong>
+                                    @i.Exercise.Name
+                                    @if (i.Sets != 0)
+                                    {
+                                        <span>(@i.Sets 组)</span>
+
+                                    }
+                                </strong>
+                                @if (i.OtherTypeExercise != true)
+                                {
+                                    @*<span>@i.Sets</span>*@
+                                    foreach (var ii in i.Reps)
+                                    {
+                                        if (ii.num != -1)
+                                        {
+                                            <span class="badge badge-primary">@ii.num</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-primary">力竭</span>
+
+                                        }
+                                    }
+                                    if (!string.IsNullOrEmpty(i.Des))
+                                    {
+                                        <span>(@i.Des)</span>
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    <span>: @i.Des</span>
+
+                                }
+                            </p>
+                        </div>
+
+                        <a class="list-group-item col-lg-2" href="@i.Exercise.ExURl" target="_blank">动作链接</a>
+                        
+
+                            }
+                            }
+                            else
+                            {
+                            <div class="list-group-item-info col-lg-12">
+                                <h3 style="margin:20px;">休息日</h3>
+                            </div>
+
+                            }
+
+                        </div>
+                    </div>
+
+
+</div>
+}
+else
+{
+    <div >
+        计划还没有完成，请期待。
+    </div >
+
+}
+    <div class="">
+
+        <a class="btn btn-default col-lg-2 col-lg-offset-10 col-md-2 col-md-offset-10 col-sm-12 col-xs-12" asp-action="WorkoutList" asp-controller="Customer">返回</a>
+    </div>

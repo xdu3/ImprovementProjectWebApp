@@ -1,0 +1,41 @@
+﻿@model ImprovementProjectWebApp.Models.DashboardVM.SetUserCheckInVM
+@{
+    ViewData["Title"] = "SetUserCheckInDate";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Set User Check In Date</h2>
+<form asp-controller="Dashboard" asp-action="SetUserCheckInDate">
+
+    <div class="col-lg-8 list-group-item">
+        <input type="number" name="AppUserPlanId" value="@Model.AppUserPlanId" class="form-control" style="display:none;">
+        <input type="number" name="Day" id="Day"class="form-control" placeholder="" style="display:none;">
+        <div class="DayInputDiv">
+            <a class="btn btn-default btn-block dayInput" name="name" onclick="DayInputClick(this,1)" >Monday</a>
+            <a class="btn btn-default btn-block dayInput" name="name" onclick="DayInputClick(this,2)">Tuesday</a>
+            <a class="btn btn-default btn-block dayInput" name="name" onclick="DayInputClick(this,3)" >Wednesday</a>
+            <a class="btn btn-default btn-block dayInput" name="name" onclick="DayInputClick(this,4)" >Thursday</a>
+            <a class="btn btn-default btn-block dayInput" name="name" onclick="DayInputClick(this,5)" >Firday</a>
+            <a class="btn btn-default btn-block dayInput" name="name" onclick="DayInputClick(this,6)" >Saturday</a>
+            <a class="btn btn-default btn-block dayInput" name="name" onclick="DayInputClick(this,0)" >Sunday</a>
+
+        </div>
+    </div>
+    <div class="list-group-item col-lg-8 col-xs-12">
+        <input type="submit" value="Set" class="btn btn-primary col-lg-12 col-xs-12" />
+    </div>
+
+
+</form>
+@section Scripts{
+    <script>
+        function DayInputClick(a,b) {
+            $('.dayInput').removeClass('btn-primary');
+            $('.dayInput').addClass('btn-default');
+            $(a).removeClass('btn-default');
+            $(a).addClass('btn-primary');
+            $("#Day").val(b);
+        };
+
+    </script>
+}

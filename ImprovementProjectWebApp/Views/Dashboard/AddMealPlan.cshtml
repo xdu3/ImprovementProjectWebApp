@@ -11,19 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        @*<form asp-action="AddMealPlan">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="@Model.MealPlan.URL" class="control-label"></label>
-                <input asp-for="@Model.MealPlan.URL" class="form-control" />
 
-                <span asp-validation-for="@Model.MealPlan.URL" class="text-danger"></span>
-            </div>
-            <input asp-for="@Model.AppUserPlanId" class="form-control" />
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>*@
         <form asp-action="AddMealPlan" enctype="multipart/form-data" method="post">
             <br />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -31,7 +19,7 @@
                 <div class="col-md-12">
                     <input type="file" id="fUpload" name="files" multiple class="form-control" />
                 </div>
-                <input asp-for="@Model.AppUserPlanId" name="AppUserPlanId"class="form-control"  type="hidden"/>
+                <input asp-for="@Model.AppUserPlanId" name="AppUserPlanId"class="form-control" />
             </div>
             <div class="row">
                 <div class="col-md-12" style="padding-top:10px;">

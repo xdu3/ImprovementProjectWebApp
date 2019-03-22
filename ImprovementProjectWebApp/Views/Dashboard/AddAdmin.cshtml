@@ -15,6 +15,36 @@
                     <input asp-for="Email" class="form-control" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
+                <div class="form-group ">
+                    <label asp-for="PhoneNumber"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="form-group ">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group " data-toggle="buttons">
+                    <label asp-for="Gender"></label>
+                    <br />
+                    <label class="btn btn-primary active">
+                        <input type="radio" name="Gender" id="option1" checked value="男"> 男
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="Gender" id="option2" value="女"> 女
+                    </label>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group ">
+                    <label asp-for="WeChatNumber"></label>
+                    <input asp-for="WeChatNumber" class="form-control" />
+
+                </div>
                 <div class="form-group">
                     <label asp-for="Password"></label>
                     <input asp-for="Password" class="form-control" />

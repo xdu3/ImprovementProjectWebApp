@@ -8,9 +8,15 @@
     <a class="list-group-item LeftSection" id="Index" asp-action="Index" asp-controller="Dashboard">
         Index
     </a>
-    <a class="list-group-item LeftSection" id="AddAdmin" asp-action="AddAdmin" asp-controller="Dashboard">
-        Add Admin
+    <a class="list-group-item LeftSection" asp-action="SearchCustomer" asp-controller="Dashboard">
+        Customer View
     </a>
+    @if (User.IsInRole("SuperAdmin"))
+    {
+        <a class="list-group-item LeftSection" id="AddAdmin" asp-action="AddAdmin" asp-controller="Dashboard">
+            Add Admin
+        </a>
+    }
     <a class="list-group-item LeftSection" asp-action="Index" asp-controller="IntroQuestions">
         Introduction Questions Manage
     </a>
@@ -23,10 +29,14 @@
     <a class="list-group-item LeftSection" asp-action="Index" asp-controller="Exercises">
         Exercises Manage
     </a>
-    <a class="list-group-item LeftSection" asp-action="SearchCustomer" asp-controller="Dashboard">
-        Customer View
+    <a class="list-group-item LeftSection" asp-action="Index" asp-controller="User">
+        User Manage
     </a>
-    <a class="list-group-item LeftSection" asp-action="Index" asp-controller="Plans">
-        Plan Controller
+    @if (User.IsInRole("SuperAdmin"))
+    {
+    <a class="list-group-item LeftSection" asp-action="Index" asp-controller="Template">
+        Template Manage
     </a>
+    }
+
 </div>

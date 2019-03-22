@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using ImprovementProjectWebApp.Data;
 using ImprovementProjectWebApp.Models;
 using ImprovementProjectWebApp.Models.Customer;
+using ImprovementProjectWebApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace ImprovementProjectWebApp.Controllers
@@ -23,44 +25,79 @@ namespace ImprovementProjectWebApp.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private IHostingEnvironment _hostingEnvironment;
-        public CustomerController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
+        private readonly IEmailSender _emailSender;
+        public CustomerController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context, IHostingEnvironment hostingEnvironment, IEmailSender emailSender)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailSender = emailSender;
             _hostingEnvironment = hostingEnvironment;
         }
-        //public async Task<IActionResult> IndexAsync()
-        //{
-        //    var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
 
-        //    return View(user);
-        //}
         public ActionResult Index()
         {
-            string curUserId =  _userManager.GetUserId(HttpContext.User);
-            AppUserPlanVM auser = new AppUserPlanVM();
-            auser.appUserPlan = _context.AppUserPlans.Where(u => u.ApplicationUserId == curUserId).Include(a => a.ApplicationUser).Include(a => a.Plan).FirstOrDefault();
-            auser.ApplicationUser = _context.ApplicationUser.Where(u => u.Id == curUserId).FirstOrDefault();
-            
-            if(_context.IntroQA.Any(i => i.UserId == curUserId))
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+            ApplicationUser CurApplicationUser = _context.ApplicationUser.Where(u => u.Id == curUserId).FirstOrDefault();
+            if (CurApplicationUser.Birthday!= DateTime.MinValue)
             {
-                auser.IfHaveIntro = true;
+                AppUserPlanVM auser = new AppUserPlanVM();
+                auser.appUserPlan = _context.AppUserPlans.Where(u => u.ApplicationUserId == curUserId).Include(a => a.ApplicationUser).Where(a => a.StartDate.AddDays(-7) <= DateTime.Today && a.EndDate >= DateTime.Today).FirstOrDefault();
+
+                auser.ApplicationUser = CurApplicationUser;
+
+                auser.IfUserDelete = _context.ApplicationUser.Where(u => u.Id == curUserId).Select(u => u.IfDelete).FirstOrDefault();
+                auser.IfUserEmailConfirmed = _context.ApplicationUser.Where(u => u.Id == curUserId).Select(u => u.EmailConfirmed).FirstOrDefault();
+                if (_context.IntroQA.Any(i => i.UserId == curUserId))
+                {
+                    auser.IfHaveIntro = true;
+                }
+                int aaa = _context.IntroQA.Where(i => i.UserId == curUserId).Count();
+                int bbb = _context.IntroQuestion.Where(i => i.IfHide == false).Count();
+                if (_context.IntroQA.Where(i => i.UserId == curUserId).Count() == _context.IntroQuestion.Where(i => i.IfHide == false).Count())
+                {
+                    auser.IfFinishIntro = true;
+                }
+                if (_context.CheckInQA.Where(c => c.ApplicationUserId == curUserId).Where(c => c.IntroCheckInQA == true).Count() != 0)
+                {
+                    int CheckInQAId = _context.CheckInQA.Where(c => c.ApplicationUserId == curUserId).Where(c => c.IntroCheckInQA == true).FirstOrDefault().Id;
+                    if (!_context.CheckInImgs.Where(c => c.CheckInQAId == CheckInQAId).Any(c => c.ImgURL == null))
+                    {
+                        auser.IfUploadImg = true;
+                    }
+
+                }
+
+                return View(auser);
             }
-            if(_context.IntroQA.Where(i => i.UserId == curUserId).Count() == _context.IntroQuestion.Where(i=>i.IfHide == false).Count())
+            else
             {
-                auser.IfFinishIntro = true;
+                return RedirectToAction("AddBirthday");
             }
-            return View(auser);
         }
-        public ActionResult CheckWorkoutList( int PlanId)
+        public ActionResult AddBirthday()
         {
-            //string curUserId = _userManager.GetUserId(HttpContext.User);
-            //int planID = _context.AppUserPlans.Where(u => u.ApplicationUserId == curUserId).Include(a => a.ApplicationUser).Include(a => a.Plan).FirstOrDefault().PlanId;
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddBirthday(DateTime Birthday)
+        {
             
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+            ApplicationUser CurApplicationUser = _context.ApplicationUser.Where(u => u.Id == curUserId).FirstOrDefault();
+            CurApplicationUser.Birthday = Birthday;
+            _context.ApplicationUser.Update(CurApplicationUser);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public ActionResult CheckWorkoutList(int PlanId)
+        {
+
             List<WorkoutPlanRepsVM> WPVM = new List<WorkoutPlanRepsVM>();
+
             var x = _context.WorkoutPlan.Where(w => w.Plan.Id == PlanId).Include(w => w.Plan).Include(w => w.Exercise);
-            foreach(var item in x )
+            foreach (var item in x)
             {
                 WorkoutPlanRepsVM wpvm = new WorkoutPlanRepsVM();
                 wpvm.Reps = _context.Reps.Where(r => r.WorkoutPlanId == item.Id).ToList();
@@ -69,21 +106,22 @@ namespace ImprovementProjectWebApp.Controllers
             }
             return View(WPVM);
         }
+        public ActionResult CheckWorkoutList_V2(int PlanId)
+        {
+            Plan plan = _context.Plans.Where(p => p.Id == PlanId).Include(p => p.WorkoutPlans).ThenInclude(w => w.Reps).Include(p => p.WorkoutPlans).ThenInclude(w => w.Exercise).FirstOrDefault();
+            CheckWorkoutList_V2VM checkWorkoutList_V2VM = new CheckWorkoutList_V2VM();
+            checkWorkoutList_V2VM.Plan = plan;
+            return View(checkWorkoutList_V2VM);
+
+        }
         public ActionResult WorkoutList()
         {
             string curUserId = _userManager.GetUserId(HttpContext.User);
-            return View(_context.AppUserPlans.Where(u => u.ApplicationUserId == curUserId).Include(a => a.ApplicationUser).Include(a => a.Plan).ToList());
+            int CurAppUserPlanId = _context.AppUserPlans.Where(u => u.ApplicationUserId == curUserId).Where(a => a.StartDate <= DateTime.Today.AddDays(7) && a.EndDate >= DateTime.Today).FirstOrDefault().Id;//adddays 预防未来7天健身计划过期。、
+            List<Plan> Plans = _context.Plans.Where(p=>p.WeekPlan.AppUserPlanId == CurAppUserPlanId).Include(p=>p.WeekPlan).ToList();
+            return View(Plans);
         }
-        //public ActionResult WorkoutList()
-        //{
-        //    string curUserId = _userManager.GetUserId(HttpContext.User);
-        //    return View(_context.AppUserPlans.Where(u => u.ApplicationUserId == curUserId).Include(a => a.ApplicationUser).Include(a => a.Plan).ToList());
-        //}
-        //public ActionResult AnswerIntroQA()
-        //{
-        //    List<IntroQuestion> introQuestions = _context.IntroQuestion.Where(i=>i.IfHide == false).ToList();
-        //    return View(introQuestions);
-        //}
+
 
         public ActionResult AnswerIntroQA(int CurQId, int LastQId, int TargetQId)
         {
@@ -105,7 +143,7 @@ namespace ImprovementProjectWebApp.Controllers
             }
             answerIntroQA.IntroQuestions = _context.IntroQuestion.Where(i => i.IfHide == false).ToList();
             answerIntroQA.IntroQAs = _context.IntroQA.Where(i => i.UserId == curUserId).ToList();
-            
+
             answerIntroQA.CurQId = CurQId;
             answerIntroQA.LastQId = LastQId;
             answerIntroQA.TargetQId = TargetQId;
@@ -114,23 +152,50 @@ namespace ImprovementProjectWebApp.Controllers
         }
 
 
+        public ActionResult AnswerIntroQAListView()
+        {
+
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+            AnswerIntroQAListVM answerIntroQAListVM = new AnswerIntroQAListVM();
+            answerIntroQAListVM.IntroQuestions = _context.IntroQuestion.Where(i => i.IfHide == false).ToList();
+            List<string> IntroAnswers = new List<string>();
+            foreach(var item in answerIntroQAListVM.IntroQuestions)
+            {
+                string aaa = "";
+                IntroAnswers.Add(aaa);
+            }
+            answerIntroQAListVM.IntroAnswers = IntroAnswers;
+            return View(answerIntroQAListVM);
+        }
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AnswerIntroQAListView(AnswerIntroQAListVM answerIntroQAListVM)
+        {
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+
+
+
+            return View(answerIntroQAListVM);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AnswerIntroQACreate(string QustionId, string Answer)
         {
             int QId = int.Parse(QustionId);
+
             IntroQA introQA = new IntroQA();
-            if(QId == 0)
+            if (QId == 0)
             {
                 QId = _context.IntroQuestion.Where(i => i.IfHide == false).FirstOrDefault().Id;
             }
-            if(_context.IntroQA.Where(i=>i.UserId == _userManager.GetUserId(HttpContext.User)).Where(i=>i.IntroQuestionId == QId).Count()!= 0)
+            if (_context.IntroQA.Where(i => i.UserId == _userManager.GetUserId(HttpContext.User)).Where(i => i.IntroQuestionId == QId).Count() != 0)
             {
                 _context.IntroQA.RemoveRange(_context.IntroQA.Where(i => i.UserId == _userManager.GetUserId(HttpContext.User)).Where(i => i.IntroQuestionId == QId));
                 _context.SaveChanges();
             }
             introQA.IntroQuestionId = QId;
-            introQA.Answer = Answer;
-            introQA.UserId= _userManager.GetUserId(HttpContext.User);
+            introQA.Answer = Answer.Trim();
+            introQA.UserId = _userManager.GetUserId(HttpContext.User);
             introQA.CreatedDate = DateTime.Today;
             _context.IntroQA.Add(introQA);
             _context.SaveChanges();
@@ -143,20 +208,26 @@ namespace ImprovementProjectWebApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("AnswerIntroQA", new { CurQId = QId });
         }
-        
+
         public ActionResult CheckInView(int CheckInDetailId)
         {
-            CheckInVM checkInVM = new CheckInVM();
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+            if (_context.UserCheckInDate.Where(u => u.AppUserPlan.ApplicationUserId == curUserId).Any(u => u.CheckInDate == DateTime.Today))
+            {
+                CheckInVM checkInVM = new CheckInVM();
 
 
-            checkInVM.CheckInQADetail = _context.CheckInQADetail.Where(c => c.Id == CheckInDetailId).Include(c => c.CheckInQA).Include(c => c.CheckInQuestion).FirstOrDefault();
+                checkInVM.CheckInQADetail = _context.CheckInQADetail.Where(c => c.Id == CheckInDetailId).Include(c => c.CheckInQA).Include(c => c.CheckInQuestion).FirstOrDefault();
+
+
+                checkInVM.CheckInQADetails = _context.CheckInQADetail.Where(c => c.CheckInQAId == checkInVM.CheckInQADetail.CheckInQA.Id).ToList();
+                return View(checkInVM);
+            }
+            return View();
             
-
-            checkInVM.CheckInQADetails = _context.CheckInQADetail.Where(c => c.CheckInQAId == checkInVM.CheckInQADetail.CheckInQA.Id).ToList();
-
-            return View(checkInVM);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AnswerCheckInQ(string CheckInQADetailId, string Answer)
         {
             int CIQADId = int.Parse(CheckInQADetailId);
@@ -168,82 +239,140 @@ namespace ImprovementProjectWebApp.Controllers
 
             return RedirectToAction("CheckInView", new { CheckInDetailId = CIQADId });
         }
-        public int GetCheckIn(string userId)
+        public ActionResult IfCheckIn()
         {
-            AppUserPlan appUserPlan = _context.AppUserPlans.Where(a=>a.ApplicationUserId == userId).Where(a => a.StartDate <= DateTime.Today && a.EndDate >= DateTime.Today).FirstOrDefault();
-            //get current a>ppUserPlan
-            if (appUserPlan != null)
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+            if(_context.UserCheckInDate.Where(u=>u.AppUserPlan.ApplicationUserId == curUserId).Any(u=>u.CheckInDate == DateTime.Today))
             {
-                if (!_context.CheckInQA.Any(c => c.AppUserPlanId == appUserPlan.Id))
-                {
-                    DateTime dt1 = new DateTime();
-                    for (int i = 0; i < 4; i++)
-                    {
-                        CheckInQA checkInQA = new CheckInQA();
-                        checkInQA.CreatedDate = appUserPlan.StartDate;
-                        checkInQA.EndDate = appUserPlan.StartDate.AddDays(7);
-                        dt1 = appUserPlan.StartDate.AddDays(7);
-                        checkInQA.AppUserPlanId = appUserPlan.Id;
-                        _context.CheckInQA.Add(checkInQA);
-                        _context.SaveChanges();
-                    }
-                }
-
-                CheckInQA CurrentCheckInQA = _context.CheckInQA.Where(c => c.AppUserPlanId == appUserPlan.Id).Where(a => a.CreatedDate <= DateTime.Today && a.EndDate >= DateTime.Today).FirstOrDefault();
-                CurrentCheckInQA.Active = true;
-                _context.CheckInQA.Update(CurrentCheckInQA);
-                _context.SaveChanges();
-                
-                return (CurrentCheckInQA.Id);
-
-
+                var a = _context.UserCheckInDate.Where(u => u.AppUserPlan.ApplicationUserId == curUserId);
+                var now = DateTime.Now;
+                var today = DateTime.Today;
+                return RedirectToAction("CheckInList", new { CheckInAvaiable = true });
             }
             else
             {
-                return (-999);
+                return View();
             }
         }
+        public ActionResult CheckInList()
+        {
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+            if (_context.UserCheckInDate.Where(u => u.AppUserPlan.ApplicationUserId == curUserId).Any(u => u.CheckInDate == DateTime.Today ||u.CheckInDate.AddDays(1) == DateTime.Today))
+            {
+                var a = _context.UserCheckInDate.Where(u => u.AppUserPlan.ApplicationUserId == curUserId);
+                var now = DateTime.Now;
+                var today = DateTime.Today;
+                CheckInQA checkInQA = new CheckInQA();
+                if (_context.CheckInQA.Where(c => c.ApplicationUserId == curUserId).Where(c => c.CreatedDate == DateTime.Today).Where(c => c.IntroCheckInQA == false).Count() == 0)
+                {
+
+                    checkInQA.CreatedDate = DateTime.Today;
+                    checkInQA.ApplicationUserId = curUserId;
+                    _context.CheckInQA.Add(checkInQA);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    checkInQA = _context.CheckInQA.Where(c => c.ApplicationUserId == curUserId).Where(c => c.CreatedDate == DateTime.Today).Where(c => c.IntroCheckInQA == false).FirstOrDefault();
+                }
+                if (!_context.CheckInQADetail.Any(C => C.CheckInQAId == checkInQA.Id))
+                {
+                    CheckInListVM checkInListVM = new CheckInListVM();
+                    checkInListVM.CheckInQuestions = _context.CheckInQuestion.Where(c => c.IfHide == false).ToList();
+                    List<CheckInQADetail> checkInQADetails = new List<CheckInQADetail>();
+                    foreach (var item in checkInListVM.CheckInQuestions)
+                    {
+                        CheckInQADetail checkInQADetail = new CheckInQADetail();
+                        //checkInQADetail.Answer = "";
+                        checkInQADetail.CheckInQAId = checkInQA.Id;
+                        checkInQADetail.CheckInQuestionId = item.Id;
+                        checkInQADetails.Add(checkInQADetail);
+                    }
+                    checkInListVM.CheckInQADetails = checkInQADetails;
+                    return View(checkInListVM);
+                }
+                else
+                {
+                    return RedirectToAction("UpLoadImgV2", new { CheckInQAId = checkInQA.Id });
+                }
+            }
+            else
+            {
+                return RedirectToAction("CheckInNotAllowed");
+            }
+
+        }
+        public ActionResult FinishedCheckIn(int CheckInQAId)
+        {
+            return View(_context.CheckInQA.Include(c => c.CheckInQADetails).Where(c => c.Id == CheckInQAId).FirstOrDefault());
+        }
+        public ActionResult CheckInNotAllowed()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CheckInList(CheckInListVM checkInListVM)
+        {
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+            int CheckInQAId = checkInListVM.CheckInQADetails.FirstOrDefault().CheckInQAId;
+            foreach (var item in checkInListVM.CheckInQADetails)
+            {
+                
+                    _context.CheckInQADetail.Add(item);
+                    _context.SaveChanges();
+                
+            }
+
+
+            return RedirectToAction("UpLoadImgV2", new { CheckInQAId });
+
+        }
+
         public ActionResult CheckIn()
         {
             string curUserId = _userManager.GetUserId(HttpContext.User);
-            int CurrentCheckInQAId = GetCheckIn(curUserId);
-            if (CurrentCheckInQAId != -999)
+            if (_context.CheckInQA.Where(c => c.ApplicationUserId == curUserId).Where(c => c.CreatedDate == DateTime.Today).Where(c=>c.IntroCheckInQA == false).Count() == 0)
             {
-                if (!(_context.CheckInQADetail.Any(c => c.CheckInQAId == CurrentCheckInQAId)))
-                {
-                    List<CheckInQADetail> checkInQADetails = new List<CheckInQADetail>();
-                    List<CheckInQuestion> checkInQuestions = _context.CheckInQuestion.Where(c => c.IfHide == false).ToList();
+                CheckInQA checkInQA = new CheckInQA();
+                checkInQA.CreatedDate = DateTime.Today;
+                checkInQA.ApplicationUserId = curUserId;
+                _context.CheckInQA.Add(checkInQA);
+                _context.SaveChanges();
 
-                    foreach (var item in checkInQuestions)
-                    {
-                        CheckInQADetail checkInQADetail = new CheckInQADetail();
-                        checkInQADetail.CheckInQAId = CurrentCheckInQAId;
-                        checkInQADetail.CheckInQuestionId = item.Id;
-                        _context.CheckInQADetail.Add(checkInQADetail);
-                        _context.SaveChanges();
-                    }
-                }
+                List<CheckInQADetail> checkInQADetails = new List<CheckInQADetail>();
+                List<CheckInQuestion> checkInQuestions = _context.CheckInQuestion.Where(c => c.IfHide == false).ToList();
+
+                        foreach (var item in checkInQuestions)
+                        {
+                            CheckInQADetail checkInQADetail = new CheckInQADetail();
+                            checkInQADetail.CheckInQAId = checkInQA.Id;
+                            checkInQADetail.CheckInQuestionId = item.Id;
+                            _context.CheckInQADetail.Add(checkInQADetail);
+                            _context.SaveChanges();
+                        }
+
             }
-
-            int firstId = _context.CheckInQADetail.Where(c => c.CheckInQAId == CurrentCheckInQAId).FirstOrDefault().Id;
+            int firstId = _context.CheckInQADetail.Where(c=>c.CheckInQA.ApplicationUserId == curUserId).Where(c => c.CheckInQA.CreatedDate == DateTime.Today).Where(c => c.CheckInQA.IntroCheckInQA == false).FirstOrDefault().Id;
             return RedirectToAction("CheckInView", new { CheckInDetailId = firstId });
 
         }
-        public ActionResult CheckInDetail( int CheckinQAId)
+
+        public ActionResult CheckInDetail(int CheckinQAId)
         {
             string curUserId = _userManager.GetUserId(HttpContext.User);
             CheckInDetailVM checkInDetailVM = new CheckInDetailVM();
-            var checkInQAs = _context.CheckInQA.Where(c => c.AppUserPlan.ApplicationUserId == curUserId).ToList();
+            var checkInQAs = _context.CheckInQA.Where(c => c.ApplicationUserId == curUserId).Where(c => c.IntroCheckInQA == false).ToList();
             List<IfCheckInVM> ifCheckInVMs = new List<IfCheckInVM>();
-            foreach(var item in checkInQAs)
+            foreach (var item in checkInQAs)
             {
                 IfCheckInVM ifCheckInVM = new IfCheckInVM();
                 ifCheckInVM.CheckInQA = item;
-                ifCheckInVM.IfCheckIn =  _context.CheckInQADetail.Any(c => c.CheckInQAId == item.Id);
+                ifCheckInVM.IfCheckIn = _context.CheckInQADetail.Any(c => c.CheckInQAId == item.Id);
                 ifCheckInVMs.Add(ifCheckInVM);
             }
             checkInDetailVM.ifCheckInVMs = ifCheckInVMs;
-            if(CheckinQAId!= 0)
+            if (CheckinQAId != 0)
             {
                 if (_context.CheckInQADetail.Any(c => c.CheckInQAId == CheckinQAId))
                 {
@@ -255,11 +384,31 @@ namespace ImprovementProjectWebApp.Controllers
             }
             return View(checkInDetailVM);
         }
-
+        public ActionResult InitialImg()
+        {
+            int CheckInQAId;
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+            if (!_context.CheckInQA.Where(c => c.ApplicationUserId == curUserId).Any(c => c.IntroCheckInQA == true))
+            {
+                CheckInQA checkInQA = new CheckInQA();
+                checkInQA.ApplicationUserId = curUserId;
+                checkInQA.CreatedDate = DateTime.Today;
+                checkInQA.EndDate = DateTime.Today;
+                checkInQA.IntroCheckInQA = true;
+                _context.CheckInQA.Add(checkInQA);
+                _context.SaveChanges();
+                CheckInQAId = checkInQA.Id;
+            }
+            else
+            {
+                CheckInQAId = _context.CheckInQA.Where(c => c.ApplicationUserId == curUserId).Where(c => c.IntroCheckInQA == true).FirstOrDefault().Id;
+            }
+            return RedirectToAction("UpLoadImg", new { CheckInQAId });
+        }
         public ActionResult UpLoadImg(int CheckInQAId, int CheckInImgsId)
         {
             string curUserId = _userManager.GetUserId(HttpContext.User);
-            if(_context.CheckInImgs.Any(c=>c.CheckInQAId == CheckInQAId))
+            if (_context.CheckInImgs.Any(c => c.CheckInQAId == CheckInQAId))
             {
                 if (CheckInImgsId == 0)
                 {
@@ -278,7 +427,7 @@ namespace ImprovementProjectWebApp.Controllers
             }
             else
             {
-                for(int i=0; i<4;i++)
+                for (int i = 0; i < 4; i++)
                 {
                     CheckInImgs checkInImgs = new CheckInImgs();
                     checkInImgs.ImgPart = i;
@@ -319,60 +468,104 @@ namespace ImprovementProjectWebApp.Controllers
                     if (files.Count != 1)
                     {
                         ModelState.AddModelError("", "You can only upload 1 file");
-                        return RedirectToAction("UpLoadImg", new { CheckInQAId, CheckInImgsId });
+                        return RedirectToAction("UpLoadImgV2", new { CheckInQAId, CheckInImgsId });
                     }
 
-                        IFormFile item = files[0];
-                        if (item.Length > 0)
+                    IFormFile item = files[0];
+                    if (item.Length > 0)
+                    {
+                        if (item.Length > 10 * 1024 * 1024)
+                        //3mb = 3*1024
                         {
-                            if (item.Length > 10 * 1024 * 1024)
-                            //3mb = 3*1024
-                            {
-                                ModelState.AddModelError("", "You can't upload file more then 10MB");
-                                return RedirectToAction("UpLoadImg", new { CheckInQAId, CheckInImgsId });
-                            }
-                            
+                            ModelState.AddModelError("", "You can't upload file more then 10MB");
+                            return RedirectToAction("UpLoadImgV2", new { CheckInQAId, CheckInImgsId });
+                        }
 
-                            var extension = item.FileName.Substring(item.FileName.LastIndexOf("."), item.FileName.Length - item.FileName.LastIndexOf("."));
-                            extension = extension.ToLower();
-                            string[] fileType = { ".png", ".jpg", ".jpeg" };
-                            if (!fileType.Contains(extension))
-                            {
-                                ModelState.AddModelError("", "You can only upload image files");
-                                return RedirectToAction("UpLoadImg", new { CheckInQAId, CheckInImgsId });
-                            }
 
-                            string fileName = ContentDispositionHeaderValue.Parse(item.ContentDisposition).FileName.Trim('"');
-                            string fullPath = Path.Combine(subFinder, fileName);
+                        var extension = item.FileName.Substring(item.FileName.LastIndexOf("."), item.FileName.Length - item.FileName.LastIndexOf("."));
+                        extension = extension.ToLower();
+                        string[] fileType = { ".png", ".jpg", ".jpeg" };
+                        if (!fileType.Contains(extension))
+                        {
+                            ModelState.AddModelError("", "You can only upload image files");
+                            return RedirectToAction("UpLoadImgV2", new { CheckInQAId, CheckInImgsId });
+                        }
 
-                            using (var stream = new FileStream(fullPath, FileMode.Create))
-                            {
-                                item.CopyTo(stream);
-                            }
+                        //string fileName = ContentDispositionHeaderValue.Parse(item.ContentDisposition).FileName.Trim('"');
+                        //string fileName = curUserId;
+                        string fileName = "CheckInImg" + checkInImgs.Id + extension;//add a Id in the Name
+                        string fullPath = Path.Combine(subFinder, fileName);
+
+                        using (var stream = new FileStream(fullPath, FileMode.Create))
+                        {
+                            item.CopyTo(stream);
+                        }
 
                         checkInImgs.ImgURL = @"\Upload\" + curUserId + @"\" + SCheckInQAId + @"\" + fileName;
                         _context.CheckInImgs.Update(checkInImgs);
                         _context.SaveChanges();
-                        }
-
-                        
+                    }
 
 
-                    return RedirectToAction("UpLoadImg", new { CheckInQAId, CheckInImgsId });
+
+
+                    return RedirectToAction("UpLoadImgV2", new { CheckInQAId, CheckInImgsId });
                 }
                 else
                 {
-                    return RedirectToAction("UpLoadImg", new { CheckInQAId, CheckInImgsId });
+                    return RedirectToAction("UpLoadImgV2", new { CheckInQAId, CheckInImgsId });
                 }
             }
             return RedirectToAction("UpLoadImg", new { CheckInQAId, CheckInImgsId });
         }
-        public ActionResult ViewMealPlan()
+        public ActionResult UpLoadImgV2(int CheckInQAId, int CheckInImgsId)
         {
             string curUserId = _userManager.GetUserId(HttpContext.User);
-            List<AppUserPlan> appUserPlans = _context.AppUserPlans.Where(a => a.ApplicationUserId == curUserId).Where(a=>a.MealPlan.URL != null).Include(a=>a.MealPlan).Include(a=>a.Plan).ToList();
-            return View(appUserPlans);
+            if (_context.CheckInImgs.Any(c => c.CheckInQAId == CheckInQAId))
+            {
+                CheckInImgsVM checkInImgsVM = new CheckInImgsVM();
+                checkInImgsVM.AllCheckInImgs = _context.CheckInImgs.Where(c => c.CheckInQAId == CheckInQAId).ToList();
 
+                bool FinishUploaded = true;
+                foreach(var i in checkInImgsVM.AllCheckInImgs)
+                {
+                    if(i.ImgURL == null)
+                    {
+                        FinishUploaded = false;
+                    }
+                }
+                if(FinishUploaded)
+                {
+                    checkInImgsVM.CheckInQADetails = _context.CheckInQADetail.Include(c=>c.CheckInQuestion).Where(c => c.CheckInQAId == CheckInQAId).ToList();
+                }
+
+
+
+                return View(checkInImgsVM);
+            }
+            else
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    CheckInImgs checkInImgs = new CheckInImgs();
+                    checkInImgs.ImgPart = i;
+                    checkInImgs.CheckInQAId = CheckInQAId;
+                    _context.CheckInImgs.Add(checkInImgs);
+                }
+                _context.SaveChanges();
+                CheckInImgsVM checkInImgsVM = new CheckInImgsVM();
+                checkInImgsVM.AllCheckInImgs = _context.CheckInImgs.Where(c => c.CheckInQAId == CheckInQAId).ToList();
+                return View(checkInImgsVM);
+
+
+            }
+        }
+            public ActionResult MealPlanList()
+        {
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+            int CurAppUserPlanId = _context.AppUserPlans.Where(u => u.ApplicationUserId == curUserId).Where(a => a.StartDate <= DateTime.Today.AddDays(7) && a.EndDate >= DateTime.Today).FirstOrDefault().Id;//adddays 预防未来7天健身计划过期。
+            List<MealPlan> mealPlans = _context.MealPlan.Where(p => p.WeekPlan.AppUserPlanId == CurAppUserPlanId).Include(p => p.WeekPlan).ToList();
+            return View(mealPlans);
         }
         public ActionResult ViewCustomer()
         {
@@ -383,9 +576,201 @@ namespace ImprovementProjectWebApp.Controllers
         public ActionResult ViewGallery()
         {
             string curUserId = _userManager.GetUserId(HttpContext.User);
-            List<CheckInImgs> checkInImgs = _context.CheckInImgs.Where(c => c.CheckInQA.AppUserPlan.ApplicationUser.Id == curUserId).Include(c=>c.CheckInQA).ThenInclude(c=>c.AppUserPlan).ThenInclude(c=>c.ApplicationUser).ToList();
+            List<CheckInImgs> checkInImgs = _context.CheckInImgs.Where(c => c.CheckInQA.ApplicationUser.Id == curUserId).Include(c => c.CheckInQA).ThenInclude(c => c.ApplicationUser).ToList();
             return View(checkInImgs);
         }
+        public ActionResult AddCustomerProfile()
+        {
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+            CustomerProfile customerProfile = new CustomerProfile();
+            customerProfile.ApplicationUserId = curUserId;
+            customerProfile.StartDate = DateTime.Today;
+            return View(customerProfile);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddCustomerProfile(CustomerProfile customerProfile)
+        {
+            if (ModelState.IsValid)
+            {
+                var files = HttpContext.Request.Form.Files;
+                if (files[0] != null && files[0].Length > 0)
+                {
+                    //when user uploads an image
+                    byte[] p1 = null;
+                    using (var fs1 = files[0].OpenReadStream())
+                    {
+                        using (var ms1 = new MemoryStream())
+                        {
+                            fs1.CopyTo(ms1);
+                            p1 = ms1.ToArray();
+                        }
+                    }
 
+                    customerProfile.WeChatQRCode = p1;
+                }
+                _context.Add(customerProfile);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(customerProfile);
+        }
+
+        public async Task<IActionResult> EditCustomerProfile(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var customerProfile = await _context.CustomerProfile.SingleOrDefaultAsync(m => m.Id == id);
+            if (customerProfile == null)
+            {
+                return NotFound();
+            }
+            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", customerProfile.ApplicationUserId);
+            return View(customerProfile);
+        }
+
+        // POST: CustomerProfiles/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditCustomerProfile(int id, CustomerProfile customerProfile)
+        {
+            if (id != customerProfile.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var files = HttpContext.Request.Form.Files;
+                    if (files[0] != null && files[0].Length > 0)
+                    {
+                        //when user uploads an image
+                        byte[] p1 = null;
+                        using (var fs1 = files[0].OpenReadStream())
+                        {
+                            using (var ms1 = new MemoryStream())
+                            {
+                                fs1.CopyTo(ms1);
+                                p1 = ms1.ToArray();
+                            }
+                        }
+
+                        customerProfile.WeChatQRCode = p1;
+                    }
+                    _context.Update(customerProfile);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CustomerProfileExists(customerProfile.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["ApplicationUserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", customerProfile.ApplicationUserId);
+            return View(customerProfile);
+        }
+
+        private bool CustomerProfileExists(int id)
+        {
+            return _context.CustomerProfile.Any(e => e.Id == id);
+        }
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+        }
+        public IActionResult AskProblem()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AskProblem( AskProblemVM askProblemVM)
+        {
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+            ApplicationUser applicationUser = _context.ApplicationUser.Where(a => a.Id == curUserId).Include(a=>a.CustomerProfiles).FirstOrDefault();
+            var Email = applicationUser.Email;
+            var UserName = applicationUser.UserName;
+            var Name = applicationUser.CustomerProfiles.FirstOrDefault().Name;
+            string message = "User Email: " + Email + "<br />" + "User Name: " + UserName + "<br />" + "Name: " + Name + "<br />"+"问题：" + askProblemVM.Question;
+            _emailSender.SendEmailAsync("aesrev@outlook.com", "User Question-" + "Name", message);
+            ViewData["Info"] = "问题已经被成功提交！谢谢您！";
+            askProblemVM = new AskProblemVM();
+            return View(askProblemVM);
+        }
+        public ActionResult EditQAD(int CheckInQAId)
+        {
+            CheckInListVM checkInListVM = new CheckInListVM();
+            checkInListVM.CheckInQADetails = _context.CheckInQADetail.Where(c => c.CheckInQAId == CheckInQAId).ToList();
+            checkInListVM.CheckInQuestions = _context.CheckInQuestion.Where(c => c.IfHide == false).ToList();
+            return View(checkInListVM);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditQAD(CheckInListVM checkInListVM)
+        {
+
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+            int CheckInQAId = checkInListVM.CheckInQADetails.FirstOrDefault().CheckInQAId;
+
+            _context.CheckInQADetail.UpdateRange(checkInListVM.CheckInQADetails);
+            _context.SaveChanges();
+
+            return RedirectToAction("UpLoadImgV2", new { CheckInQAId });
+        }
+        public ActionResult DeleteCheckInPic(int CheckInImgsId,int CheckInQAId)
+        {
+            CheckInImgs checkInImgs = _context.CheckInImgs.Where(c => c.Id == CheckInImgsId).FirstOrDefault();
+            var webRootPath = _hostingEnvironment.WebRootPath;
+            var path = webRootPath + checkInImgs.ImgURL;
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+            checkInImgs.ImgURL = null;
+            _context.CheckInImgs.Update(checkInImgs);
+            _context.SaveChanges();
+            return RedirectToAction("UpLoadImgV2", new { CheckInQAId });
+        }
+        public ActionResult  AddFeedbacks()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddFeedbacks(string Question)
+        {
+            FeedBack feedBack = new FeedBack();
+            feedBack.ApplicationUserId = _userManager.GetUserId(HttpContext.User);
+            feedBack.Qustion = Question;
+            _context.FeedBack.Add(feedBack);
+            _context.SaveChanges();
+            return RedirectToAction("FeedbacksList");
+        }
+        public ActionResult FeedbacksList()
+        {
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+            FeedbacksListVM feedbacksListVM = new FeedbacksListVM();
+            feedbacksListVM.FeedBacks = _context.FeedBack.Where(f => f.ApplicationUserId == curUserId).ToList();
+            return View(feedbacksListVM);
+        }
     }
 }

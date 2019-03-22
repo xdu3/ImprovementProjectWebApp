@@ -1,0 +1,209 @@
+﻿@model ImprovementProjectWebApp.Models.User.UserIndexVM
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>User Manage</h2>
+@if (ViewBag.Err != null)
+{
+    <div class="alert alert-danger">
+        <strong>Danger!</strong> @ViewBag.Err
+    </div>
+}
+@if (ViewBag.Info != null)
+{
+    <div class="alert alert-info">
+        <strong>Info!</strong> @ViewBag.Info
+    </div>
+}
+<p>
+    <a asp-action="CreateNewCustomer">Create New</a>
+</p>
+<form asp-controller="User" asp-action="Index">
+    Customer:
+    <div class="row">
+        <div class="col-lg-10">
+            <input type="text" name="SearchString" class="form-control">
+        </div>
+        <div class="col-lg-2">
+            <input type="submit" value="Search" class="btn btn-default" width="100%" />
+        </div>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                User Name
+            </th>
+            <th>
+                Email
+                @if (Model.FilterStatus == 1)
+                {
+                    <a asp-action="Index" asp-route-CurPage="@Model.curPage" asp-route-ShowDelete="@Model.ShowDelete" asp-route-FilterStatus=0 class="badge badge-primary">Show All</a>
+                }
+                else
+                {
+                    <a asp-action="Index" asp-route-CurPage="@Model.curPage" asp-route-ShowDelete="@Model.ShowDelete" asp-route-FilterStatus=1 class="badge badge-primary">Show Only Actived</a>
+
+                }
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Customer Profile Manage
+            </th>
+            @if (User.IsInRole("SuperAdmin"))
+            {
+                <th>
+                    Change Password
+                </th>
+            }
+            <th>
+                Delete User
+                @if (Model.ShowDelete == false)
+                {
+                    <a asp-action="Index" asp-route-CurPage="@Model.curPage" asp-route-ShowDelete=true asp-route-FilterStatus="@Model.FilterStatus" class="badge badge-primary">Show All</a>
+                }
+                else
+                {
+                    <a asp-action="Index" asp-route-CurPage="@Model.curPage" asp-route-ShowDelete=false asp-route-FilterStatus="@Model.FilterStatus" class="badge badge-primary">Show not delete</a>
+
+                }
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.applicationUsers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+
+                </td>
+                <td>
+                    @if (item.IfDelete != true)
+                    {
+                        if (item.EmailConfirmed == true)
+                        {
+                            @Html.DisplayFor(modelItem => item.Email)
+                        }
+                        else
+                        {
+
+                            <span style="color:red;">@Html.DisplayFor(modelItem => item.Email)</span>
+                            <a asp-controller="User" asp-route-UserId="@item.Id" asp-action="ActiveEmail" onclick="return confirm('Are you sure wants to active this Email?');">Active</a>
+                        }
+                    }
+                    else
+                    {
+                        <p style="color:red;">@Html.DisplayFor(modelItem => item.Email)</p>
+
+                    }
+                </td>
+                <td>
+                    @if (item.IfDelete != true)
+                    {
+                        @if (item.CustomerProfiles.Count() != 0)
+                        {
+                            @Html.DisplayFor(modelItem => item.CustomerProfiles.FirstOrDefault().Name)
+                        }
+                        else
+                        {
+                            <p>Customer don't have Profile</p>
+
+                        }
+                    }
+                    else
+                    {
+                        <p style="color:red;">@Html.DisplayFor(modelItem => item.CustomerProfiles.FirstOrDefault().Name)</p>
+
+                    }
+
+                </td>
+                <td>
+                    @if (item.IfDelete != true)
+                    {
+                        @if (item.CustomerProfiles.Count() != 0)
+                        {
+                            <a asp-action="ViewCustomerProfile" class="btn btn-success" asp-route-UserId="@item.Id" style="width:120px;"> View Profile</a>
+                            <a asp-action="EditCustomerProfile" asp-route-id="@item.CustomerProfiles.FirstOrDefault().Id" class="btn btn-warning" style="width:120px;">Edit</a>
+                            <a asp-action="DeleteCustomerProfile" asp-route-id="@item.CustomerProfiles.FirstOrDefault().Id" class="btn btn-danger" style="width:120px;">Delete Profile</a>
+                        }
+                        else
+                        {
+                            <a asp-action="CreateCustomerProfile" asp-route-UserId="@item.Id" class="btn btn-primary" style="width:368px;">Create Profile</a>
+
+
+                        }
+                    }
+                    else
+                    {
+                        <p style="color:red;">Customer Is Deleted!</p>
+
+                    }
+
+
+                </td>
+                @if (User.IsInRole("SuperAdmin"))
+                {
+                    <td>
+                        <a asp-action="ChangeUserPassword" asp-route-UserID="@item.Id" class="btn btn-warning" style="width:100%;">Change</a>
+                    </td>
+                }
+                <td>
+                    @if (item.IfDelete != true)
+                    {
+                        if (item.UserName != "dx3081@gmail.com")
+                        {
+                            <a asp-action="DeleteUser" asp-route-UserID="@item.Id" asp-route-CurPage="@Model.curPage" asp-route-ShowDelete="@Model.ShowDelete" asp-route-FilterStatus="@Model.FilterStatus" class="btn btn-danger" style="width:100%;">Delete User</a>
+                        }
+                        else
+                        {
+                            <p style="color:red;">想都别想！！！</p>
+
+                        }
+                    }
+                    else
+                    {
+                        <a asp-action="RecoverUser" asp-route-UserID="@item.Id" asp-route-CurPage="@Model.curPage" asp-route-ShowDelete="@Model.ShowDelete" asp-route-FilterStatus="@Model.FilterStatus" class="btn btn-success" style="width:100%;">Recover User</a>
+
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@for (int i = 1; i <= Model.totalPage; i++)
+{
+    if (Model.curPage == i)
+    {
+
+        <a asp-controller="User" asp-action="Index" asp-route-CurPage="@i" asp-route-ShowDelete="@Model.ShowDelete" asp-route-FilterStatus="@Model.FilterStatus" class="btn btn-primary">@i</a>
+
+    }
+    else
+    {
+        if (Model.curPage != 0)
+        {
+            <a asp-controller="User" asp-action="Index" asp-route-CurPage="@i" asp-route-ShowDelete="@Model.ShowDelete" asp-route-FilterStatus="@Model.FilterStatus" class="btn btn-default">@i</a>
+        }
+        else
+        {
+            if (i == 1)
+            {
+
+                <a asp-controller="User" asp-action="Index" asp-route-CurPage="@i" asp-route-ShowDelete="@Model.ShowDelete" class="btn btn-primary">@i</a>
+            }
+            else
+            {
+                <a asp-controller="User" asp-action="Index" asp-route-CurPage="@i" asp-route-ShowDelete="@Model.ShowDelete" class="btn btn-default">@i</a>
+            }
+
+        }
+    }
+}
+

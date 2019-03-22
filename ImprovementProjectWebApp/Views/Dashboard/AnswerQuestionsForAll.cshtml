@@ -1,0 +1,36 @@
+﻿@model ImprovementProjectWebApp.Models.FeedBack
+@{
+    ViewData["Title"] = "AnswerQuestionsForAll";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Answer Questions For All</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form asp-action="AnswerQuestionsForAll">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Qustion" class="control-label"></label>
+                <p>@Model.Qustion</p>
+                <input asp-for="Qustion" class="form-control" style="display:none;" />
+                <span asp-validation-for="Qustion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Answer" class="control-label"></label>
+                <input asp-for="Answer" class="form-control" />
+                <span asp-validation-for="Answer" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display:none;">
+                <label asp-for="ApplicationUserId" class="control-label"></label>
+                <input asp-for="ApplicationUserId" class="form-control" />
+                <span asp-validation-for="ApplicationUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary col-lg-2 col-lg-offset-10" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -49,7 +49,7 @@ namespace ImprovementProjectWebApp.Controllers
         // GET: IntroQAs/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser.Where(a => a.IfDelete == false && a.EmailConfirmed == true), "Id", "Id");
             ViewData["IntroQuestionId"] = new SelectList(_context.IntroQuestion, "Id", "Question");
             return View();
         }
@@ -67,7 +67,7 @@ namespace ImprovementProjectWebApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", introQA.UserId);
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser.Where(a => a.IfDelete == false && a.EmailConfirmed == true), "Id", "Id", introQA.UserId);
             ViewData["IntroQuestionId"] = new SelectList(_context.IntroQuestion, "Id", "Question", introQA.IntroQuestionId);
             return View(introQA);
         }
@@ -85,7 +85,7 @@ namespace ImprovementProjectWebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", introQA.UserId);
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser.Where(a => a.IfDelete == false && a.EmailConfirmed == true), "Id", "Id", introQA.UserId);
             ViewData["IntroQuestionId"] = new SelectList(_context.IntroQuestion, "Id", "Question", introQA.IntroQuestionId);
             return View(introQA);
         }
@@ -122,7 +122,7 @@ namespace ImprovementProjectWebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id", introQA.UserId);
+            ViewData["UserId"] = new SelectList(_context.ApplicationUser.Where(a => a.IfDelete == false && a.EmailConfirmed == true), "Id", "Id", introQA.UserId);
             ViewData["IntroQuestionId"] = new SelectList(_context.IntroQuestion, "Id", "Question", introQA.IntroQuestionId);
             return View(introQA);
         }
@@ -175,17 +175,19 @@ namespace ImprovementProjectWebApp.Controllers
                 introQA.CreatedDate = DateTime.Now;
                 introQA.IntroQuestion = item;
                 ListIntroQAs.Add(introQA);
-            }           
+            }
+            //ViewData["UserId"] = appUser.Id;
             return View(ListIntroQAs);
         }
-
+        //===========================????
         public ActionResult AdminIntroAnswerView(string id)
         {
-            ApplicationUser appUser = _context.ApplicationUser.Where(a => a.Id == id).FirstOrDefault();
+            ApplicationUser appUser = _context.ApplicationUser.Where(a => a.Id == id).Where(a => a.IfDelete == false && a.EmailConfirmed == true).FirstOrDefault();
             List<IntroQuestion> ListIntroQuestions = _context.IntroQuestion.ToList();
             List<IntroQA> ListIntroQAs = new List<IntroQA>();
             List<IntroQA> UserIntroQAs = _context.IntroQA.Where(i => i.UserId == id).ToList();
             ViewData["UserName"] = appUser.UserName;
+            ViewData["UserId"] = appUser.Id;
             return View(UserIntroQAs);
         }
     }

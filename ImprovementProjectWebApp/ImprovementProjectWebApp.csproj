@@ -6,12 +6,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\NewFolder\**" />
+    <Content Remove="wwwroot\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder\**" />
+    <None Remove="wwwroot\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Data\Migrations\20181120065717_addCustomerProfileIdInAppUser.cs" />
     <Compile Remove="Data\Migrations\20181120065717_addCustomerProfileIdInAppUser.Designer.cs" />
     <Compile Remove="Data\Migrations\20181120070023_addCustomerProfileIdInAppUserFix.cs" />
     <Compile Remove="Data\Migrations\20181120070023_addCustomerProfileIdInAppUserFix.Designer.cs" />
     <Compile Remove="Data\Migrations\20181120070639_addCustomerProfileIdInAppUser.cs" />
     <Compile Remove="Data\Migrations\20181120070639_addCustomerProfileIdInAppUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190107210408_WeekPlanAddAndPlanFix.cs" />
+    <Compile Remove="Data\Migrations\20190107210408_WeekPlanAddAndPlanFix.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190107212501_WeekPlanAddAndPlanFix2.cs" />
+    <Compile Remove="Data\Migrations\20190107212501_WeekPlanAddAndPlanFix2.Designer.cs" />
   </ItemGroup>
 
 
@@ -28,6 +39,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\daterangepicker\daterangepicker.js" />
+    <None Include="wwwroot\daterangepicker\moment.min.js" />
+    <None Include="wwwroot\lib\bootstrap-datepicker\bootstrap-datepicker.js" />
     <None Include="wwwroot\lib\bootstrap4\css\bootstrap-grid.css.map" />
     <None Include="wwwroot\lib\bootstrap4\css\bootstrap-grid.min.css.map" />
     <None Include="wwwroot\lib\bootstrap4\css\bootstrap-reboot.css.map" />

@@ -1,0 +1,26 @@
+﻿@model ImprovementProjectWebApp.Models.DashboardVM.AddTodayAsCheckInDateVM
+
+@{
+    ViewData["Title"] = "AddTodayAsCheckInDate";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h2>Add Today As Check In Date</h2>
+
+@if (Model.AlreadyExist == true)
+{
+    <div class="alert alert-danger">
+        <strong>Check in date already exist</strong>
+    </div>
+}
+@if (Model.AddSuccess == true)
+{
+    <div class="alert alert-info">
+        <strong>Check in date add successfully</strong>
+    </div>
+}
+<div class="col-lg-12">
+
+    <a class="btn btn-default col-lg-2 col-lg-offset-10" asp-action="ViewPlan" asp-controller="Dashboard" asp-route-id="@Model.UserId">返回</a>
+</div>
+
+

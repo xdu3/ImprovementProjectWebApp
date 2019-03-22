@@ -1,10 +1,10 @@
 ﻿@model ImprovementProjectWebApp.Models.Customer.AnswerIntroQAVM
 @{
     ViewData["Title"] = "AnswerIntroQA";
-    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    //Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
 
-<h2>AnswerIntroQA</h2>
+<h2>回答初始问题</h2>
 <div>
     @{
         int count = 0;
@@ -13,7 +13,7 @@
         {
 
             count++;
-    <a asp-action="AnswerIntroQA" asp-route-CurQId="@intq.Id" asp-route-LastQId="@LastId" class="list-group-item col-lg-2">
+    <a asp-action="AnswerIntroQA" asp-route-CurQId="@intq.Id" asp-route-LastQId="@LastId" class="list-group-item col-lg-2 col-md-2 col-sm-2 col-xs-6">
         问题 @count
         @if (Model.IntroQAs.Where(i => i.IntroQuestionId == intq.Id).Count() == 0)
         {
@@ -31,27 +31,185 @@
     if (Model.IntroQA == null)
     {
 <div>
-    <div class="col-lg-6 row">
+    <div class="col-lg-12 row">
+        @if (Model.IntroQ.Question == "请列出你喜欢/可以吃的蛋白食物:（请不要选您可能会过敏的食物）")
+        {
+            <br />
+            <p>
+                问题： @Model.IntroQ.Question
+            </p>
+            <br />
+            <p>
+                答案：
+            </p>
+            <form asp-action="AnswerIntroQACreate" method="post">
 
-        问题： @Model.IntroQ.Question
-        <br />
-        答案：
-        <br />
+                <input id="QustionId" name="QustionId" value="@Model.CurQId" style="display:none;" />
+                <a onclick="PbtnClick(this,0)" class="btn btn-default ">鸡胸肉（无骨无皮）</a>
+                <a onclick="PbtnClick(this,1)" class="btn btn-default">瘦火鸡肉沫</a>
+                <a onclick="PbtnClick(this,2)" class="btn btn-default">瘦牛肉沫</a>
+                <a onclick="PbtnClick(this,3)" class="btn btn-default">瘦牛排</a>
+                <a onclick="PbtnClick(this,4)" class="btn btn-default">瘦鱼肉</a>
+                <a onclick="PbtnClick(this,5)" class="btn btn-default">鸡腿（无骨无皮）</a>
+                <a onclick="PbtnClick(this,6)" class="btn btn-default">低卡蛋白粉</a>
+                <a onclick="PbtnClick(this,7)" class="btn btn-default">鸡蛋白</a>
+                <a onclick="PbtnClick(this,8)" class="btn btn-default">鸡蛋</a>
+                <a onclick="PbtnClick(this,9)" class="btn btn-default">无脂低糖酸奶（非饮料）</a>
+
+                <textarea id="Answer" rows="5" name="Answer" class="form-control PTextarea" style="display:none;">
+
+            </textarea>
+                <br />
+                <input type="submit" id="btnUpload" value="提交" class="btn btn-primary col-lg-2 col-lg-offset-10 col-xs-12" style="margin-top:10px;"/>
+            </form>
+                }
+                else if (Model.IntroQ.Question == "请列出你喜欢/可以吃的碳水化合食物: （请不要选您可能会过敏的食物）")
+                {
+                <br />
+                <p>
+                    问题： @Model.IntroQ.Question
+                </p>
+                <br />
+                <p>
+                    答案：
+                </p>
+
+                <form asp-action="AnswerIntroQACreate" method="post">
+                    <input id="QustionId" name="QustionId" value="@Model.CurQId" style="display:none;" />
+                    <a onclick="CbtnClick(this,0)" class="btn btn-default ">燕麦</a>
+                    <a onclick="CbtnClick(this,1)" class="btn btn-default">白米饭</a>
+                    <a onclick="CbtnClick(this,2)" class="btn btn-default">棕米饭</a>
+                    <a onclick="CbtnClick(this,3)" class="btn btn-default">红薯</a>
+                    <a onclick="CbtnClick(this,4)" class="btn btn-default">甜薯</a>
+                    <a onclick="CbtnClick(this,5)" class="btn btn-default">全麦面包</a>
 
 
-        <input id="QustionId" name="QustionId" value="@Model.CurQId" style="display:none;" />
+                    <textarea id="Answer" rows="5" name="Answer" class="form-control CTextarea" style="display:none;">
 
-        <textarea id="Answer" rows="5" name="Answer" class="form-control">
+            </textarea>
+                    <br />
+                    <input type="submit" id="btnUpload" value="提交" class="btn btn-primary col-lg-2 col-lg-offset-10 col-xs-12" style="margin-top:10px;" />
+                </form>
+
+
+                }
+                else if (Model.IntroQ.Question == "请列出你喜欢/可以吃的脂肪食物: （请不要选您可能会过敏的食物）")
+                {
+                <br />
+                <p>
+                    问题： @Model.IntroQ.Question
+                </p>
+                <br />
+                <p>
+                    答案：
+                </p>
+
+                <form asp-action="AnswerIntroQACreate" method="post">
+                    <input id="QustionId" name="QustionId" value="@Model.CurQId" style="display:none;" />
+                    <a onclick="FbtnClick(this,0)" class="btn btn-default ">无糖添加花生酱</a>
+                    <a onclick="FbtnClick(this,1)" class="btn btn-default">牛油果</a>
+                    <a onclick="FbtnClick(this,2)" class="btn btn-default">杏仁</a>
+                    <a onclick="FbtnClick(this,3)" class="btn btn-default">腰果</a>
+                    <a onclick="FbtnClick(this,4)" class="btn btn-default">橄榄油</a>
+                    <a onclick="FbtnClick(this,5)" class="btn btn-default">椰子油</a>
+                    <a onclick="FbtnClick(this,6)" class="btn btn-default">三文鱼</a>
+
+                    <textarea id="Answer" rows="5" name="Answer" class="form-control FTextarea" style="display:none;">
+
+            </textarea>
+                    <br />
+                    <input type="submit" id="btnUpload" value="提交" class="btn btn-primary col-lg-2 col-lg-offset-10 col-xs-12" style="margin-top:10px;" />
+                </form>
+
+                }
+                else if (Model.IntroQ.Question == "请选择偏爱的有氧运动: ")
+                {
+                <br />
+                <p>
+                    问题： @Model.IntroQ.Question
+                </p>
+                <br />
+                <p>
+                    答案：
+                </p>
+
+                <form asp-action="AnswerIntroQACreate" method="post">
+
+                    <input id="QustionId" name="QustionId" value="@Model.CurQId" style="display:none;" />
+                    <a onclick="YYbtnClick(this,0)" class="btn btn-default ">自行车</a>
+                    <a onclick="YYbtnClick(this,1)" class="btn btn-default">跑步</a>
+                    <a onclick="YYbtnClick(this,2)" class="btn btn-default">游泳</a>
+                    <a onclick="YYbtnClick(this,3)" class="btn btn-default">跳绳</a>
+                    <a onclick="YYbtnClick(this,4)" class="btn btn-default">登山机</a>
+                    <a onclick="YYbtnClick(this,5)" class="btn btn-default">椭圆机</a>
+                    <a onclick="YYbtnClick(this,6)" class="btn btn-default">跑步机</a>
+                    <textarea id="Answer" rows="5" name="Answer" class="form-control YYTextarea" style="display:none;">
+
+            </textarea>
+                    <br />
+                    <input type="submit" id="btnUpload" value="提交" class="btn btn-primary col-lg-2 col-lg-offset-10 col-xs-12" style="margin-top:10px;" />
+                </form>
+                }
+                else if (Model.IntroQ.Question == "您的用餐规律:（几餐？）")
+                {
+                <br />
+                <p>
+                    问题： @Model.IntroQ.Question
+                </p>
+                <br />
+                <p>
+                    答案：
+                </p>
+
+                <form asp-action="AnswerIntroQACreate" method="post">
+                    <input id="QustionId" name="QustionId" value="@Model.CurQId" style="display:none;" />
+                    <a onclick="MbtnClick(this,0)" class="btn btn-default Mbtn">1</a>
+                    <a onclick="MbtnClick(this,1)" class="btn btn-default Mbtn">2</a>
+                    <a onclick="MbtnClick(this,2)" class="btn btn-default Mbtn">3</a>
+                    <a onclick="MbtnClick(this,3)" class="btn btn-default Mbtn">4</a>
+                    <a onclick="MbtnClick(this,4)" class="btn btn-default Mbtn">5</a>
+                    <a onclick="MbtnClick(this,5)" class="btn btn-default Mbtn">6</a>
+
+                    <textarea id="Answer" rows="5" name="Answer" class="form-control MTextarea" style="display:none;">
+
+            </textarea>
+                    <br />
+
+                    <input type="submit" id="btnUpload" value="提交" class="btn btn-primary col-lg-2 col-lg-offset-10 col-xs-12" style="margin-top:10px;" />
+                </form>
+                }
+                else
+                {
+                <br />
+                <p>
+                    问题： @Model.IntroQ.Question
+                </p>
+                <br />
+                <p>
+                    答案：
+                </p>
+                <form asp-action="AnswerIntroQACreate" method="post">
+
+                    <input id="QustionId" name="QustionId" value="@Model.CurQId" style="display:none;" />
+
+
+
+                    <textarea id="Answer" rows="5" name="Answer" class="form-control">
 
                 </textarea>
-    </div>
-    <div class="clearfix"></div>
-    <br />
-    <a class="btn btn-default" asp-action="Index" asp-controller="Customer">返回</a>
-    <input value="提交" class="btn btn-default" onclick="AnswerIntroQACreate()" />
+
+                    <input type="submit" id="btnUpload" value="提交" class="btn btn-primary col-lg-2 col-lg-offset-10 col-xs-12" style="margin-top:10px;" />
+                </form>
+                }
+        </div>
+
+
+
 
 </div>
+
     }
+
     else
     {
 
@@ -63,18 +221,19 @@
             <br />
             @Model.IntroQA.Answer
             <br /><br />
-                  <div class="col-lg-12">
-                      <a asp-action="DeleteIntroQA" class="btn btn-danger col-lg-2 col-lg-offset-10" asp-controller="Customer" asp-route-IntroQAId=" @Model.IntroQA.Id">删除</a>
+                  <div class="col-lg-12 row">
+                      <a asp-action="DeleteIntroQA" class="btn btn-warning col-lg-2 col-lg-offset-10 col-xs-12" asp-controller="Customer" asp-route-IntroQAId=" @Model.IntroQA.Id">修改</a>
                   </div>
 
          </div>
-
+         
     }
 }
-        <div class="col-lg-12">
+        <div class="col-lg-12 row">
 
-            <a class="btn btn-default col-lg-2 col-lg-offset-10" asp-action="Index" asp-controller="Customer">返回</a>
+            <a class="btn btn-default col-lg-2 col-lg-offset-10 col-xs-12" asp-action="Index" asp-controller="Customer">返回</a>
         </div>
+        <div class="clearfix"></div>
 <environment include="Development">
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -95,7 +254,233 @@
                 location.reload();
 
             },
-            error: function () { alert('Selected Part Error'); }
+            error: function () { alert("内容不能为空。"); }
         });
+    }
+    function PbtnClick(b, a) {
+        switch (a){
+            case 0:
+                var text = "鸡胸肉（无骨无皮）";
+                break;
+            case 1:
+                var text = "瘦火鸡肉沫";
+                break;
+            case 2:
+                var text = "瘦牛肉沫";
+                break;
+            case 3:
+                var text = "瘦牛排";
+                break;
+            case 4:
+                var text = "瘦鱼肉";
+                break;
+            case 5:
+                var text = "鸡腿（无骨无皮）";
+                break;
+            case 6:
+                var text = "低卡蛋白粉";
+                break;
+            case 7:
+                var text = "鸡蛋白";
+                break;
+            case 8:
+                var text = "鸡蛋";
+                break;
+            case 9:
+                var text = "无脂低糖酸奶（非饮料）";
+                break;
+
+            default:
+                var text = "false";
+                break;
+                
+
+        }
+         
+        if ($(b).hasClass('btn-default')) {
+            
+            $(b).removeClass('btn-default').addClass('btn-primary')
+            $(".PTextarea").val($(".PTextarea").val()+" "+ text);
+        }
+        else {
+            $(b).removeClass('btn-primary').addClass('btn-default')
+            $(".PTextarea").val($(".PTextarea").val().replace(text, ""));
+
+        }
+        
+
+    }
+
+    function CbtnClick(b, a) {
+        switch (a) {
+            case 0:
+                var text = "燕麦";
+                break;
+            case 1:
+                var text = "白米饭";
+                break;
+            case 2:
+                var text = "棕米饭";
+                break;
+            case 3:
+                var text = "红薯";
+                break;
+            case 4:
+                var text = "甜薯";
+                break;
+            case 5:
+                var text = "全麦面包";
+                break;
+
+
+            default:
+                var text = "false";
+                break;
+
+
+        }
+
+        if ($(b).hasClass('btn-default')) {
+            $(b).removeClass('btn-default').addClass('btn-primary')
+            $(".CTextarea").val($(".CTextarea").val() + " " + text);
+        }
+        else {
+            $(b).removeClass('btn-primary').addClass('btn-default')
+            $(".CTextarea").val($(".CTextarea").val().replace(text, ""));
+
+        }
+
+
+    }
+
+    function FbtnClick(b, a) {
+        switch (a) {
+            case 0:
+                var text = "无糖添加花生酱";
+                break;
+            case 1:
+                var text = "牛油果";
+                break;
+            case 2:
+                var text = "杏仁";
+                break;
+            case 3:
+                var text = "腰果";
+                break;
+            case 4:
+                var text = "橄榄油";
+                break;
+            case 5:
+                var text = "椰子油";
+                break;
+            case 6:
+                var text = "三文鱼";
+                break;
+
+            default:
+                var text = "false";
+                break;
+
+
+        }
+
+        if ($(b).hasClass('btn-default')) {
+            $(b).removeClass('btn-default').addClass('btn-primary')
+            $(".FTextarea").val($(".FTextarea").val() + " " + text);
+        }
+        else {
+            $(b).removeClass('btn-primary').addClass('btn-default')
+            $(".FTextarea").val($(".FTextarea").val().replace(text, ""));
+
+        }
+
+
+    }
+
+    function YYbtnClick(b, a) {
+        switch (a) {
+            case 0:
+                var text = "自行车";
+                break;
+            case 1:
+                var text = "跑步";
+                break;
+            case 2:
+                var text = "游泳";
+                break;
+            case 3:
+                var text = "跳绳";
+                break;
+            case 4:
+                var text = "登山机";
+                break;
+            case 5:
+                var text = "椭圆机";
+                break;
+            case 6:
+                var text = "跑步机";
+                break;
+
+            default:
+                var text = "false";
+                break;
+
+
+        }
+
+        if ($(b).hasClass('btn-default')) {
+            $(b).removeClass('btn-default').addClass('btn-primary')
+            $(".YYTextarea").val($(".YYTextarea").val() + " " + text);
+        }
+        else {
+            $(b).removeClass('btn-primary').addClass('btn-default')
+            $(".YYTextarea").val($(".YYTextarea").val().replace(text, ""));
+
+        }
+
+
+    }
+
+    function MbtnClick(b, a) {
+        switch (a) {
+            case 0:
+                var text = "1";
+                break;
+            case 1:
+                var text = "2";
+                break;
+            case 2:
+                var text = "3";
+                break;
+            case 3:
+                var text = "4";
+                break;
+            case 4:
+                var text = "5";
+                break;
+            case 5:
+                var text = "6";
+                break;
+
+
+            default:
+                var text = "false";
+                break;
+
+
+        }
+
+        if ($(b).hasClass('btn-default')) {
+            $(".Mbtn").removeClass('btn-primary').addClass('btn-default')
+            $(b).removeClass('btn-default').addClass('btn-primary')
+            $(".MTextarea").val(text);
+        }
+        else {
+            $(".Mbtn").removeClass('btn-primary').addClass('btn-default')
+            $(".MTextarea").val("");
+
+        }
+
+
     }
 </script>

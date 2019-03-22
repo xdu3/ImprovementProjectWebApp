@@ -1,0 +1,158 @@
+﻿@model ImprovementProjectWebApp.Models.DashboardVM.FastEditPlanVM
+@{
+    ViewData["Title"] = "FastEditPlan";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@if (ViewBag.Err != null)
+{
+    <div class="alert alert-danger">
+        <strong>Danger!</strong> @ViewBag.Err
+    </div>
+}
+<h2>Fast Edit Plan</h2>
+
+
+<div class="list-group col-lg-12">
+
+    @{
+
+        var x = Model.plans.GroupBy(m => m.WeekPlan);
+        int count = 1;
+
+
+        foreach (var item in x)
+        {
+            <div class="list-group-item col-lg-6">
+                <div class=" col-lg-2">
+                    <h4>Week @count</h4>
+                    <p>@item.FirstOrDefault().WeekPlan.Name</p>
+                </div>
+                <div class=" col-lg-10">
+                    @{
+
+                        for (int i = 1; i <= 7; i++)
+                        {
+                            bool have = false;
+                            foreach (var z in item)
+                            {
+                                @if (z.DayPlanNum == i)
+                                {
+
+                                    <div class="list-group-item col-lg-3">
+                                        Day @i
+                                    </div>
+
+                                    @if (Model.CopyPlanId == 0)
+                                    {
+                                        <div class="list-group-item col-lg-6">
+                                            <strong>@z.Name</strong>
+
+                                        </div>
+                                        <a class="btn btn-success col-lg-3" style="font-size:19px;" asp-controller="Dashboard" asp-action="FastEditPlan" asp-route-appUserPlanId="@item.FirstOrDefault().WeekPlan.AppUserPlanId" asp-route-PlanId="@z.Id">Copy</a>
+                                    }
+                                    else if (Model.CopyPlanId == z.Id)
+                                    {
+                                        <div class="list-group-item col-lg-6">
+                                            <strong>@z.Name</strong>
+
+                                        </div>
+                                        <a class="btn btn-danger col-lg-3" style="font-size:19px;" asp-controller="Dashboard" asp-action="FastEditPlan" asp-route-appUserPlanId="@item.FirstOrDefault().WeekPlan.AppUserPlanId" asp-route-PlanId="0">Cancel</a>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="list-group-item col-lg-9">
+                                            <strong>@z.Name</strong>
+
+                                        </div>
+
+                                    }
+
+
+                                    have = true;
+                                }
+                            }
+                            if (have != true)
+                            {
+
+                                <div class="list-group-item list-group-item-info col-lg-3">
+                                    Day @i
+                                </div>
+                                @if (Model.CopyPlanId == 0)
+                                {
+                                    <div class="list-group-item list-group-item-info col-lg-9">
+                                        <strong>Rest day</strong>
+
+                                    </div>
+                                }
+                                else
+                                {
+
+                                    <div class="list-group-item list-group-item-info col-lg-6">
+                                        <strong>Rest day</strong>
+
+                                    </div>
+                                    <a class="btn btn-warning col-lg-3" style="font-size:19px; " asp-controller="Dashboard" asp-route-AppUserPlanId="@Model.plans.FirstOrDefault().WeekPlan.AppUserPlanId" asp-action="PastePlanToDate" asp-route-WeekPlanId="@item.FirstOrDefault().WeekPlanId" asp-route-CopyPlanId="@Model.CopyPlanId" asp-route-DayNum="@i">Paste</a>
+                                }
+                            }
+                        }
+
+                    }
+                </div>
+
+                <a class="btn btn-primary" style="margin-top:10px;" asp-controller="Dashboard" asp-action="DuplicationWeekPlan" asp-route-WeekPlanId="@item.FirstOrDefault().WeekPlan.Id">Duplicate WeekPlan</a>
+
+            </div>
+            count++;
+        }
+        @if (Model.WeekPlans != null)
+        {
+            foreach (var WPWIthoutPlan in Model.WeekPlans)
+            {
+            <div class="list-group-item col-lg-6">
+                <div class=" col-lg-2">
+                    <h4>Week @count</h4>
+                    <p>
+                        @WPWIthoutPlan.Name
+                    </p>
+                </div>
+                <div class=" col-lg-10">
+                    @for (int i = 1; i <= 7; i++)
+                    {
+                        <div class="list-group-item list-group-item-info col-lg-3">
+                            Day @i
+                        </div>
+                        @if (Model.CopyPlanId == 0)
+                        {
+                            <div class="list-group-item list-group-item-info col-lg-9">
+                                <strong>Rest day</strong>
+
+                            </div>
+                        }
+                        else
+                        {
+
+                            <div class="list-group-item list-group-item-info col-lg-6">
+                                <strong>Rest day</strong>
+
+                            </div>
+                            <a class="btn btn-warning col-lg-3" style="font-size:19px; " asp-controller="Dashboard" asp-route-AppUserPlanId="@Model.plans.FirstOrDefault().WeekPlan.AppUserPlanId" asp-action="PastePlanToDate" asp-route-WeekPlanId="@WPWIthoutPlan.Id" asp-route-CopyPlanId="@Model.CopyPlanId" asp-route-DayNum="@i">Paste</a>
+                        }
+                    }
+                </div>
+            </div>
+                    count++;
+                }
+            }
+        }
+
+
+
+            </div>
+<div class="clearfix"></div>
+<br />
+<div class="col-lg-12">
+
+    <a class="btn btn-default col-lg-2 col-lg-offset-10" asp-action="ViewPlan" asp-controller="Dashboard" asp-route-id="@Model.UserId">返回</a>
+</div>

@@ -12,5 +12,8 @@ namespace ImprovementProjectWebApp.Models.Customer
         //public IntroQA IntroQA { get; set; }
         public bool IfHaveIntro { get; set; }
         public bool IfFinishIntro { get; set; }
+        public bool IfUploadImg { get; set; }
+        public bool IfUserDelete { get; set; }
+        public bool IfUserEmailConfirmed { get; set; }
     }
 }

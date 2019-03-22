@@ -13,5 +13,7 @@ namespace ImprovementProjectWebApp.Models.WorkoutDatailVM
         public WorkoutPlan WorkoutPlan { get; set; }
         public List<PlanSetsReps> ListPlanSetsReps { get; set; }
         public bool IfTemplate { get; set; }
+        public string UserID { get; set; }
+        public int WeekPlanId { get; set; }
     }
 }

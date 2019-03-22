@@ -1,0 +1,78 @@
+﻿@model ImprovementProjectWebApp.Models.DashboardVM.MemberListVM
+@{
+    ViewData["Title"] = "MemberList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>MemberList</h2>
+@if (Model != null)
+{
+    @*@foreach (var item in Model.ApplicationUsers)
+    {
+        <p>@item.Email</p>
+        if (item.CustomerProfiles.Count() > 0)
+        {
+            <p>@item.CustomerProfiles.FirstOrDefault().Name</p>
+        }
+    }*@
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+
+                <th scope="col">Email</th>
+                <th scope="col">Name</th>
+                <th scope="col">User register date</th>
+                <th scope="col">Plan expired day</th>
+                <th scope="col">User</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ApplicationUsers)
+            {
+            <tr>
+
+                <td>@item.Email</td>
+                <td>
+                    @if (item.CustomerProfiles.Count() != 0)
+                    {
+                        @item.CustomerProfiles.FirstOrDefault().Name
+                    }
+                    else
+                    {
+                        <p>Null</p>
+                    }
+                </td>
+                <td>
+                    @if (item.CustomerProfiles.Count() != 0)
+                    {
+                        @item.CustomerProfiles.FirstOrDefault().StartDate.ToString("yyyy MMMM dd")
+                    }
+                    else
+                    {
+                        <p>Null</p>
+                    }
+                </td>
+
+                <td>
+                    @if (item.AppUserPlans.Count() != 0)
+                    {
+                        var endDate = item.AppUserPlans.Max(a => a.EndDate);
+                        int dayDiff = (endDate - DateTime.Today).Days;
+                        <p>@dayDiff</p>
+                    }
+                    else
+                    {
+                        <p>Null</p>
+                    }
+                </td>
+                <td>
+                    @*<a asp-controller="Dashboard" asp-action="ViewUserProfile" asp-route-UserId="@item.Id" class="btn btn-success">View Customer</a>*@
+                    <a asp-controller="Dashboard" asp-action="ViewCustomer" asp-route-id="@item.Id" class="btn btn-success">View Customer</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+

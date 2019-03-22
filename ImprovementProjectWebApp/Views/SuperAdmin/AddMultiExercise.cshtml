@@ -1,0 +1,24 @@
+﻿@model ImprovementProjectWebApp.Models.SuperAdmin.MutilExercise
+@{
+    ViewData["Title"] = "AddMultiExercise";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>AddMultiExercise</h2>
+<form asp-controller="SuperAdmin" asp-action="AddMultiExercise">
+
+    <div class="col-lg-12 list-group-item">
+        <div class="form-group">
+            <label >Body part</label>
+            <select asp-for="BodyPartId" class="form-control" asp-items="ViewBag.BodyPartId"></select>
+        </div>
+        <textarea type="text" name="Exercises" class="form-control">
+    
+        </textarea>
+    </div>
+    <div class="col-lg-12 list-group-item">
+        <input type="submit" value="Add" class="btn btn-primary col-lg-12 " />
+    </div>
+
+
+</form>

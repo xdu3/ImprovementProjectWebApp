@@ -23,22 +23,19 @@ namespace ImprovementProjectWebApp.Models
 
         public decimal Price { get; set; }
         public bool IfLock { get; set; }
-        public int TrackId { get; set; }
+        public string PaymentType { get; set; }
+        public DateTime PaymentDate { get; set; }
 
-        [Display(Name = "Plan")]
-        public int PlanId { get; set; }
-        [ForeignKey("PlanId")]
-        public virtual Plan Plan { get; set; }
-
-
-        [Display(Name = "MealPlan")]
-        public int MealPlanId { get; set; }
-        [ForeignKey("MealPlanId")]
-        public virtual MealPlan MealPlan { get; set; }
+        [Display(Name = "PlanPackage")]
+        public int PlanPackageId { get; set; }
+        [ForeignKey("PlanPackageId")]
+        public virtual PlanPackage PlanPackage { get; set; }
 
         [Display(Name = "User")]
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
+        public IEnumerable<WeekPlan> WeekPlans { get; set; }
+        
     }
 }

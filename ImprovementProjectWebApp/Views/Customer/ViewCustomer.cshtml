@@ -4,68 +4,89 @@
     ViewData["Title"] = "ViewCustomer";
     Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
+@if (Model == null)
+{
+    <div class="alert alert-danger">
+        <strong>Danger!</strong> 该用户没有Profile <a asp-controller="Customer" asp-action="AddCustomerProfile" >填写</a>
+    </div> 
 
-<h4>用户信息</h4>
-<hr />
-<div class="col-lg-6">
+}
+else
+{
+    <h4>用户信息</h4>
+    <hr />
+    <div class="col-lg-6">
 
-    <dl class="dl-horizontal">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Gender)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.WeChatNumber)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.WeChatNumber)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.StartDate)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ApplicationUser.Email)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ApplicationUser.Email)
+            </dd>
+            <dt>
+                生日
+            </dt>
+            <dd>
+                @Model.ApplicationUser.Birthday.ToString("yyyy MMMM dd") 
+                <br />
+                <a asp-action="AddBirthday" asp-controller="Customer" target="_blank">修改生日</a>
+            </dd>
+        </dl>
+    </div>
+    @if (Model.WeChatQRCode != null)
+    {
+    <div class="col-lg-6">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.WeChatQRCode)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.WeChatNumber)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.WeChatNumber)
-        </dd>
+            @{
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
+                var base64 = Convert.ToBase64String(Model.WeChatQRCode);
+                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                <img src="@imgsrc" alt="Alternate Text" width="100%" />
+
+            }
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.Email)
-        </dd>
-    </dl>
-</div>
-<div class="col-lg-6">
-    <dt>
-        @Html.DisplayNameFor(model => model.WeChatQRCode)
-    </dt>
-    <dd>
-        @{
-
-            var base64 = Convert.ToBase64String(Model.WeChatQRCode);
-            var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-            <img src="@imgsrc" alt="Alternate Text" width="100%" />
-
-        }
-    </dd>
-</div>
-<div class="clearfix">
-</div>
-<div class="col-lg-12">
-
-    <a class="btn btn-default col-lg-2 col-lg-offset-10" asp-action="Index" asp-controller="Customer">返回</a>
-</div>
+    </div>
+    }
+    <div class="clearfix">
+    </div>
+    <div class="col-lg-12">
+        <br /><br />
+        <a class="btn btn-warning col-lg-2  col-md-2 col-sm-12 col-xs-12" asp-action="EditCustomerProfile" asp-controller="Customer" asp-route-id="@Model.Id">编辑</a>
+        <a class="btn btn-default col-lg-2  col-md-2 col-md-offset-8 col-sm-12 col-xs-12 col-lg-offset-8" asp-action="Index" asp-controller="Customer">返回</a>
+    </div>
+}

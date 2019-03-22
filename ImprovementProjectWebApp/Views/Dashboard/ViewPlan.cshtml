@@ -1,83 +1,216 @@
-﻿@*@model ImprovementProjectWebApp.Models.PartExerciseViewModels.UserPlanVM*@
-@model IList<ImprovementProjectWebApp.Models.AppUserPlan>
+﻿@model ImprovementProjectWebApp.Models.DashboardVM.DViewPlanVM
 @{
     ViewData["Title"] = "SelectOrAddPlan";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-<p>User Name: @ViewBag.UserName</p>
-<p>Current Plan Number: @Model.Count()</p>
 @if (ViewBag.Err != null)
 {
     <div class="alert alert-danger">
         <strong>Danger!</strong> @ViewBag.Err
     </div>
 }
-<div class="list-group">
-    @{
-        var x = Model.GroupBy(m => m.TrackId);
-        foreach (var item in x)
-        {
+@if (Model.IfTemplate != true)
+{
+<p>User Name: @ViewBag.UserName</p>
+}
+@if (Model.AppUserPlan == null)
+{
+    <a class="btn btn-default" asp-controller="PlanManage" asp-action="AddAppUserPlan" asp-route-UserId="@ViewBag.UserId">Add Plan</a>
 
-    <div class="list-group-item col-lg-12">
-        <p class="col-lg-8">Period: @item.FirstOrDefault().StartDate.ToString("yyyy MMMM dd") - @item.LastOrDefault().EndDate.ToString("yyyy MMMM dd")</p><a class="col-lg-4 btn btn-danger" asp-controller="Dashboard" asp-action="DeleteListAppUserPlan" asp-route-TrackId="@item.FirstOrDefault().TrackId" asp-route-UserId="@item.FirstOrDefault().ApplicationUserId">Delete</a>
-        <p class="col-lg-12">Lock Status :@item.FirstOrDefault().IfLock</p>
-        <p class="col-lg-12">Price :@item.FirstOrDefault().Price</p>
-
-        @{
-            int count = 1;
-            foreach (var i in item)
+}
+else
+{
+    <div class="col-lg-12 list-group-item">
+        <div class="col-lg-6">
+            @*@if (Model.IfTemplate != true)
+        {*@
+            <h4>@Model.AppUserPlan.StartDate - @Model.AppUserPlan.EndDate</h4>
+            <p>Price: @Model.AppUserPlan.Price</p>
+            <p>If the Plan is locked: @Model.AppUserPlan.IfLock</p>
+            <p>There is <strong>@Model.WeekLeft</strong> week plan left</p>
+            <p>AppUserPlan ID: @Model.AppUserPlan.Id</p>
+            @if (Model.IfTemplate != true)
             {
-                if (i.Plan.PlanName != "未完成")
+                @if (Model.CheckInStatus == null)
                 {
-        <div class="col-lg-3 list-group-item">
-            <p>@i.Plan.PlanName</p>
-            <a asp-action="CreateDetail" class=" btn btn-success col-lg-12" asp-controller="WorkoutPlansDetail" asp-route-appUserPlanId="@i.Id">View Workout</a>
-            @if (i.MealPlan.Default == true)
-            {
-                <a asp-action="AddMealPlan" class="btn btn-warning col-lg-12" asp-controller="Dashboard" asp-route-UserId="@i.ApplicationUserId" asp-route-AppUserPlanId="@i.Id">Add Meal Plan</a>
-            }
-            else
-            {
-                <a asp-action="ViewMealPlan" class="btn btn-success col-lg-6" asp-controller="Dashboard" asp-route-UserId="@i.ApplicationUserId" asp-route-AppUserPlanId="@i.Id">View Meal Plan</a>
-                <a asp-action="DeleteMealPlan" class="btn btn-warning col-lg-6" asp-controller="Dashboard" asp-route-UserId="@i.ApplicationUserId" asp-route-AppUserPlanId="@i.Id">Delete Meal Plan</a>
-            }
-
-            <a asp-action="Disconnect" class="btn btn-danger col-lg-12" asp-controller="Dashboard" asp-route-appUserPlanId="@i.Id">Disconnect</a>
-
-        </div>
+                    <a class="btn btn-primary" asp-controller="Dashboard" asp-action="SetUserCheckInDate" asp-route-AppUserPlanId="@Model.AppUserPlan.Id">Set User Check In Date</a>
                 }
                 else
                 {
-        <div class="col-lg-4 list-group-item">
-            <p>Phase @count</p>
-            <a asp-action="AddPhasePlan" class="btn btn-warning col-lg-12" asp-controller="Dashboard" asp-route-UserId="@i.ApplicationUserId" asp-route-AppUserPlanId="@i.Id">Add Phase Plan</a>
-            <a asp-action="ConnectToTem" class="btn btn-warning col-lg-12" asp-controller="Dashboard" asp-route-UserId="@i.ApplicationUserId" asp-route-AppUserPlanId="@i.Id">Connect To Template</a>
-            @if (i.MealPlan.Default == true)
+                    <p>User Check In day <strong>@Model.CheckInStatus</strong> </p>
+                    <a class="btn btn-primary" asp-controller="Dashboard" asp-action="SetUserCheckInDate" asp-route-AppUserPlanId="@Model.AppUserPlan.Id"> Reset User Check In Date</a>
+                }
+
+            }
+            <a asp-controller="Dashboard" asp-action="AddTodayAsCheckInDate" asp-route-AppUserPlanId="@Model.AppUserPlan.Id" class="btn btn-primary col-lg-4">Add Today As Check In Date </a>
+            @*}
+        else
+        {
+            <h4>Template</h4>
+            @if (Model.CheckInStatus == null)
             {
-                <a asp-action="AddMealPlan" class="btn btn-warning col-lg-12" asp-controller="Dashboard"  asp-route-AppUserPlanId="@i.Id">Add Meal Plan</a>
+                <a class="btn btn-primary" asp-controller="Dashboard" asp-action="SetUserCheckInDate" asp-route-AppUserPlanId="@Model.AppUserPlan.Id">Set User Check In Date</a>
             }
             else
             {
-                <a asp-action="ViewMealPlan" class="btn btn-success col-lg-12" asp-controller="Dashboard" asp-route-AppUserPlanId="@i.Id">View Meal Plan</a>
-
+                <p>User Check In day <strong>@Model.CheckInStatus</strong> </p>
+                <a class="btn btn-primary" asp-controller="Dashboard" asp-action="SetUserCheckInDate" asp-route-AppUserPlanId="@Model.AppUserPlan.Id"> Reset User Check In Date</a>
             }
+            <a asp-controller="Dashboard" asp-action="AddTodayAsCheckInDate" asp-route-AppUserPlanId="@Model.AppUserPlan.Id" class="btn btn-primary col-lg-4">Add Today As Check In Date </a>
+        }*@
+
         </div>
+        <div class="col-lg-3 col-lg-offset-3">
+            <a class="btn btn-primary btn-block" asp-controller="Dashboard" asp-action="FastEditPlan" asp-route-AppUserPlanId="@Model.AppUserPlan.Id">Fast Edit Plan</a>
+        </div>
+
+
+        <div class="col-lg-12" style="padding-top:10px;">
+
+            @{
+                var count = 1;
+                foreach (var item in Model.WeekPlans)
+                {
+
+            <a class="col-lg-12 list-group-item" asp-controller="Dashboard" asp-action="ViewPlan" asp-route-id="@ViewBag.UserId" asp-route-WeekPlanId="@item.Id">
+                @if (Model.IfTemplate != true)
+                {
+                    <span>Week @count</span>
+                }
+                else
+                {
+
+                    <span>Plan name: @item.Name</span>
+                }
+            </a>
+                    if (Model.SelectWeekPlansId == item.Id)
+                    {
+
+                        <div class="col-lg-12 list-group-item">
+                            <div class="col-lg-3  list-group-item" style="height:359px;">
+                                <div style="height:268px;">
+                                    <p class="col-lg-12">Plan name: @item.Name</p>
+
+                                    @if (Model.IfTemplate != true)
+                                    {
+                                        <p class="col-lg-12">@item.WeekPlanStartTime.ToString("yyyy MMMM dd") - @item.WeekPlanEndTime.ToString("yyyy MMMM dd")</p>
+
+                                        @if (Model.MealPlanExist == false)
+                                        {
+                                            <a class="btn btn-primary col-lg-12" asp-controller="PlanManage" asp-action="AddMealPlan" asp-route-WeekPlanId="@item.Id">Add Meal Plan</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-success col-lg-12" href="@Model.MealPlanURL" target='_blank'>View Meal Plan</a>
+                                            <a class="btn btn-danger col-lg-12" asp-controller="PlanManage" asp-action="DeleteMealPlan" asp-route-WeekPlanId="@item.Id" onclick="return confirm('Are you sure wants to Delete this Meal Plan?');">Delete Meal Plan</a>
+                                        }
+                                    }
+
+                                </div>
+                                <div style="height:91px;">
+                                    <a class="btn btn-success col-lg-12" asp-controller="PlanManage" asp-action="ViewWeekPlan" asp-route-WeekPlanId="@item.Id" asp-route-UserId="@ViewBag.UserId" target="_blank">View Week Plan</a>
+                                    @if (Model.IfLastWeekPlan)
+                                    {
+                                        <a class="btn btn-danger col-lg-12" asp-controller="PlanManage" asp-action="DeleteWeekPlan" asp-route-WeekPlanId="@item.Id" onclick="return confirm('Are you sure wants to Delete this Week Plan?');">Delete Week Plan</a>
+                                    }
+                                    else
+                                    {
+
+                                        <a class="btn btn-danger col-lg-12 disabled" asp-controller="PlanManage" asp-action="DeleteWeekPlan" asp-route-WeekPlanId="@item.Id" onclick="return confirm('Are you sure wants to Delete this Week Plan?');">Only last week plan can be deleted</a>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-lg-9">
+                                @for (int i = 1; i <= 7; i++)
+                                {
+                                    <div class=" col-lg-12 list-group-item list-group-item-dark">
+
+                                        @if (Model.Plans.Where(p => p.DayPlanNum == i).Count() == 0)
+                                        {
+                                            <p class="col-lg-1">Day @i</p>
+                                            <p class="col-lg-2">No Plan</p>
+                                            <a class="btn btn-primary btn-sm col-lg-6" asp-controller="PlanManage" asp-action="AddDayPlan" asp-route-WeekPlanId="@item.Id" asp-route-AddDayNum="@i">+</a>
+                                            <a class="btn btn-info btn-sm col-lg-3" asp-controller="PlanManage" asp-action="AddRestDayPlan" asp-route-WeekPlanId="@item.Id" asp-route-AddDayNum="@i">Add rest day</a>
+                                        }
+                                        else
+                                        {
+                                            var PlanId = Model.Plans.Where(p => p.DayPlanNum == i).FirstOrDefault().Id;
+                                            <p class="col-lg-1">Day @i</p>
+                                            <p class="col-lg-2">Name: @Model.Plans.Where(p => p.DayPlanNum == i).FirstOrDefault().Name <span class="badge  badge-danger">@Model.Plans.Where(p => p.DayPlanNum == i).FirstOrDefault().WorkoutNum</span></p>
+
+                                            if (Model.Plans.Where(p => p.DayPlanNum == i).FirstOrDefault().Name != "休息日")
+                                            {
+                                                <a class="btn btn-success btn-sm col-lg-3 " asp-controller="WorkoutPlansDetail" asp-action="CreateDetail" asp-route-PlanId="@PlanId">Manage Plan</a>
+                                                <a class="btn btn-warning btn-sm col-lg-3 " asp-controller="PlanManage" asp-action="EditDayPlan" asp-route-PlanId="@PlanId">Edit Plan Name</a>
+                                                <a class="btn btn-danger btn-sm col-lg-3" asp-controller="PlanManage" asp-action="DeleteDayPlan" asp-route-PlanId="@PlanId" onclick="return confirm('Are you sure wants to Delete this Plan?');">Delete</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-primary btn-sm col-lg-6 disabled">休息日</a>
+                                                <a class="btn btn-danger btn-sm col-lg-3" asp-controller="PlanManage" asp-action="DeleteDayPlan" asp-route-PlanId="@PlanId" onclick="return confirm('Are you sure wants to Delete this Plan?');">Delete</a>
+                                            }
+                                        }
+                                    </div>
+                                }
+                            </div>
+
+                        </div>
+
                     }
+                    count++;
+                }
+                @if (Model.WeekLeft != 0 && Model.IfTemplate != true)
+                {
+                    <form asp-controller="PlanManage" asp-action="AddWeekPlan">
+
+                        <div class="col-lg-8 list-group-item">
+                            <input type="number" name="appUserPlanId" value="@Model.AppUserPlan.Id" class="form-control" style="display:none;">
+                            <input type="text" name="WeekPlanName" class="form-control" placeholder="Enter a week plan name">
+                        </div>
+
+                            <div class="col-lg-4 list-group-item">
+                                <input type="submit" value="+" class="btn btn-primary col-lg-6 " onclick="return confirm('Are you sure wants to Add this Plan?');" />
+                                <a class="btn btn-success col-lg-6 " asp-controller="Dashboard" asp-action="AddTemplate" asp-route-AppUserPlanId="@Model.AppUserPlan.Id" asp-route-UserId="@ViewBag.UserId">Add Template</a>
+                            </div>
+
+
+                    </form>
 
                 }
-            count++;
-            }
-     </div>
-            
-        }
+                @if (Model.IfTemplate == true)
+                {
+                    <form asp-controller="PlanManage" asp-action="AddWeekPlan">
 
-        }
+                        <div class="col-lg-8 list-group-item">
+                            <input type="number" name="appUserPlanId" value="@Model.AppUserPlan.Id" class="form-control" style="display:none;">
+                            <input type="text" name="WeekPlanName" class="form-control" placeholder="Enter a week plan name">
+                        </div>
+
+                        <div class="col-lg-4 list-group-item">
+                            <input type="submit" value="+" class="btn btn-primary col-lg-12 " onclick="return confirm('Are you sure wants to Add this Plan?');" />
+
+                        </div>
+
+
+                    </form>
+                }
+                
+            }
+        </div>
     </div>
 
-<div class="clearfix"></div>
+}
 
+
+
+<div class="clearfix"></div>
 <br />
-<a class="btn btn-default" asp-controller="AppUserPlans" asp-action="CreateRelationship" asp-route-UserId="@ViewBag.UserId">Add Plan</a>
-<br />
+@if (Model.IfTemplate != true)
+{
+<div class="col-lg-12">
+
+    <a class="btn btn-default col-lg-2 col-lg-offset-10" asp-action="ViewCustomer" asp-controller="Dashboard" asp-route-id="@ViewBag.UserId">返回</a>
+</div>
+}
 

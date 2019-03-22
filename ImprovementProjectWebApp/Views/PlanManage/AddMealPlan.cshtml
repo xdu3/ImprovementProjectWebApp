@@ -1,0 +1,28 @@
+﻿@model ImprovementProjectWebApp.Models.MealPlan
+@{
+    ViewData["Title"] = "AddMealPlan";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>AddMealPlan</h2>
+<p>Week Plan Name: @ViewBag.WeekPlanName</p>
+<div class="row">
+    <div class="col-md-4">
+
+        <form asp-action="AddMealPlan" enctype="multipart/form-data" method="post">
+            <br />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="file" id="fUpload" name="files" multiple class="form-control" />
+                </div>
+                <input asp-for="@Model.WeekPlanId" name="WeekPlanId" class="form-control" style="display:none;"/>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="padding-top:10px;">
+                    <input type="submit" id="btnUpload" value="Upload" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

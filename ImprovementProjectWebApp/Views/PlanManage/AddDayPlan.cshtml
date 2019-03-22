@@ -1,0 +1,39 @@
+﻿@model ImprovementProjectWebApp.Models.Plan
+@{
+    ViewData["Title"] = "AddDayPlan";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Add Day Plan</h2>
+@if (ViewBag.Err != null)
+{
+    <div class="alert alert-danger">
+        <strong>Danger!</strong> @ViewBag.Err
+    </div>
+}
+<form asp-controller="PlanManage" asp-action="AddDayPlan">
+
+    <div class="col-lg-8 list-group-item">
+        <label>Plan Name</label>
+        <input type="text" name="Name" value="@Model.Name" class="form-control">
+    </div>
+    <div style="display:none;">
+        <div class="col-lg-8 list-group-item">
+            <label>Plan Date</label>
+            <input type="text" name="DayPlanDate" value="@Model.DayPlanDate" class="form-control">
+        </div>
+        <div class="col-lg-8 list-group-item">
+            <label>Day</label>
+            <input type="number" name="DayPlanNum" value="@Model.DayPlanNum" class="form-control">
+        </div>
+        <div class="col-lg-8 list-group-item">
+            <label>WeekPlanId</label>
+            <input type="number" name="WeekPlanId" value="@Model.WeekPlanId" class="form-control">
+        </div>
+    </div>
+    <div class="col-lg-8 list-group-item">
+        <input type="submit" value="Add" class="btn btn-default col-lg-12 " />
+    </div>
+
+</form>
+

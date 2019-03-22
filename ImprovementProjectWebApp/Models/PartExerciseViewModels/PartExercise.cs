@@ -12,7 +12,7 @@ namespace ImprovementProjectWebApp.Models.PartExerciseViewModels
         public List<BodyPart> BodyParts { get; set; }
         public int SelectExerciseId { get; set; }
         public int SelectPartId { get; set; }
-        public int AppUserPlanId { get; set; }
+        public int PlanId { get; set; }
         public int WorkoutPlanId { get; set; }
     }
 }

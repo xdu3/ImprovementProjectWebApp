@@ -46,10 +46,10 @@
             @Html.DisplayNameFor(model => model.FirstOrDefault().WorkoutPlan.Plan)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.FirstOrDefault().WorkoutPlan.Plan.PlanName)
+            @Html.DisplayFor(model => model.FirstOrDefault().WorkoutPlan.Plan.Name)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="CreateDetail" asp-route-appUserPlanId="@ViewBag.AppUserId">back</a>
+    <a asp-action="CreateDetail" asp-route-PlanId="@ViewBag.PlanId">back</a>
 </div>

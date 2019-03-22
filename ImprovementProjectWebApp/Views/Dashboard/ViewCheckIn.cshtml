@@ -1,0 +1,62 @@
+﻿@model ImprovementProjectWebApp.Models.DashboardVM.ViewCheckInVM
+@{
+    ViewData["Title"] = "ViewCheckIn";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>ViewCheckIn</h2>
+
+    <p class="list-group-item col-lg-12">
+        @Model.ApplicationUser.UserName
+    </p>
+    <div class="list-group-item  col-lg-12">
+        @foreach (var item in @Model.ApplicationUser.CheckInQAs)
+        {
+        <div class="col-lg-4">
+            <div class="list-group-item col-lg-12">
+                <p class="col-lg-12">@item.CreatedDate</p>
+                @if (item.CheckInQADetails.Count() != 0)
+                {
+                    <div class="list-group-item col-lg-12">
+                        @foreach (var i in item.CheckInQADetails)
+                        {
+                            <p>
+                                Question: @i.CheckInQuestion.Question
+                            </p>
+                            <p>
+                                Answer: @i.Answer
+                            </p>
+                            <a asp-controller="Dashboard" asp-action="EditCheckInQADetail" asp-route-CheckInQADetailId="@i.Id">Edit</a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p>Check In Detail null</p>
+
+                }
+                @if (item.CheckInImgs.Count() != 0)
+                {
+                    <div class="list-group-item col-lg-12">
+                        @foreach (var i2 in item.CheckInImgs)
+                        {
+                            <img src="@i2.ImgURL" alt="Alternate Text" width="100%" />
+
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p>Img null</p>
+
+                }
+            </div>
+            <a class="btn btn-block btn-danger col-lg-12" asp-controller="Dashboard" asp-action="DeleteUserCheckInDatail" asp-route-CheckInQAId="@item.Id" asp-route-UserId="@Model.ApplicationUser.Id">
+                x
+            </a>
+
+        </div>
+            }
+
+
+        </div>

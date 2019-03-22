@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>IntroAnswerView</h2>
+<h2>Intro Answer View</h2>
 <div class="list-group col-lg-12">
     @{
         if (Model != null)
@@ -48,5 +48,9 @@
 
         }
         }
+</div>
+<div class="col-lg-12">
+
+    <a class="btn btn-default col-lg-2 col-lg-offset-10" asp-action="ViewCustomer" asp-controller="Dashboard" asp-route-id="@ViewBag.UserId">返回</a>
 </div>
 <div class="clearfix"></div>

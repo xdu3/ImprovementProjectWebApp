@@ -5,186 +5,260 @@
 }
 @*<link href="~/css/main.css" rel="stylesheet">*@
 <link href="~/css/CustomerIndex.css" rel="stylesheet">
+
+
+
 @if (Model == null)
 {
 
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-info" role="alert">
         请联系教练添加您的计划！
     </div>
 
 }
-
-<!-- Our Work Section -->
-    <div class="">
-
-
-        <div class="">
-            <h3 class="title-description">用户名: @Model.ApplicationUser.UserName</h3>
+else
+{
+    if (Model.IfUserDelete == true)
+    {
+        <br />
+        <br /><br />
+        <div class="alert alert-info" role="alert">
+            您的账户出现了问题请您联系我们的管理员
         </div>
-        <!-- End Title Page -->
-        <!-- Portfolio Projects -->
-        @if (Model.appUserPlan != null)
-        {
-            @if (Model.appUserPlan.EndDate < DateTime.Now)
-            {
+    }
+    else
+    {
 
-                <div class="">
-                    <div class="alert alert-danger" role="alert">
-                        您的计划已经过期，请联系我们的教练给您安排计划。
-                    </div>
-                </div>
+        <!-- Our Work Section -->
+        <div class="">
 
-            }
-            else
+
+            <div class="">
+                <h3 class="title-description">用户名: @Model.ApplicationUser.UserName</h3>
+            </div>
+            <!-- End Title Page -->
+            <!-- Portfolio Projects -->
+            @if (Model.appUserPlan != null)
             {
-                @if ((Model.appUserPlan.EndDate - DateTime.Now).TotalDays < 5)
+                @if (Model.appUserPlan.EndDate < DateTime.Now)
                 {
-                    int days = (int)Math.Abs(Math.Round((Model.appUserPlan.EndDate - DateTime.Now).TotalDays));
+
                     <div class="">
                         <div class="alert alert-danger" role="alert">
-                            您的计划还有 @days 天过期，请联系我们的教练给您安排计划。
+                            您的计划已经过期，请联系我们的教练给您安排计划。
                         </div>
                     </div>
 
                 }
-
-                @if (Model.IfHaveIntro == true)
+                else
                 {
-                    if (Model.IfFinishIntro != true)
+                    @if ((Model.appUserPlan.EndDate - DateTime.Now).TotalDays < 5)
                     {
-                        <div class="alert alert-warning " role="alert">
-                            你还没有完成初始问题 <a asp-controller="Customer" asp-action="AnswerIntroQA">点击这里完成回答初始问题</a>
+                        int days = (int)Math.Abs(Math.Round((Model.appUserPlan.EndDate - DateTime.Now).TotalDays));
+                        <div class="">
+                            <div class="alert alert-danger" role="alert">
+                                您的计划还有 @days 天过期，请联系我们的教练给您安排计划。
+                            </div>
                         </div>
+
                     }
-
-                        <div class="containerNew">
-                            <div class="box">
-                                <div class="thumb">
-                                    <img src="images/1.jpg">
-                                </div>
-                                <div class="details">
-                                    <div class="content">
-                                        <i class="fa fa-gift" aria-hidden="true"></i>
-                                        <h3>健身计划</h3>
-                                        <a class="selected" asp-controller="Customer" asp-action="WorkoutList">View</a>
-                                    </div>
-                                </div>
+                    <div class="containerNew">
+                        <div class="box">
+                            <div class="thumb">
+                                <img src="images/1.jpg">
                             </div>
-
-                            <div class="box">
-                                <div class="thumb">
-                                    <img src="images/2.jpg">
-                                </div>
-                                <div class="details">
-                                    <div class="content">
-                                        <i class="fa fa-globe" aria-hidden="true"></i>
-                                        <h3>饮食计划</h3>
-                                        <a asp-controller="Customer" asp-action="ViewMealPlan">View</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="box">
-                                <div class="thumb">
-                                    <img src="images/3.jpg">
-                                </div>
-                                <div class="details">
-                                    <div class="content">
-                                        <i class="fa fa-camera" aria-hidden="true"></i>
-                                        <h3>打卡</h3>
-                                        <a asp-controller="Customer" asp-action="CheckIn">View</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box">
-                                <div class="thumb">
-                                    <img src="images/4.jpg">
-                                </div>
-                                <div class="details" id="x1">
-                                    <div class="content">
-                                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                                        <h3>打卡信息</h3>
-                                        <a asp-controller="Customer" asp-action="CheckInDetail">View</a>
-                                        
-                                    </div>
+                            <div class="details">
+                                <div class="content">
+                                    <i class="fa fa-gift" aria-hidden="true"></i>
+                                    <h3>健身计划</h3>
+                                    <a class="selected" asp-controller="Customer" asp-action="WorkoutList">View</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="containerNew box2">
 
-                            <div class="box">
-                                <div class="thumb">
-                                    <img src="images/5.jpg">
-                                </div>
-                                <div class="details" id="x2">
-                                    <div class="content">
-                                        <i class="fa fa-gift" aria-hidden="true"></i>
-                                        <h3>初始问题</h3>
-                                        <a asp-controller="Customer" asp-action="AnswerIntroQA">View</a>
-                                    </div>
-                                </div>
+                        <div class="box">
+                            <div class="thumb">
+                                <img src="images/2.jpg">
                             </div>
-
-                            <div class="box">
-                                <div class="thumb">
-                                    <img src="images/6.jpg">
-                                </div>
-                                <div class="details" id="x3">
-                                    <div class="content">
-                                        <i class="fa fa-globe" aria-hidden="true"></i>
-                                        <h3>用户信息</h3>
-                                        <a asp-controller="Customer" asp-action="ViewCustomer">View</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box">
-                                <div class="thumb">
-                                    <img src="images/5.jpg">
-                                </div>
-                                <div class="details" id="x2">
-                                    <div class="content">
-                                        <i class="fa fa-gift" aria-hidden="true"></i>
-                                        <h3>图片墙</h3>
-                                        <a asp-controller="Customer" asp-action="ViewGallery">View</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="box">
-                                <div class="thumb">
-                                    <img src="images/6.jpg">
-                                </div>
-                                <div class="details" id="x3">
-                                    <div class="content">
-                                        <i class="fa fa-globe" aria-hidden="true"></i>
-                                        <h3>用户信息</h3>
-                                        <a asp-controller="Customer" asp-action="ViewCustomer">View</a>
-                                    </div>
+                            <div class="details">
+                                <div class="content">
+                                    <i class="fa fa-globe" aria-hidden="true"></i>
+                                    <h3>饮食计划</h3>
+                                    <a asp-controller="Customer" asp-action="MealPlanList">View</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="clearfix"></div>
 
+                        <div class="box">
+                            <div class="thumb">
+                                <img src="images/3.jpg">
+                            </div>
+                            <div class="details">
+                                <div class="content">
+                                    <i class="fa fa-camera" aria-hidden="true"></i>
+                                    <h3>打卡</h3>
+                                    <a asp-controller="Customer" asp-action="CheckInList">View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box">
+                            <div class="thumb">
+                                <img src="images/4.jpg">
+                            </div>
+                            <div class="details" id="x1">
+                                <div class="content">
+                                    <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                                    <h3>打卡信息</h3>
+                                    <a asp-controller="Customer" asp-action="CheckInDetail">View</a>
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="containerNew box2">
+
+                        <div class="box">
+                            <div class="thumb">
+                                <img src="images/5.jpg">
+                            </div>
+                            <div class="details" id="x2">
+                                <div class="content">
+                                    <i class="fa fa-gift" aria-hidden="true"></i>
+                                    <h3>用户提问</h3>
+                                    <a asp-controller="Customer" asp-action="FeedbacksList">View</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box">
+                            <div class="thumb">
+                                <img src="images/6.jpg">
+                            </div>
+                            <div class="details" id="x3">
+                                <div class="content">
+                                    <i class="fa fa-globe" aria-hidden="true"></i>
+                                    <h3>用户信息</h3>
+                                    <a asp-controller="Customer" asp-action="ViewCustomer">View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box">
+                            <div class="thumb">
+                                <img src="images/7.jpg">
+                            </div>
+                            <div class="details" id="x2">
+                                <div class="content">
+                                    <i class="fa fa-gift" aria-hidden="true"></i>
+                                    <h3>图片墙</h3>
+                                    <a asp-controller="Customer" asp-action="ViewGallery">View</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="box">
+                            <div class="thumb">
+                                <img src="images/8.jpg">
+                            </div>
+                            <div class="details" id="x3">
+                                <div class="content">
+                                    <i class="fa fa-globe" aria-hidden="true"></i>
+                                    <h3>管理账户</h3>
+                                    <a asp-controller="Manage" asp-action="Index">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                }
+            }
+            else
+            {
+
+                @if (Model.IfUserEmailConfirmed == false)
+                {
+
+                    <div class="alert alert-info" role="alert">
+                        <h4>验证邮件已经成功发送至您的邮箱，请您进入您的邮箱激活您的账户，如果未发现邮件，请查看您的垃圾邮箱.</h4>
+                        <h4>如果邮件过期请 <a asp-controller="Manage" asp-action="Index">点击这里进入用户设置再次发送邮件激活</a></h4>
+                        
+                    </div>
+                }
+                else
+                {
+                    if (Model.IfHaveIntro == true)
+                    {
+                        if (Model.IfFinishIntro != true)
+                        {
+                            <div class="alert alert-warning " role="alert">
+                                你还没有完成初始问题 <a asp-controller="Customer" asp-action="AnswerIntroQA">点击这里完成回答初始问题</a>
+                            </div>
                         }
                         else
                         {
+                            if (Model.IfUploadImg != true)
+                            {
+                                <div class="alert alert-warning " role="alert">
+                                    你还没有上传初始图片 <a asp-controller="Customer" asp-action="InitialImg">点击这里上传初始图片</a>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="alert alert-info" role="alert">
+                                    您还没有任何计划，请通过以下途径购买计划。
+                                </div>
+                                <div>
+                                    <div class="col-lg-3">
+                                        <h4 class="text-center list-group-item">4周计划</h4>
+                                        <div class="list-group-item">
+                                            <img src="~/images/shoukuan1000.jpg" alt="Alternate Text" width="100%" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <h4 class="text-center  list-group-item"> 12周计划</h4>
+                                        <div class="list-group-item">
+                                            <img src="~/images/shoukuan2700.jpg" alt="Alternate Text" width="100%" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 ">
+                                        <h4 class="text-center  list-group-item">4周学生计划</h4>
+                                        <div class="list-group-item">
+                                            <img src="~/images/shoukuan800.jpg" alt="Alternate Text" width="100%" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <h4 class="text-center  list-group-item">12周学生计划</h4>
+                                        <div class="list-group-item">
+                                            <img src="~/images/shoukuan2200.jpg" alt="Alternate Text" width="100%" />
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="clearfix"></div>
+                                </div>
+
+                            }
+                        }
+
+                    }
+                    else
+                    {
                         <div class="alert alert-danger" role="alert">
                             你还没有开始初始问题 <a asp-controller="Customer" asp-action="AnswerIntroQA">点击这里开始回答初始问题</a>
 
                         </div>
 
-                        }
-                        }
-                        }
-                        else
-                        {
-                        <div class="alert alert-danger" role="alert">
-                            您还没有任何计划，请联系我们的教练给您安排计划。
-                        </div>
+                    }
 
-                        }
-                        <!-- End Portfolio Projects -->
-                    </div>
+                }
 
+
+            }
+            <!-- End Portfolio Projects -->
+        </div>
+    }
+}
+        <hr />
 

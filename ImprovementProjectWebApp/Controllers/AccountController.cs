@@ -80,7 +80,7 @@ namespace ImprovementProjectWebApp.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -92,12 +92,12 @@ namespace ImprovementProjectWebApp.Controllers
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
+                    _logger.LogWarning("用户被锁，请联系管理员。");
                     return RedirectToAction(nameof(Lockout));
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "登陆错误，请再试一遍。");
                     return View(model);
                 }
             }
@@ -239,7 +239,7 @@ namespace ImprovementProjectWebApp.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, Birthday = model.Birthday };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -310,50 +310,53 @@ namespace ImprovementProjectWebApp.Controllers
 
                     var result2 = await _userManager.AddToRoleAsync(user, "Customer");
                     //====================================================
-
-
-                    _logger.LogInformation("User created a new account with password.");
-
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
-
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation("User created a new account with password.");
-
-                    CustomerProfile customerProfile  = new CustomerProfile();
-                    customerProfile.ApplicationUserId = user.Id;
-
-                    customerProfile.Name = model.Name;
-                    customerProfile.Gender = model.Gender;
-                    customerProfile.PhoneNumber = model.PhoneNumber;
-                    customerProfile.WeChatNumber = model.WeChatNumber;
-                    customerProfile.StartDate = DateTime.Today;
-                    //==============img=========================
-                    var files = HttpContext.Request.Form.Files;
-                    if (files[0] != null && files[0].Length > 0)
+                    if (result2.Succeeded)
                     {
-                        //when user uploads an image
-                        byte[] p1 = null;
-                        using (var fs1 = files[0].OpenReadStream())
-                        {
-                            using (var ms1 = new MemoryStream())
-                            {
-                                fs1.CopyTo(ms1);
-                                p1 = ms1.ToArray();
-                            }
-                        }
 
-                        customerProfile.WeChatQRCode = p1;
-                    }
-                    _context.CustomerProfile.Add(customerProfile);
+                        _logger.LogInformation("User created a new account with password.");
+
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation("User created a new account with password.");
+
+                        CustomerProfile customerProfile = new CustomerProfile();
+                        customerProfile.ApplicationUserId = user.Id;
+
+                        customerProfile.Name = model.Name;
+                        customerProfile.Gender = model.Gender;
+                        customerProfile.PhoneNumber = model.PhoneNumber;
+                        customerProfile.WeChatNumber = model.WeChatNumber;
+                        customerProfile.StartDate = DateTime.Today;
+                        //==============img=========================
+                        var files = HttpContext.Request.Form.Files;
+                        if (files[0] != null && files[0].Length > 0)
+                        {
+                            //when user uploads an image
+                            byte[] p1 = null;
+                            using (var fs1 = files[0].OpenReadStream())
+                            {
+                                using (var ms1 = new MemoryStream())
+                                {
+                                    fs1.CopyTo(ms1);
+                                    p1 = ms1.ToArray();
+                                }
+                            }
+
+                            customerProfile.WeChatQRCode = p1;
+                        }
+                    
+                    _context.CustomerProfile.Add(customerProfile);                    
                     _context.SaveChanges();
+                        //======send user confirmationEmail
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                        await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation("User created a new account with password.");
+                        return RedirectToLocal(returnUrl);
+                    }
                     //===================================
 
-
-
-
-                    return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
             }
@@ -373,6 +376,11 @@ namespace ImprovementProjectWebApp.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+        public async Task<IActionResult> AtagLogout()
+        {
+            await _signInManager.SignOutAsync();
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 

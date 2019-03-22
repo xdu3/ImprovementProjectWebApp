@@ -3,151 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ImprovementProjectWebApp.Data;
 using ImprovementProjectWebApp.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using ImprovementProjectWebApp.Data;
 
 namespace ImprovementProjectWebApp.Controllers
 {
+    [Authorize(Roles = "SuperAdmin,Admin")]
     public class TemplateController : Controller
     {
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        //private readonly IEmailSender _emailSender;
+        //private readonly ILogger _logger;
         private readonly ApplicationDbContext _context;
+        private IHostingEnvironment _hostingEnvironment;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public TemplateController(ApplicationDbContext context)
+        public TemplateController(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            //IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager,
+            //ILogger<AccountController> logger,
+            ApplicationDbContext context,
+            IHostingEnvironment hostingEnvironment)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            //_emailSender = emailSender;
+            _roleManager = roleManager;
+            //_logger = logger;
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
-
-        // GET: Template
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Plans.Where(p=>p.IfTemplate == true).ToListAsync());
-        }
+            string applicationUser = _context.ApplicationUser.Where(a => a.UserName == "dx3081@gmail.com").FirstOrDefault().Id;
 
-        // GET: Template/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var plan = await _context.Plans
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (plan == null)
-            {
-                return NotFound();
-            }
-
-            return View(plan);
-        }
-
-        // GET: Template/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Template/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PlanName,Active,IfTemplate")] Plan plan)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(plan);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(plan);
-        }
-
-        // GET: Template/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var plan = await _context.Plans.SingleOrDefaultAsync(m => m.Id == id);
-            if (plan == null)
-            {
-                return NotFound();
-            }
-            return View(plan);
-        }
-
-        // POST: Template/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PlanName,Active,IfTemplate")] Plan plan)
-        {
-            if (id != plan.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(plan);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PlanExists(plan.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(plan);
-        }
-
-        // GET: Template/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var plan = await _context.Plans
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (plan == null)
-            {
-                return NotFound();
-            }
-
-            return View(plan);
-        }
-
-        // POST: Template/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var plan = await _context.Plans.SingleOrDefaultAsync(m => m.Id == id);
-            _context.Plans.Remove(plan);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool PlanExists(int id)
-        {
-            return _context.Plans.Any(e => e.Id == id);
+            return RedirectToAction("ViewPlan", "Dashboard", new { id = applicationUser });
         }
     }
 }

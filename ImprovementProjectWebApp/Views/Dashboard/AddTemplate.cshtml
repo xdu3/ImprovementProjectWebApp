@@ -1,0 +1,42 @@
+﻿@model ImprovementProjectWebApp.Models.DashboardVM.AddTemplateVM
+@{
+    ViewData["Title"] = "AddTemplate";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>AddTemplate</h2>
+<h4>@Model.ApplicationUser.UserName</h4>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Plan name</th>
+            <th scope="col"></th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @{ 
+            int count = 1;
+            foreach (var item in Model.weekPlans)
+            {
+                <tr>
+                    <th scope="row">@count</th>
+                    <td>@item.Name</td>
+                    <td>
+                        <a asp-controller="Dashboard" asp-action="ViewWeekPlan" asp-route-AppUserPlanId="@Model.AppUserPlanId" asp-route-WeekPlanId="@item.Id" asp-route-UserId="@Model.UserId" target="_blank" class="btn btn-primary btn-sm">View</a>
+
+                        <a asp-controller="Dashboard" asp-action="CopyTemplate" asp-route-WeekPlanId="@item.Id" asp-route-AppUserPlanId="@Model.AppUserPlanId" class="btn btn-success btn-sm">Add to User</a>
+                    </td>
+                    
+                </tr>
+                count++;
+            }
+
+            }
+    </tbody>
+    </table>
+<div class="col-lg-12">
+    <br /><br />
+    <a class="btn btn-default col-lg-2 col-lg-offset-10" asp-action="ViewPlan" asp-controller="Dashboard" asp-route-id="@Model.UserId">返回</a>
+</div>

@@ -5,13 +5,23 @@
 }
 
 <h2>View User Check In Q&A</h2>
-<h4>@Model.FirstOrDefault().AppUserPlan.ApplicationUser.Email</h4>
+
 <div class="list-group col-lg-12">
     @foreach (var item in Model)
     {
-        <a class="list-group-item col-lg-4">@item.CreatedDate.ToString("yyyy MMMM dd")</a>
-
+        if (item.IntroCheckInQA == true)
+        {
+            <a class="list-group-item col-lg-4" asp-route-CheckInQAId="@item.Id" asp-action="CheckInDetail" asp-controller="Dashboard">@item.CreatedDate.ToString("yyyy MMMM dd")</a>
+        }
+        else
+        {
+            <a class="list-group-item col-lg-4" asp-route-CheckInQAId="@item.Id" asp-action="CheckInDetail" asp-controller="Dashboard">@item.CreatedDate.ToString("yyyy MMMM dd")</a>
+        }
     }
 
+</div>
+<div class="col-lg-12">
+
+    <a class="btn btn-default col-lg-2 col-lg-offset-10" asp-action="ViewCustomer" asp-controller="Dashboard" asp-route-id="@ViewBag.UserId">返回</a>
 </div>
 <div class="clearfix"></div>

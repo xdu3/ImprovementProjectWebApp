@@ -3,7 +3,7 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 <div>
-    <h3>Plan Name: @Model.FirstOrDefault().WorkoutPlan.Plan.PlanName</h3>
+    <h3>Plan Name: @Model.FirstOrDefault().WorkoutPlan.Plan.Name</h3>
     <ul class="list-group">
 
         @foreach (var item in Model)
@@ -35,36 +35,73 @@
                 <div class="list-group-item col-lg-6">
                     <div class="repOl">
                         Reps:
-                    </div>
-                    @if (item.Reps.Count != 0)
-                    {
-                        @foreach (var rep in item.Reps)
+                        @if (item.Reps.Count != 0)
                         {
-                            <div class="repOl1">
+                            @foreach (var rep in item.Reps)
+                            {
+
                                 @if (rep.num != -1)
                                 {
-                                @Html.DisplayFor(modelItem => rep.num)
+                                    <span class="badge badge-primary">@Html.DisplayFor(modelItem => rep.num)</span>
+
                                 }
                                 else
                                 {
-                                <span>
-                                    力竭
-                                </span>
+                                    <span>
+                                        力竭
+                                    </span>
                                 }
-                            </div>
-                        }
-                    }
-                    else if (item.Reps.Count != item.WorkoutPlan.Sets)
-                    {
 
-                        <a asp-action="RepsView" class="badge badge-danger" asp-route-workoutPlanId="@item.WorkoutPlan.Id">Unfinished</a>
+                            }
+                        }
+                        else if (item.Reps.Count != item.WorkoutPlan.Sets)
+                        {
+
+                            <a asp-action="RepsView" class="badge badge-danger" asp-route-workoutPlanId="@item.WorkoutPlan.Id">Unfinished</a>
+                        }
+                        else
+                        {
+                            <a asp-action="RepsView" class="badge badge-danger" asp-route-workoutPlanId="@item.WorkoutPlan.Id">Unfinished</a>
+                        }
+
+
+                    </div>
+                    @*@if (item.Reps.Count != 0)
+        {
+            @foreach (var rep in item.Reps)
+            {
+                <div class="repOl1">
+                    @if (rep.num != -1)
+                    {
+                    <span class="badge badge-primary">@Html.DisplayFor(modelItem => rep.num)</span>
+
                     }
                     else
                     {
-                        <a asp-action="RepsView" class="badge badge-danger" asp-route-workoutPlanId="@item.WorkoutPlan.Id">Unfinished</a>
+                    <span>
+                        力竭
+                    </span>
                     }
+                </div>
+            }
+        }
+        else if (item.Reps.Count != item.WorkoutPlan.Sets)
+        {
+
+            <a asp-action="RepsView" class="badge badge-danger" asp-route-workoutPlanId="@item.WorkoutPlan.Id">Unfinished</a>
+        }
+        else
+        {
+            <a asp-action="RepsView" class="badge badge-danger" asp-route-workoutPlanId="@item.WorkoutPlan.Id">Unfinished</a>
+        }*@
                     <div class="clearfix"></div>
                 </div>
+                if (!string.IsNullOrEmpty(item.WorkoutPlan.Des))
+                {
+                <div  class="list-group-item col-lg-6">
+                    @item.WorkoutPlan.Des
+                </div>
+                }
                 <div class="clearfix"></div>
 
                 <div class="col-lg-6 btnblock">
@@ -83,15 +120,7 @@
     </ul>
 </div>
 <style>
-    .repOl {
-        width: 40px;
-        float: left;
-    }
 
-    .repOl1 {
-        width: 40px;
-        float: left;
-    }
 
     .btnblock {
         padding: 0;

@@ -1,0 +1,89 @@
+﻿@model ImprovementProjectWebApp.Models.CustomerProfile
+@{
+    ViewData["Title"] = "EditCustomerProfile";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<h2>编辑用户资料</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="EditCustomerProfile" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                    <label asp-for="Gender" class="control-label"></label>
+                    <input asp-for="Gender" class="form-control" />
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>*@
+            <div class="form-group " data-toggle="buttons">
+                <label asp-for="Gender"></label>
+                <br />
+                <label class="btn btn-primary active">
+                    <input type="radio" name="Gender" id="option1" checked value="男"> 男
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="Gender" id="option2" value="女"> 女
+                </label>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WeChatNumber" class="control-label"></label>
+                <input asp-for="WeChatNumber" class="form-control" />
+                <span asp-validation-for="WeChatNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WeChatQRCode"></label>
+                <input asp-for="WeChatQRCode" type="file" id="fUpload" name="files" class="form-control" />
+            </div>
+            <div style="display:none;">
+                <div class="form-group">
+                    <label asp-for="StartDate" class="control-label"></label>
+                    <input asp-for="StartDate" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ApplicationUserId" class="control-label"></label>
+                    <select asp-for="ApplicationUserId" class="form-control" asp-items="ViewBag.ApplicationUserId"></select>
+                    <span asp-validation-for="ApplicationUserId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default " />
+            </div>
+        </form>
+    </div>
+    @if (Model.WeChatQRCode != null)
+    {
+        <div class="col-lg-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.WeChatQRCode)
+            </dt>
+            <dd>
+                @{
+
+                    var base64 = Convert.ToBase64String(Model.WeChatQRCode);
+                    var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                    <img src="@imgsrc" alt="Alternate Text" width="100%" />
+
+                }
+            </dd>
+        </div>
+    }
+</div>
+<div class="clearfix"></div>
+<div class="col-lg-12">
+    <br /><br />
+    <a asp-action="ViewCustomer" class="btn btn-primary col-lg-2 col-lg-offset-10 ">返回</a>
+</div>

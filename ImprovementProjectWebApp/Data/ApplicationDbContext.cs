@@ -16,6 +16,7 @@ namespace ImprovementProjectWebApp.Data
         }
 
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<FeedBack> FeedBack { get; set; }
         public DbSet<CustomerProfile> CustomerProfile { get; set; }
         public DbSet<BodyPart> BodyPart { get; set; }
         public DbSet<Exercise> Exercise { get; set; }
@@ -30,6 +31,9 @@ namespace ImprovementProjectWebApp.Data
         public DbSet<Plan> Plans { get; set; }
         public DbSet<CheckInImgs> CheckInImgs { get; set; }
         public DbSet<MealPlan> MealPlan { get; set; }
+        public DbSet<WeekPlan> WeekPlan { get; set; }
+        public DbSet<UserCheckInDate> UserCheckInDate { get; set; }
+        public DbSet<PlanPackage> PlanPackage { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

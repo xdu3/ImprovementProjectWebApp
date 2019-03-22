@@ -1,0 +1,29 @@
+﻿@model ImprovementProjectWebApp.Models.DashboardVM.GetAllQuestionVM
+@{
+    ViewData["Title"] = "UnsolvedQuestions";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Unsolved Questions</h2>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+
+            <th scope="col">Email</th>
+            <th scope="col">Name</th>
+            <th scope="col">Question</th>
+            <th scope="col">Answer</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.FeedBacks)
+    {
+    <tr>
+        <td>@item.ApplicationUser.Email</td>
+        <td>@item.ApplicationUser.CustomerProfiles.FirstOrDefault().Name</td>
+        <td>@item.Qustion</td>
+        <td>@item.Answer</td>
+        <td> <a asp-controller="Dashboard" asp-action="AnswerQuestions" asp-route-FeedbackId="@item.Id" class="btn btn-success">Answer Question</a></td>
+    </tr>
+    }
+</table>

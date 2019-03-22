@@ -99,6 +99,7 @@
                     //alert(data);
                     @*var url = "Url.Action("../ WorkoutPlans", "AddWorkoutPlanView", new { PlanName = @Model.PlanName, UserId = @Model.UserId })";*@
                     window.location.href = "../WorkoutPlansDetail/FinishDetail/" + $("#workPlanId").val();
+                    //window.location.href = "../WorkoutPlansDetail/CreateDetail ? PlanId =" + data;
                 },
                 error: function () { alert('List workout plan error'); }
             });

@@ -10,12 +10,12 @@
         @if (item.Id != Model.SelectPartId)
         {
 
-            <a class="list-group-item col-lg-2 partBtn btn" asp-action="CreateDetail" asp-route-appUserPlanId="@Model.AppUserPlanId" asp-route-PartId="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+            <a class="list-group-item col-lg-2 partBtn btn" asp-action="CreateDetail" asp-route-PlanId="@Model.PlanId" asp-route-PartId="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
         }
         else
         {
 
-            <a class="list-group-item col-lg-2 partBtn btn active" asp-action="CreateDetail" asp-route-appUserPlanId="@Model.AppUserPlanId" asp-route-PartId="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+            <a class="list-group-item col-lg-2 partBtn btn active" asp-action="CreateDetail" asp-route-PlanId="@Model.PlanId" asp-route-PartId="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
         }
     }
 
@@ -30,11 +30,11 @@
             @if (item.Id != Model.SelectExerciseId)
             {
 
-                <a class="list-group-item col-lg-2 partBtn btn"  asp-action="CreateDetail" asp-route-appUserPlanId="@Model.AppUserPlanId" asp-route-ExId="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+                <a class="list-group-item col-lg-2 partBtn btn"  asp-action="CreateDetail" asp-route-PlanId="@Model.PlanId" asp-route-ExId="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
             }
             else
             {
-                <a class="list-group-item col-lg-2 partBtn btn active"  asp-action="CreateDetail" asp-route-appUserPlanId="@Model.AppUserPlanId" asp-route-ExId="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
+                <a class="list-group-item col-lg-2 partBtn btn active"  asp-action="CreateDetail" asp-route-PlanId="@Model.PlanId" asp-route-ExId="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>
 
             }
         }

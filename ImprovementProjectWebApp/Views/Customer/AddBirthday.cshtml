@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "AddBirthday";
+
+}
+
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <h2>修改生日</h2>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+
+            <div class="form-group col-lg-12 row">
+                <label class="control-label">生日</label>
+                <input name="Birthday" class="form-control" asp-format="{0:MM/dd/yyyy}" id="datepicker" type="text" value="@DateTime.Today" data-date-end-date="0d"/>
+            </div>
+            <div class="clearfix"></div>
+            <button type="submit" class="btn btn-primary">修改</button>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(function () {
+            var isRtl = $('html').attr('dir') === 'rtl';
+
+            $('#datepicker').datepicker({
+                orientation: isRtl ? 'auto right' : 'auto left',
+                startDate: new Date(1900, 01, 01), 
+                endDate: new Date(),
+                language: 'zh-CN'
+            });
+
+        });
+
+    </script>
+    
+
+}

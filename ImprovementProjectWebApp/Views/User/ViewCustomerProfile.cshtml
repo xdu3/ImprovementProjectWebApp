@@ -1,0 +1,84 @@
+﻿@model ImprovementProjectWebApp.Models.CustomerProfile
+
+@{
+    ViewData["Title"] = "ViewCustomerProfile";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    dt, dd {
+        font-size: large;
+    }
+</style>
+<h2>View Customer Profile</h2>
+
+    <div class="col-lg-6">
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ApplicationUser.UserName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Gender)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.WeChatNumber)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.WeChatNumber)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.StartDate)
+            </dd>
+
+            <dd>
+                @Html.DisplayFor(model => model.ApplicationUser.Email)
+            </dd>
+        </dl>
+    </div>
+    @if (Model.WeChatQRCode != null)
+    {
+        <div class="col-lg-3">
+            <dt>
+                @Html.DisplayNameFor(model => model.WeChatQRCode)
+            </dt>
+            <dd>
+                @{
+
+                    var base64 = Convert.ToBase64String(Model.WeChatQRCode);
+                    var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                    <img src="@imgsrc" alt="Alternate Text" width="100%" />
+
+                }
+            </dd>
+        </div>
+    }
+    <div class="clearfix"></div>
+    <div>
+        <br /><br />
+        <a asp-action="EditCustomerProfile" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+        <a asp-action="DeleteCustomerProfile" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+        <a asp-action="Index" class="btn btn-primary">Back to List</a>
+    </div>
+
+    

@@ -35,7 +35,17 @@ namespace ImprovementProjectWebApp
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(
+                options => {
+                    options.Lockout.AllowedForNewUsers = true;
+                    options.Lockout.MaxFailedAccessAttempts = 10;
+
+                    // Password settings
+                    options.Password.RequireDigit = false;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -43,11 +53,12 @@ namespace ImprovementProjectWebApp
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
-            //services.AddMvc().AddRazorPagesOptions(options =>
-            //{
-            //    options.Conventions.AddPageRoute("/t1/index.html", "");
-            //    options.RootDirectory = "/t1/index.html";
-            //});
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

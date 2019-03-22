@@ -27,6 +27,8 @@ namespace ImprovementProjectWebApp.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<DateTime>("Birthday");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -34,6 +36,8 @@ namespace ImprovementProjectWebApp.Data.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("IfDelete");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -82,23 +86,21 @@ namespace ImprovementProjectWebApp.Data.Migrations
 
                     b.Property<bool>("IfLock");
 
-                    b.Property<int>("MealPlanId");
+                    b.Property<DateTime>("PaymentDate");
 
-                    b.Property<int>("PlanId");
+                    b.Property<string>("PaymentType");
+
+                    b.Property<int>("PlanPackageId");
 
                     b.Property<decimal>("Price");
 
                     b.Property<DateTime>("StartDate");
 
-                    b.Property<int>("TrackId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("MealPlanId");
-
-                    b.HasIndex("PlanId");
+                    b.HasIndex("PlanPackageId");
 
                     b.ToTable("AppUserPlans");
                 });
@@ -141,15 +143,17 @@ namespace ImprovementProjectWebApp.Data.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<int>("AppUserPlanId");
+                    b.Property<string>("ApplicationUserId");
 
                     b.Property<DateTime>("CreatedDate");
 
                     b.Property<DateTime>("EndDate");
 
+                    b.Property<bool>("IntroCheckInQA");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserPlanId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("CheckInQA");
                 });
@@ -210,8 +214,7 @@ namespace ImprovementProjectWebApp.Data.Migrations
                     b.Property<string>("WeChatNumber")
                         .IsRequired();
 
-                    b.Property<byte[]>("WeChatQRCode")
-                        .IsRequired();
+                    b.Property<byte[]>("WeChatQRCode");
 
                     b.HasKey("Id");
 
@@ -227,6 +230,10 @@ namespace ImprovementProjectWebApp.Data.Migrations
 
                     b.Property<int>("BodyPartId");
 
+                    b.Property<string>("ExURl");
+
+                    b.Property<string>("ExURl2");
+
                     b.Property<string>("Name")
                         .IsRequired();
 
@@ -235,6 +242,24 @@ namespace ImprovementProjectWebApp.Data.Migrations
                     b.HasIndex("BodyPartId");
 
                     b.ToTable("Exercise");
+                });
+
+            modelBuilder.Entity("ImprovementProjectWebApp.Models.FeedBack", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Answer");
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("Qustion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("FeedBack");
                 });
 
             modelBuilder.Entity("ImprovementProjectWebApp.Models.IntroQA", b =>
@@ -285,7 +310,11 @@ namespace ImprovementProjectWebApp.Data.Migrations
 
                     b.Property<string>("URL");
 
+                    b.Property<int>("WeekPlanId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("WeekPlanId");
 
                     b.ToTable("MealPlan");
                 });
@@ -295,16 +324,40 @@ namespace ImprovementProjectWebApp.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("Active");
+                    b.Property<DateTime>("DayPlanDate");
 
-                    b.Property<bool>("IfTemplate");
+                    b.Property<int>("DayPlanNum");
 
-                    b.Property<string>("PlanName")
+                    b.Property<string>("Name")
                         .IsRequired();
+
+                    b.Property<int>("WeekPlanId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("WeekPlanId");
+
                     b.ToTable("Plans");
+                });
+
+            modelBuilder.Entity("ImprovementProjectWebApp.Models.PlanPackage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Des")
+                        .IsRequired();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<int>("Term");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PlanPackage");
                 });
 
             modelBuilder.Entity("ImprovementProjectWebApp.Models.Reps", b =>
@@ -321,6 +374,47 @@ namespace ImprovementProjectWebApp.Data.Migrations
                     b.HasIndex("WorkoutPlanId");
 
                     b.ToTable("Reps");
+                });
+
+            modelBuilder.Entity("ImprovementProjectWebApp.Models.UserCheckInDate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AppUserPlanId");
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<DateTime>("CheckInDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserPlanId");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("UserCheckInDate");
+                });
+
+            modelBuilder.Entity("ImprovementProjectWebApp.Models.WeekPlan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AppUserPlanId");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<DateTime>("WeekPlanEndTime");
+
+                    b.Property<DateTime>("WeekPlanStartTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserPlanId");
+
+                    b.ToTable("WeekPlan");
                 });
 
             modelBuilder.Entity("ImprovementProjectWebApp.Models.WorkoutPlan", b =>
@@ -460,40 +554,34 @@ namespace ImprovementProjectWebApp.Data.Migrations
             modelBuilder.Entity("ImprovementProjectWebApp.Models.AppUserPlan", b =>
                 {
                     b.HasOne("ImprovementProjectWebApp.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
+                        .WithMany("AppUserPlans")
                         .HasForeignKey("ApplicationUserId");
 
-                    b.HasOne("ImprovementProjectWebApp.Models.MealPlan", "MealPlan")
+                    b.HasOne("ImprovementProjectWebApp.Models.PlanPackage", "PlanPackage")
                         .WithMany()
-                        .HasForeignKey("MealPlanId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ImprovementProjectWebApp.Models.Plan", "Plan")
-                        .WithMany()
-                        .HasForeignKey("PlanId")
+                        .HasForeignKey("PlanPackageId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ImprovementProjectWebApp.Models.CheckInImgs", b =>
                 {
                     b.HasOne("ImprovementProjectWebApp.Models.CheckInQA", "CheckInQA")
-                        .WithMany()
+                        .WithMany("CheckInImgs")
                         .HasForeignKey("CheckInQAId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ImprovementProjectWebApp.Models.CheckInQA", b =>
                 {
-                    b.HasOne("ImprovementProjectWebApp.Models.AppUserPlan", "AppUserPlan")
-                        .WithMany()
-                        .HasForeignKey("AppUserPlanId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("ImprovementProjectWebApp.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("CheckInQAs")
+                        .HasForeignKey("ApplicationUserId");
                 });
 
             modelBuilder.Entity("ImprovementProjectWebApp.Models.CheckInQADetail", b =>
                 {
                     b.HasOne("ImprovementProjectWebApp.Models.CheckInQA", "CheckInQA")
-                        .WithMany()
+                        .WithMany("CheckInQADetails")
                         .HasForeignKey("CheckInQAId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -506,7 +594,7 @@ namespace ImprovementProjectWebApp.Data.Migrations
             modelBuilder.Entity("ImprovementProjectWebApp.Models.CustomerProfile", b =>
                 {
                     b.HasOne("ImprovementProjectWebApp.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
+                        .WithMany("CustomerProfiles")
                         .HasForeignKey("ApplicationUserId");
                 });
 
@@ -518,6 +606,13 @@ namespace ImprovementProjectWebApp.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("ImprovementProjectWebApp.Models.FeedBack", b =>
+                {
+                    b.HasOne("ImprovementProjectWebApp.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("FeedBacks")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
             modelBuilder.Entity("ImprovementProjectWebApp.Models.IntroQA", b =>
                 {
                     b.HasOne("ImprovementProjectWebApp.Models.IntroQuestion", "IntroQuestion")
@@ -526,16 +621,52 @@ namespace ImprovementProjectWebApp.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ImprovementProjectWebApp.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
+                        .WithMany("IntroQAs")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ImprovementProjectWebApp.Models.MealPlan", b =>
+                {
+                    b.HasOne("ImprovementProjectWebApp.Models.WeekPlan", "WeekPlan")
+                        .WithMany("MealPlan")
+                        .HasForeignKey("WeekPlanId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ImprovementProjectWebApp.Models.Plan", b =>
+                {
+                    b.HasOne("ImprovementProjectWebApp.Models.WeekPlan", "WeekPlan")
+                        .WithMany("Plans")
+                        .HasForeignKey("WeekPlanId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ImprovementProjectWebApp.Models.Reps", b =>
                 {
                     b.HasOne("ImprovementProjectWebApp.Models.WorkoutPlan", "WorkoutPlan")
-                        .WithMany()
+                        .WithMany("Reps")
                         .HasForeignKey("WorkoutPlanId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ImprovementProjectWebApp.Models.UserCheckInDate", b =>
+                {
+                    b.HasOne("ImprovementProjectWebApp.Models.AppUserPlan", "AppUserPlan")
+                        .WithMany()
+                        .HasForeignKey("AppUserPlanId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ImprovementProjectWebApp.Models.ApplicationUser")
+                        .WithMany("UserCheckInDates")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("ImprovementProjectWebApp.Models.WeekPlan", b =>
+                {
+                    b.HasOne("ImprovementProjectWebApp.Models.AppUserPlan", "AppUserPlan")
+                        .WithMany("WeekPlans")
+                        .HasForeignKey("AppUserPlanId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -547,7 +678,7 @@ namespace ImprovementProjectWebApp.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ImprovementProjectWebApp.Models.Plan", "Plan")
-                        .WithMany()
+                        .WithMany("WorkoutPlans")
                         .HasForeignKey("PlanId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
