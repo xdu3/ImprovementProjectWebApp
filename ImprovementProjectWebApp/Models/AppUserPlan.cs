@@ -27,7 +27,7 @@ namespace ImprovementProjectWebApp.Models
         public DateTime PaymentDate { get; set; }
 
         [Display(Name = "PlanPackage")]
-        public int PlanPackageId { get; set; }
+        public int? PlanPackageId { get; set; }
         [ForeignKey("PlanPackageId")]
         public virtual PlanPackage PlanPackage { get; set; }
 

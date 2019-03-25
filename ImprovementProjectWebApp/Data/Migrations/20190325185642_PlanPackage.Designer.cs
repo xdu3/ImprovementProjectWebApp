@@ -11,8 +11,8 @@ using System;
 namespace ImprovementProjectWebApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190321063034_PlanPackageId")]
-    partial class PlanPackageId
+    [Migration("20190325185642_PlanPackage")]
+    partial class PlanPackage
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -91,7 +91,7 @@ namespace ImprovementProjectWebApp.Data.Migrations
 
                     b.Property<string>("PaymentType");
 
-                    b.Property<int>("PlanPackageId");
+                    b.Property<int?>("PlanPackageId");
 
                     b.Property<decimal>("Price");
 
@@ -560,8 +560,7 @@ namespace ImprovementProjectWebApp.Data.Migrations
 
                     b.HasOne("ImprovementProjectWebApp.Models.PlanPackage", "PlanPackage")
                         .WithMany()
-                        .HasForeignKey("PlanPackageId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PlanPackageId");
                 });
 
             modelBuilder.Entity("ImprovementProjectWebApp.Models.CheckInImgs", b =>

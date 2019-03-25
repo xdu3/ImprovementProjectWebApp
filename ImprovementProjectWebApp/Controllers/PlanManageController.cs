@@ -82,6 +82,9 @@ namespace ImprovementProjectWebApp.Controllers
         {
             int Days = EndDateNumber * 28;
             appUserPlan.EndDate = appUserPlan.StartDate.AddDays(Days);
+            appUserPlan.PaymentDate = DateTime.Today;
+            appUserPlan.PaymentType = "Cash";
+
             if (ModelState.IsValid)
             {
 

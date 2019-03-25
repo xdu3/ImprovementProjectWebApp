@@ -90,7 +90,7 @@ namespace ImprovementProjectWebApp.Data.Migrations
 
                     b.Property<string>("PaymentType");
 
-                    b.Property<int>("PlanPackageId");
+                    b.Property<int?>("PlanPackageId");
 
                     b.Property<decimal>("Price");
 
@@ -559,8 +559,7 @@ namespace ImprovementProjectWebApp.Data.Migrations
 
                     b.HasOne("ImprovementProjectWebApp.Models.PlanPackage", "PlanPackage")
                         .WithMany()
-                        .HasForeignKey("PlanPackageId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PlanPackageId");
                 });
 
             modelBuilder.Entity("ImprovementProjectWebApp.Models.CheckInImgs", b =>

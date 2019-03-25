@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ImprovementProjectWebApp.Data.Migrations
 {
-    public partial class PlanPackageId : Migration
+    public partial class PlanPackage : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,8 +23,7 @@ namespace ImprovementProjectWebApp.Data.Migrations
             migrationBuilder.AddColumn<int>(
                 name: "PlanPackageId",
                 table: "AppUserPlans",
-                nullable: false,
-                defaultValue: 0);
+                nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "PlanPackage",
@@ -53,7 +52,7 @@ namespace ImprovementProjectWebApp.Data.Migrations
                 column: "PlanPackageId",
                 principalTable: "PlanPackage",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

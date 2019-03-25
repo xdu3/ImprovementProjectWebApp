@@ -23,6 +23,8 @@
     <Compile Remove="Data\Migrations\20190107210408_WeekPlanAddAndPlanFix.Designer.cs" />
     <Compile Remove="Data\Migrations\20190107212501_WeekPlanAddAndPlanFix2.cs" />
     <Compile Remove="Data\Migrations\20190107212501_WeekPlanAddAndPlanFix2.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190321063034_PlanPackageId.cs" />
+    <Compile Remove="Data\Migrations\20190321063034_PlanPackageId.Designer.cs" />
   </ItemGroup>
 
 
