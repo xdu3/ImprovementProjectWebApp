@@ -32,11 +32,14 @@
     <a class="list-group-item LeftSection" asp-action="Index" asp-controller="User">
         User Manage
     </a>
+    <a class="list-group-item LeftSection" asp-action="Index" asp-controller="PlanPackage">
+        Plan Package
+    </a>
     @if (User.IsInRole("SuperAdmin"))
     {
-    <a class="list-group-item LeftSection" asp-action="Index" asp-controller="Template">
-        Template Manage
-    </a>
+        <a class="list-group-item LeftSection" asp-action="Index" asp-controller="Template">
+            Template Manage
+        </a>
     }
 
 </div>

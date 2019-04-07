@@ -21,10 +21,15 @@ namespace ImprovementProjectWebApp.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
-        public decimal Price { get; set; }
         public bool IfLock { get; set; }
         public string PaymentType { get; set; }
         public DateTime PaymentDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:C}")]
+        [Display(Name = "Price")]
+        public double OrderTotal { get; set; }
+        public string Status { get; set; }
+        public string PaymentStatus { get; set; }
+        public string TransactionId { get; set; }
 
         [Display(Name = "PlanPackage")]
         public int? PlanPackageId { get; set; }

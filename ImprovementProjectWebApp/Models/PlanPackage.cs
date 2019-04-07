@@ -14,6 +14,7 @@ namespace ImprovementProjectWebApp.Models
         public string Name { get; set; }
         [Required]
         public string Des { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Price should be grater than ${1}")]
         [Required]
         public decimal Price { get; set; }
         [Required]

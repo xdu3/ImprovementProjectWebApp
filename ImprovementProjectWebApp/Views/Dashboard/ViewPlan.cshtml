@@ -25,7 +25,7 @@ else
             @*@if (Model.IfTemplate != true)
         {*@
             <h4>@Model.AppUserPlan.StartDate - @Model.AppUserPlan.EndDate</h4>
-            <p>Price: @Model.AppUserPlan.Price</p>
+            <p>Price: @Model.AppUserPlan.OrderTotal</p>
             <p>If the Plan is locked: @Model.AppUserPlan.IfLock</p>
             <p>There is <strong>@Model.WeekLeft</strong> week plan left</p>
             <p>AppUserPlan ID: @Model.AppUserPlan.Id</p>
