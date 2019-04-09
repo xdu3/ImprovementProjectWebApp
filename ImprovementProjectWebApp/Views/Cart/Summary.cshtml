@@ -1,0 +1,230 @@
+﻿@model AppUserPlan
+@using Microsoft.Extensions.Options
+@inject IOptions<ImprovementProjectWebApp.Utility.StripeSettings> Stripe
+@{
+    ViewData["Title"] = "Summary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post">
+    @if (Model != null)
+    {
+        <br />
+        <input asp-for="@Model.ApplicationUserId" hidden />
+        <input asp-for="@Model.PlanPackageId" hidden />
+        <div class="backgroundWhiteBorder">
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <i class="fa fa-shopping-cart"></i> &nbsp;
+                            Order Summary
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-info btn-sm">Back to Home Page</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-body">
+                    <div class="container rounded p-2">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6" style="padding-bottom:16px">
+                                <div class="row">
+                                    <h4 class="mb-3" style="justify-content: space-between;display:flex;align-items: center;">
+                                        <span class="text-info">Plan Details:</span>
+                                    </h4>
+                                </div>
+                                <div class="row" style="margin-bottom:5px">
+                                    <div class="col-md-3">
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input asp-for="@Model.ApplicationUser.UserName" readonly type="text" id="txtName" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-bottom:5px">
+                                    <div class="col-md-3">
+                                        <label>Phone</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input asp-for="@Model.ApplicationUser.PhoneNumber" type="text" id="txtPhone" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-bottom:5px">
+                                    <div class="col-md-3">
+                                        <label>Plan</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input asp-for="@Model.PlanPackage.Name" readonly type="text" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-bottom:5px">
+                                    <div class="col-md-3">
+                                        <label>Start Date</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input asp-for="@Model.StartDate" id="datepicker" type="text" value="" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom:5px">
+                                    <div class="col-md-3">
+                                        <label>End Date</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input asp-for="@Model.EndDate" readonly id="endDate" type="text" value="" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-bottom:5px">
+                                    <div class="col-md-3">
+                                        <label>Description:</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <textarea asp-for="@Model.PlanPackage.Des" readonly style="height:100px;" class="form-control"></textarea>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-md-12 col-lg-5 offset-lg-1">
+                                <div class="row">
+                                    <h4 class="align-items-center mb-3" style="justify-content: space-between;display:flex;align-items: center;">
+                                        <span class="text-info">Order Summary:</span>
+                                    </h4>
+                                </div>
+                                <ul class="list-group mb-3">
+                                    @{
+                                        var total = 0.0;
+                                    }
+
+                                    <li class="list-group-item" style="justify-content: space-between;display:flex">
+                                        <div>
+                                            <h6 class="my-0">@Model.PlanPackage.Name</h6>
+                                            <small class="text-muted">Quantity: 1</small>
+                                        </div>
+                                        <span class="text-muted">$@(Model.PlanPackage.Price)</span>
+
+                                    </li>
+
+
+                                    <li class="list-group-item bg-light" style="justify-content: space-between;display:flex">
+
+                                        <small class="text-info">Total (CAD)</small>
+
+                                        <strong class="text-info">$@(Model.PlanPackage.Price)</strong>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-8"></div>
+                        <div class="col-sm-12 col-md-4">
+                            @{
+                                var OrderTotalForStrip = Model.PlanPackage.Price * 100;
+                            }
+                            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="@Stripe.Value.PublishableKey"
+                                    date-amount="@OrderTotalForStrip"
+                                    data-name="Improvement Project"
+                                    data-label="Place Order"
+                                    data-description="Good Training, Good Shape."
+                                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                    data-locale="auto"
+                                    data-allow-remember-me="false"
+                                    data-currency="cad">
+                            </script>
+                            <script>
+                                document.getElementsByClassName('stripe-button-el')[0].style.display = 'none';
+                            </script>
+                            <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-success form-control">Place Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="backgroundWhiteBorder">No items added to the shopping cart...</div>
+    }
+</form>
+
+@section Scripts{
+    <script>
+        $(function () {
+            var minDt = 0;
+
+            minDt = getDateFromCurrentDate();
+
+            $('#datepicker').datepicker({
+                minDate: minDt, beforeShowDay: function (date) { return [(date.getDay() == 1), ""]; } });
+
+        })
+
+
+
+        function getDateFromCurrentDate() {
+            var curDt = new Date();
+
+            curDt.setDate(curDt.getDate() + (1 - 1 - curDt.getDay() + 7) % 7 + 1);
+            return curDt;
+
+        }
+
+        function setEndDate() {
+            var dateSelected = document.getElementById("datepicker").value;
+            var dt = new Date(dateSelected);
+
+            console.log(dt);
+            var dates = @(Model.PlanPackage.Term * 7);
+            dt.setDate(dt.getDate() + dates - 1); 
+      
+            $('#endDate').datepicker().datepicker('setDate', dt);
+
+        }
+
+        $('#datepicker').change(function () {
+            
+            setEndDate();
+            $("#endDate").datepicker("destroy");
+        });
+
+
+        function validateInput() {
+            var dt = document.getElementById("datepicker").value;
+            var phone = document.getElementById("txtPhone").value;
+
+
+                if (dt.toString() == '') {
+                    alert("Please select start date");
+                    return false;
+                }
+                else {
+
+                        if (phone.toString() == '') {
+                            alert("Please enter phone number");
+                            return false;
+                        }
+                        else {
+                            return true;
+                        }
+                    
+                }
+            
+        }
+    </script>
+}
+

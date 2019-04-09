@@ -1,6 +1,6 @@
 ﻿
 <div style="height:10px;"></div>
-<ul class="nav nav-pills nav-stacked col-lg-3">
+<ul class="nav nav-pills nav-stacked col-lg-2">
 
     <li class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "/Customer/WorkoutList" ? " active" : "")">
         <a class=" LeftSection" asp-controller="Customer" asp-action="WorkoutList">
@@ -30,6 +30,11 @@
     <li class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "/Customer/ViewCustomer" ? " active" : "")">
         <a class=" LeftSection" asp-controller="Customer" asp-action="ViewCustomer">
             用户信息
+        </a>
+    </li>
+    <li class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "/Order/OrderHistory" ? " active" : "")">
+        <a class=" LeftSection" asp-controller="Order" asp-action="OrderHistory">
+            购买记录
         </a>
     </li>
     <li class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "/Customer/ViewGallery" ? " active" : "")">

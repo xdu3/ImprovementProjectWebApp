@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using ImprovementProjectWebApp.Data;
 using ImprovementProjectWebApp.Models;
 using ImprovementProjectWebApp.Services;
+using ImprovementProjectWebApp.Utility;
+using Stripe;
 
 namespace ImprovementProjectWebApp
 {
@@ -52,6 +54,8 @@ namespace ImprovementProjectWebApp
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+
             services.AddMvc();
 
             services.AddSession(options =>
@@ -74,7 +78,7 @@ namespace ImprovementProjectWebApp
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["SecretKey"]);
             app.UseStaticFiles();
 
             app.UseAuthentication();

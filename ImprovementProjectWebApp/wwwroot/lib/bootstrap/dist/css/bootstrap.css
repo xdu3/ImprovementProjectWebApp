@@ -2587,7 +2587,7 @@ output {
 .form-control[disabled],
 .form-control[readonly],
 fieldset[disabled] .form-control {
-  background-color: #eee;
+  background-color: #fff;
   opacity: 1;
 }
 .form-control[disabled],
@@ -5970,7 +5970,7 @@ button.close {
 }
 @media (min-width: 768px) {
   .modal-dialog {
-    width: 600px;
+    width: 70%;
     margin: 30px auto;
   }
   .modal-content {

@@ -8,7 +8,7 @@ namespace ImprovementProjectWebApp.Models
 {
     public class PlanPackage
     {
-        [Required]
+        [Key]
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
@@ -16,7 +16,7 @@ namespace ImprovementProjectWebApp.Models
         public string Des { get; set; }
         [Range(1, int.MaxValue, ErrorMessage = "Price should be grater than ${1}")]
         [Required]
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         [Required]
         public int Term { get; set; }
     }

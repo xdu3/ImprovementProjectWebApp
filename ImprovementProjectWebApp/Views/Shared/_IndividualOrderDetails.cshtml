@@ -1,0 +1,88 @@
+﻿@model AppUserPlan
+@using ImprovementProjectWebApp.Utility
+
+<div class="container border ml-1 backgroundWhiteBorder10Padding" style="width:100%">
+    <div class="col-lg-8 col-sm-12" style="border-right: 1px solid #bbb9b9">
+        <br />
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label>Name</label>
+            </div>
+            <div class="col-md-9">
+                <input asp-for="ApplicationUser.UserName" disabled class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label asp-for="ApplicationUser.Email"></label>
+            </div>
+            <div class="col-md-9">
+                <input asp-for="ApplicationUser.Email" disabled class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label asp-for="ApplicationUser.PhoneNumber">Phone Number</label>
+            </div>
+            <div class="col-md-9">
+                <input asp-for="ApplicationUser.PhoneNumber" disabled class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label asp-for="OrderTotal">Order Total</label>
+            </div>
+            <div class="col-md-9">
+                <input asp-for="OrderTotal" disabled class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label asp-for="PaymentDate">Order Date</label>
+            </div>
+            <div class="col-md-9">
+                <input value="@Model.PaymentDate.ToShortDateString() @Model.PaymentDate.ToShortTimeString()" disabled class="form-control" />
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-4 col-sm-12">
+        <h4 style="justify-content: space-between;display:flex;align-items: center; margin-bottom:16px">
+            <span class="text-muted">Order ID:</span>
+            <span class="badge badge-secondary badge-pill">@Model.Id</span>
+        </h4>
+
+        <ul class="list-group" style="margin-bottom:16px">
+            @{ var total = 0.0;}
+
+            <li class="list-group-item" style="justify-content: space-between;display:flex;">
+                <div>
+                    <h6 class="my-0">@Model.PlanPackage.Name</h6>
+                    <small class="text-muted">Quantity: 1</small>
+                </div>
+                <span class="text-muted">$@(Model.OrderTotal)</span>
+
+            </li>
+
+
+            <li class="list-group-item bg-light" style="justify-content: space-between;display:flex;">
+                <span class="text-info">
+                    Total (CAD)
+                </span>
+                <strong class="text-info">
+                    $@Model.OrderTotal
+                </strong>
+            </li>
+
+        </ul>
+        <button type="submit" disabled class="btn btn-info form-control" style="background:#5bc0de">@Model.Status</button>
+
+
+    </div>
+</div>
