@@ -11,9 +11,8 @@ namespace ImprovementProjectWebApp.Models
     {
         [Required]
         public int Id { get; set; }
-
-
-
+        public string UserName { get; set; }
+        public string Phone { get; set; }
         [Display(Name = "StartDate")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
@@ -37,6 +36,7 @@ namespace ImprovementProjectWebApp.Models
         public virtual PlanPackage PlanPackage { get; set; }
 
         [Display(Name = "User")]
+        [Required]
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }

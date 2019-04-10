@@ -38,10 +38,21 @@ namespace ImprovementProjectWebApp.Controllers
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            ApplicationUser applicationUser = await _db.ApplicationUser.Where(c => c.Id == claim.Value).FirstOrDefaultAsync();
+            var applicationUser = await _db.ApplicationUser.Where(c => c.Id == claim.Value).FirstOrDefaultAsync();
+            var profile = await _db.CustomerProfile.Where(c => c.ApplicationUserId == applicationUser.Id).FirstOrDefaultAsync();
 
-            userPlan.ApplicationUser = applicationUser;
-            userPlan.ApplicationUserId = claim.Value;
+            if(applicationUser == null)
+            {
+                return NotFound();
+            }
+            if(profile == null)
+            {
+                return NotFound();
+            }
+
+            userPlan.Phone = profile.PhoneNumber;
+            userPlan.UserName = profile.Name;
+            userPlan.ApplicationUserId = applicationUser.Id;
 
             var plan = await _db.PlanPackage.FindAsync(planId);
 
@@ -65,7 +76,6 @@ namespace ImprovementProjectWebApp.Controllers
         {
 
             var plan = await _db.PlanPackage.FindAsync(userPlan.PlanPackageId);
-            userPlan.PlanPackage = plan;
             userPlan.OrderTotal = plan.Price;
             userPlan.PaymentType = "Stripe";
             userPlan.PaymentDate = DateTime.Now;

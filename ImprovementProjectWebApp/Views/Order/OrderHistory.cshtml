@@ -24,11 +24,11 @@
         {
             <table class="table table-striped border">
                 <tr class="table-secondary">
-                    <th>
+                    <th hidden>
                         @Html.DisplayNameFor(m => m.Id)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(m => m.ApplicationUser.UserName)
+                        @Html.DisplayNameFor(m => m.UserName)
                     </th>
                     <th>
                         @Html.DisplayNameFor(m => m.ApplicationUser.Email)
@@ -48,11 +48,11 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
+                        <td hidden>
                             @Html.DisplayFor(m => item.Id)
                         </td>
                         <td>
-                            @Html.DisplayFor(m => item.ApplicationUser.UserName)
+                            @Html.DisplayFor(m => item.UserName)
                         </td>
                         <td>
                             @Html.DisplayFor(m => item.ApplicationUser.Email)

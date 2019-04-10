@@ -10,7 +10,7 @@
                 <label>Name</label>
             </div>
             <div class="col-md-9">
-                <input asp-for="ApplicationUser.UserName" disabled class="form-control" />
+                <input asp-for="UserName" disabled class="form-control" />
             </div>
         </div>
 
@@ -25,10 +25,10 @@
 
         <div class="form-group row">
             <div class="col-md-3">
-                <label asp-for="ApplicationUser.PhoneNumber">Phone Number</label>
+                <label asp-for="Phone">Phone Number</label>
             </div>
             <div class="col-md-9">
-                <input asp-for="ApplicationUser.PhoneNumber" disabled class="form-control" />
+                <input asp-for="Phone" disabled class="form-control" />
             </div>
         </div>
 
@@ -47,6 +47,24 @@
             </div>
             <div class="col-md-9">
                 <input value="@Model.PaymentDate.ToShortDateString() @Model.PaymentDate.ToShortTimeString()" disabled class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label asp-for="PaymentDate">Start Date</label>
+            </div>
+            <div class="col-md-9">
+                <input value="@Model.StartDate.ToShortDateString()" disabled class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label asp-for="PaymentDate">End Date</label>
+            </div>
+            <div class="col-md-9">
+                <input value="@Model.EndDate.ToShortDateString()" disabled class="form-control" />
             </div>
         </div>
 

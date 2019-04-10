@@ -6,7 +6,7 @@
 
 <br />
 <div class="backgroundWhite">
-    <div class="row px-3" style="padding:16px">
+    <div class="row" style="padding-bottom:16px" >
         <div class="col-md-8">
             <h2 class="text-info">Order Confirmed</h2>
         </div>
@@ -24,92 +24,121 @@
             <p>Feel free to contact us if you have any questions.</p>
         </div>
 
-    
-            <div class="container row border ml-1 backgroundWhiteBorder10Padding" style="width:100%">
-                <div class="col-lg-8 col-sm-12" style="border-right: 1px solid #bbb9b9">
-                    <br />
-                    <input type="hidden" asp-for="Id" />
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label>Name</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input asp-for="ApplicationUser.UserName" disabled class="form-control" />
-                        </div>
-                    </div>
 
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label asp-for="ApplicationUser.Email"></label>
-                        </div>
-                        <div class="col-md-9">
-                            <input asp-for="ApplicationUser.Email" disabled class="form-control" />
-                        </div>
+        <div class="container row border ml-1 backgroundWhiteBorder10Padding" style="width:100%">
+            <div class="col-lg-8 col-sm-12" style="border-right: 1px solid #bbb9b9">
+                <br />
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label>Name</label>
                     </div>
-
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label asp-for="ApplicationUser.PhoneNumber">Phone Number</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input asp-for="ApplicationUser.PhoneNumber" disabled class="form-control" />
-                        </div>
+                    <div class="col-md-9">
+                        <input asp-for="UserName" disabled class="form-control" />
                     </div>
+                </div>
 
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label asp-for="OrderTotal">Order Total</label>
-                        </div>
-                        <div class="col-md-9">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="ApplicationUser.Email"></label>
+                    </div>
+                    <div class="col-md-9">
+                        <input asp-for="ApplicationUser.Email" disabled class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="Phone">Phone Number</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input asp-for="Phone" disabled class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="OrderTotal">Order Total</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
                             <input asp-for="OrderTotal" disabled class="form-control" />
+                            <span class="input-group-addon">.00</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="PaymentDate">Start Date</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-clock"></i></span>
+                            <input value="@Model.StartDate.ToShortDateString()" disabled class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="PaymentDate">End Date</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-clock"></i></span>
+                            <input value="@Model.EndDate.ToShortDateString()" disabled class="form-control" />
+                        </div>
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <label asp-for="PaymentDate">Order Date</label>
-                        </div>
-                        <div class="col-md-9">
-                            <input value="@Model.PaymentDate.ToShortDateString() @Model.PaymentDate.ToShortTimeString()" disabled class="form-control" />
-                        </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label asp-for="PaymentDate">Order Date</label>
                     </div>
-
+                    <div class="col-md-9">
+                        <input value="@Model.PaymentDate.ToShortDateString() @Model.PaymentDate.ToShortTimeString()" disabled class="form-control" />
+                    </div>
                 </div>
 
-                <div class="col-lg-4 col-sm-12">
-                    <h4 style="justify-content: space-between;display:flex;align-items: center; margin-bottom:16px">
-                        <span class="text-muted">Order ID:</span>
-                        <span class="badge badge-secondary badge-pill">@Model.Id</span>
-                    </h4>
-
-                    <ul class="list-group" style="margin-bottom:16px">
-                        @{ var total = 0.0;}
-
-                            <li class="list-group-item" style="justify-content: space-between;display:flex;">
-                                <div>
-                                    <h6 class="my-0">@Model.PlanPackage.Name</h6>
-                                    <small class="text-muted">Quantity: 1</small>
-                                </div>
-                                <span class="text-muted">$@(Model.OrderTotal)</span>
-
-                            </li>
- 
-
-                        <li class="list-group-item bg-light" style="justify-content: space-between;display:flex;">
-                            <span class="text-info">
-                                Total (CAD)
-                            </span>
-                            <strong class="text-info">
-                                $@Model.OrderTotal
-                            </strong>
-                        </li>
-
-                    </ul>
-                        <button type="submit" disabled class="btn btn-info form-control" style="background:#5bc0de">@Model.Status</button>
-                    
-
-                </div>
             </div>
+
+            <div class="col-lg-4 col-sm-12">
+                <h4 style="justify-content: space-between;display:flex;align-items: center; margin-bottom:16px">
+                    <span class="text-muted">Order ID:</span>
+                    <span class="badge badge-secondary badge-pill">@Model.Id</span>
+                </h4>
+
+                <ul class="list-group" style="margin-bottom:16px">
+                    @{ var total = 0.0;}
+
+                    <li class="list-group-item" style="justify-content: space-between;display:flex;">
+                        <div>
+                            <h6 class="my-0">@Model.PlanPackage.Name</h6>
+                            <small class="text-muted">Quantity: 1</small>
+                        </div>
+                        <span class="text-muted">$@(Model.OrderTotal)</span>
+
+                    </li>
+
+
+                    <li class="list-group-item bg-light" style="justify-content: space-between;display:flex;">
+                        <span class="text-info">
+                            Total (CAD)
+                        </span>
+                        <strong class="text-info">
+                            $@Model.OrderTotal
+                        </strong>
+                    </li>
+
+                </ul>
+                <button type="submit" disabled class="btn btn-info form-control" style="background:#5bc0de">@Model.Status</button>
+
+
+            </div>
+        </div>
 
     }
     else

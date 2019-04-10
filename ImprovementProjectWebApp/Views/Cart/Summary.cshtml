@@ -38,10 +38,10 @@
                                 </div>
                                 <div class="row" style="margin-bottom:5px">
                                     <div class="col-md-3">
-                                        <label>Email</label>
+                                        <label>Name</label>
                                     </div>
                                     <div class="col-md-9">
-                                        <input asp-for="@Model.ApplicationUser.UserName" readonly type="text" id="txtName" class="form-control" />
+                                        <input asp-for="@Model.UserName" readonly type="text" id="txtName" class="form-control" />
                                     </div>
                                 </div>
 
@@ -50,7 +50,7 @@
                                         <label>Phone</label>
                                     </div>
                                     <div class="col-md-9">
-                                        <input asp-for="@Model.ApplicationUser.PhoneNumber" type="text" id="txtPhone" class="form-control" />
+                                        <input asp-for="@Model.Phone" type="text" id="txtPhone" class="form-control" />
                                     </div>
                                 </div>
 
@@ -68,7 +68,7 @@
                                         <label>Start Date</label>
                                     </div>
                                     <div class="col-md-9">
-                                        <input asp-for="@Model.StartDate" id="datepicker" type="text" value="" class="form-control" />
+                                        <input asp-for="@Model.StartDate" id="datepicker" type="text" readonly="readonly" value="" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="row" style="margin-bottom:5px">
@@ -213,14 +213,7 @@
                     return false;
                 }
                 else {
-
-                        if (phone.toString() == '') {
-                            alert("Please enter phone number");
-                            return false;
-                        }
-                        else {
-                            return true;
-                        }
+                    return true;   
                     
                 }
             
