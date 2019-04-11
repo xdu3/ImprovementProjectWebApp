@@ -1,0 +1,136 @@
+﻿@model IEnumerable<AppUserPlan>
+@using ImprovementProjectWebApp.Utility
+@{
+    ViewData["Title"] = "UserOrderList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="border backgroundWhite">
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="text-info">User Order List</h2>
+        </div>
+
+        <div class="col-md-4 text-right">
+            <a asp-action="NewOrder" asp-controller="Order" class="btn btn-success form-control" style="margin-top:16px">New Order</a>
+        </div>
+    </div>
+
+
+    <br />
+
+    <div>
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th >
+                        @Html.DisplayNameFor(m => m.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.UserName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ApplicationUser.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.PlanPackage.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.OrderTotal)
+                    </th>
+                    <th>
+                        Total Items
+                    </th>
+                    <th></th>
+
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ApplicationUser.Email)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(m => item.PlanPackage.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.OrderTotal)
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-success anchorDetail" data-id="@item.Id" data-toggle="modal">
+                                <i class="fa fa-list-alt"></i> Details
+                            </button>
+
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+        }
+        else
+        {
+            <p>No order exists...</p>
+        }
+    </div>
+
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog-centered modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-light justify-content-center">
+                <h5 class="modal-title">Order Details</h5>
+            </div>
+            <div class="modal-body justify-content-center" id="myModalContent">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" style="width:20%" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        var PostBackURL = '/Order/GetOrderDetails';
+
+        $(function () {
+            $(".anchorDetail").click(function () {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+
+                $.ajax({
+                    type: "GET",
+                    url: PostBackURL,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id },
+                    cache: false,
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load faile");
+                    }
+                });
+            });
+
+
+        })
+    </script>
+}
+
+
+

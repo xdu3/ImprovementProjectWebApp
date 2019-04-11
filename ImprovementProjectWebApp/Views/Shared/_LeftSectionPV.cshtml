@@ -35,6 +35,9 @@
     <a class="list-group-item LeftSection" asp-action="Index" asp-controller="PlanPackage">
         Plan Package
     </a>
+    <a class="list-group-item LeftSection" asp-action="UserOrderList" asp-controller="Order">
+        Order List
+    </a>
     @if (User.IsInRole("SuperAdmin"))
     {
         <a class="list-group-item LeftSection" asp-action="Index" asp-controller="Template">

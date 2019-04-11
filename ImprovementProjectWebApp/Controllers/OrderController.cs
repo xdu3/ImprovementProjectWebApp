@@ -62,5 +62,19 @@ namespace ImprovementProjectWebApp.Controllers
             return PartialView("_IndividualOrderDetails", userPlan);
 
         }
+
+        [Authorize]
+        public async Task<IActionResult> UserOrderList()
+        {
+            List<AppUserPlan> userPlans = await _db.AppUserPlans
+                                                .Include(a => a.ApplicationUser)
+                                                .Include(a => a.PlanPackage)
+                                                .ToListAsync();
+
+            return View(userPlans);
+
+        }
+
+
     }
 }
