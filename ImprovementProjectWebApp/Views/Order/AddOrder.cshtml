@@ -1,0 +1,202 @@
+﻿@model ImprovementProjectWebApp.Models.UserPlanViewModels.UserPlanViewModel
+@{
+    ViewData["Title"] = "AddOrder";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-info">Create User Order</h2>
+<br />
+
+
+<form method="post" asp-action="AddOrder">
+    <div class="border backgroundWhite">
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ApplicationUser.ApplicationUserId" />
+            <div class="col-md-8">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label class="col-form-label" asp-for="ApplicationUser.Name"></label>
+                    </div>
+                    <div class="col-md-8">
+                        <input asp-for="ApplicationUser.Name" readonly class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label class="col-form-label" asp-for="ApplicationUser.ApplicationUser.Email"></label>
+                    </div>
+                    <div class="col-md-8">
+                        <input asp-for="ApplicationUser.ApplicationUser.Email" readonly class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label class="col-form-label" asp-for="AppUserPlan.PlanPackageId"></label>
+                    </div>
+                    <div class="col-md-8">
+
+                        @foreach (var plan in Model.PlanPackages)
+                        {
+
+                            <label class="radio-inline">
+                                <input asp-for="PlanId" type="radio" value="@plan.Id" data-term="@plan.Term">@plan.Name
+                            </label>
+                        }
+
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label class="col-form-label" asp-for="AppUserPlan.OrderTotal"></label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" asp-for="AppUserPlan.OrderTotal" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row" style="margin-bottom:5px">
+                    <div class="col-md-4">
+                        <label>Start Date</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input asp-for="@Model.AppUserPlan.StartDate" id="datepicker" type="text" readonly="readonly" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:5px">
+                    <div class="col-md-4">
+                        <label>End Date</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input asp-for="@Model.AppUserPlan.EndDate" readonly id="endDate" type="text" value="" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="submit" class="btn btn-info form-control" value="Create" />
+                            </div>
+                            <div class="col-md-6">
+                                <a asp-action="UserList" class="btn btn-success form-control">Back to List</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="list-group">
+                    @if (Model.AppUserPlans.Count() > 0)
+                    {
+                        <a href="#" class="list-group-item disabled">
+                            User Plan History
+                        </a>
+                        foreach (var plan in Model.AppUserPlans)
+                        {
+                            <a href="#" class="list-group-item">
+                                @plan.PlanPackage.Name
+                                <p class="list-group-item-text">
+                                    @plan.StartDate.ToShortDateString() - @plan.EndDate.ToShortDateString()
+                                </p>
+                            </a>
+
+                        }
+
+                    }
+                    else
+                    {
+                        <a href="#" class="list-group-item disabled">
+                            No Plans
+                        </a>
+                    }
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+</form>
+
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            var minDt = 0;
+
+            minDt = getDateFromCurrentDate();
+            $('#datepicker').datepicker({
+                minDate: minDt, beforeShowDay: function (date) { return [(date.getDay() == 1), ""]; }
+            });
+
+        function getDateFromCurrentDate() {
+            var curDt = new Date();
+
+            curDt.setDate(curDt.getDate() + (1 - 1 - curDt.getDay() + 7) % 7 + 1);
+            return curDt;
+
+        }
+
+        function setEndDate() {
+            var dateSelected = $("#datepicker").val();
+            var dt = new Date(dateSelected);
+
+            console.log(dt);
+            
+            var planDates = $("input[name='PlanId']:checked").attr("data-term");
+            console.log(planDates);
+            var dates = planDates * 7;
+            dt.setDate(dt.getDate() + dates - 1);
+
+            $('#endDate').datepicker().datepicker('setDate', dt);
+
+        }
+
+            $('#datepicker').change(function () {
+                
+            setEndDate();
+            $("#endDate").datepicker("destroy");
+        });
+
+        $('input[type=radio][name=PlanId]').change(function () {
+
+            var startDate = $("#datepicker").val();
+     
+            if (startDate) {
+                setEndDate();
+                $("#endDate").datepicker("destroy");
+            }
+                
+
+        });
+
+
+        function validateInput() {
+            var dt = document.getElementById("datepicker").value;
+            var phone = document.getElementById("txtPhone").value;
+
+
+                if (dt.toString() == '') {
+                    alert("Please select start date");
+                    return false;
+                }
+                else {
+                    return true;
+
+                }
+
+            }
+    });
+
+    </script>
+}
+
+

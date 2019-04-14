@@ -1,0 +1,66 @@
+﻿@model IEnumerable<CustomerProfile>
+@{
+    ViewData["Title"] = "UserList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="border backgroundWhite">
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="text-info">Select a user to add a plan</h2>
+        </div>
+        <div class="col-md-4 text-right">
+            <a asp-action="OrderHistory" class="btn btn-success form-control">Back to User Order List</a>
+        </div>
+    </div>
+
+    <br />
+    <div>
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        @Html.DisplayNameFor(m => m.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.PhoneNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.ApplicationUser.Email)
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ApplicationUser.Email)
+                        </td>
+
+                        <td style="width:150px;">
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-primary text-white" asp-action="AddOrder" asp-route-userId="@item.ApplicationUserId"><i class="fa fa-plus"></i></a>
+                                <a class="btn btn-success text-white" asp-action="Details" asp-route-userId="@item.ApplicationUserId"><i class="fa fa-list-alt"></i></a>
+                      
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p>No user exists...</p>
+        }
+    </div>
+</div>
+
