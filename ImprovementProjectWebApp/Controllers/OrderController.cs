@@ -66,12 +66,25 @@ namespace ImprovementProjectWebApp.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> UserOrderList()
+        public async Task<IActionResult> UserOrderList(string search_param, string search_text)
         {
             List<AppUserPlan> userPlans = await _db.AppUserPlans
                                                 .Include(a => a.ApplicationUser)
                                                 .Include(a => a.PlanPackage)
                                                 .ToListAsync();
+
+            if(search_param == "name")
+            {
+                userPlans = userPlans.Where(u => u.UserName.ToLower().Contains(search_text.ToLower())).ToList();
+            }
+            if(search_param == "email")
+            {
+                userPlans = userPlans.Where(u => u.ApplicationUser.Email.ToLower().Contains(search_text.ToLower())).ToList();
+            }
+            if(search_param == "phone")
+            {
+                userPlans = userPlans.Where(u => u.Phone.Contains(search_text)).ToList();
+            }
 
             return View(userPlans);
 
