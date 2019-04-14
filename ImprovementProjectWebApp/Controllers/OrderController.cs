@@ -110,10 +110,23 @@ namespace ImprovementProjectWebApp.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> UserList()
+        public async Task<IActionResult> UserList(string search_param, string search_text)
         {
 
             var userList = await _db.CustomerProfile.Include(c => c.ApplicationUser).ToListAsync();
+
+            if (search_param == "name")
+            {
+                userList = userList.Where(u => u.Name.ToLower().Contains(search_text.ToLower())).ToList();
+            }
+            if (search_param == "email")
+            {
+                userList = userList.Where(u => u.ApplicationUser.Email.ToLower().Contains(search_text.ToLower())).ToList();
+            }
+            if (search_param == "phone")
+            {
+                userList = userList.Where(u => u.PhoneNumber.Contains(search_text)).ToList();
+            }
 
             return View(userList);
         }
