@@ -61,6 +61,12 @@ namespace ImprovementProjectWebApp.Controllers
                                             .Include(a => a.PlanPackage)
                                             .FirstOrDefaultAsync(a => a.Id == Id);
 
+            CustomerProfile profile = await _db.CustomerProfile.FirstOrDefaultAsync(c => c.ApplicationUserId == userPlan.ApplicationUserId);
+
+            userPlan.UserName = profile.Name;
+            userPlan.Phone = profile.PhoneNumber;
+
+
             return PartialView("_IndividualOrderDetails", userPlan);
 
         }
