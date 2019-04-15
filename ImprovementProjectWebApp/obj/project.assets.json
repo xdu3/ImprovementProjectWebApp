@@ -13537,9 +13537,7 @@
         "C:\\Users\\suife\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
-      "originalTargetFrameworks": [
-        "netcoreapp2.0"
-      ],
+      "originalTargetFrameworks": ["netcoreapp2.0"],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
@@ -13550,9 +13548,7 @@
         }
       },
       "warningProperties": {
-        "warnAsError": [
-          "NU1605"
-        ]
+        "warnAsError": ["NU1605"]
       }
     },
     "frameworks": {
@@ -13583,9 +13579,7 @@
             "version": "[25.4.0, )"
           }
         },
-        "imports": [
-          "net461"
-        ],
+        "imports": ["net461"],
         "assetTargetFallback": true,
         "warn": true
       }

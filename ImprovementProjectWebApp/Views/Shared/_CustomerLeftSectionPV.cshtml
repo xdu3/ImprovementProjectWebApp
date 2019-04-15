@@ -22,11 +22,11 @@
             打卡信息
         </a>
     </li>
-    <li class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "/Customer/AnswerIntroQA" ? " active" : "")">
+    @*<li class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "/Customer/AnswerIntroQA" ? " active" : "")">
         <a class=" LeftSection" asp-controller="Customer" asp-action="AnswerIntroQA">
             初始问题
         </a>
-    </li>
+    </li>*@
     <li class="@(Url.RouteUrl(ViewContext.RouteData.Values) == "/Customer/ViewCustomer" ? " active" : "")">
         <a class=" LeftSection" asp-controller="Customer" asp-action="ViewCustomer">
             用户信息

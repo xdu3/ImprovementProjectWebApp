@@ -239,7 +239,7 @@ namespace ImprovementProjectWebApp.Controllers
         }
         public ActionResult ViewCustomerProfile(string UserId)
         {
-            return View(_context.CustomerProfile.Where(c => c.ApplicationUserId == UserId).Include(c=>c.ApplicationUser).FirstOrDefault());
+            return View(_context.CustomerProfile.Where(c => c.ApplicationUserId == UserId).Include(c=>c.ApplicationUser).ThenInclude(c=>c.AppUserPlans).FirstOrDefault());
         }
 
         // GET: CustomerProfiles/Edit/5
