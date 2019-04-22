@@ -11,9 +11,10 @@ using System;
 namespace ImprovementProjectWebApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190422142249_foodCategoryTable")]
+    partial class foodCategoryTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -284,33 +285,6 @@ namespace ImprovementProjectWebApp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FoodCategory");
-                });
-
-            modelBuilder.Entity("ImprovementProjectWebApp.Models.FoodItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<double>("Calories");
-
-                    b.Property<double>("Carb");
-
-                    b.Property<double>("Fat");
-
-                    b.Property<int>("FoodCategoryId");
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<double>("Protein");
-
-                    b.Property<bool>("UserSelect");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FoodCategoryId");
-
-                    b.ToTable("FoodItem");
                 });
 
             modelBuilder.Entity("ImprovementProjectWebApp.Models.IntroQA", b =>
@@ -662,14 +636,6 @@ namespace ImprovementProjectWebApp.Data.Migrations
                     b.HasOne("ImprovementProjectWebApp.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("FeedBacks")
                         .HasForeignKey("ApplicationUserId");
-                });
-
-            modelBuilder.Entity("ImprovementProjectWebApp.Models.FoodItem", b =>
-                {
-                    b.HasOne("ImprovementProjectWebApp.Models.FoodCategory", "FoodCategory")
-                        .WithMany()
-                        .HasForeignKey("FoodCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("ImprovementProjectWebApp.Models.IntroQA", b =>

@@ -1,0 +1,61 @@
+﻿@model ImprovementProjectWebApp.Models.FoodItem
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>FoodItem</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Protein)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Protein)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Carb)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Carb)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fat)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fat)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Calories)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Calories)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserSelect)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserSelect)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FoodCategory)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FoodCategory.Category)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -11,83 +11,197 @@
 </style>
 <h2>View Customer Profile</h2>
 
-    <div class="col-lg-6">
+<div class="col-lg-6">
 
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.ApplicationUser.UserName)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Gender)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Gender)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.PhoneNumber)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.WeChatNumber)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.WeChatNumber)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.StartDate)
-            </dd>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.UserName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.UserName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.WeChatNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WeChatNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.ApplicationUser.Email)
-            </dd>
-        </dl>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Email)
+        </dd>
+    </dl>
+</div>
+@if (Model.WeChatQRCode != null)
+{
+    <div class="col-lg-3">
+        <dt>
+            @Html.DisplayNameFor(model => model.WeChatQRCode)
+        </dt>
+        <dd>
+            @{
+
+                var base64 = Convert.ToBase64String(Model.WeChatQRCode);
+                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                <img src="@imgsrc" alt="Alternate Text" width="100%" />
+
+            }
+        </dd>
     </div>
-    @if (Model.WeChatQRCode != null)
-    {
-        <div class="col-lg-3">
-            <dt>
-                @Html.DisplayNameFor(model => model.WeChatQRCode)
-            </dt>
-            <dd>
-                @{
+}
+<div class="clearfix"></div>
+<div>
+    <br /><br />
+    <a asp-action="EditCustomerProfile" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="DeleteCustomerProfile" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>
+<hr />
+<div class="clearfix"></div>
+<div class="col-lg-12 row">
 
-                    var base64 = Convert.ToBase64String(Model.WeChatQRCode);
-                    var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                    <img src="@imgsrc" alt="Alternate Text" width="100%" />
-
-                }
-            </dd>
-        </div>
-    }
-    <div class="clearfix"></div>
     <div>
-        <br /><br />
-        <a asp-action="EditCustomerProfile" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
-        <a asp-action="DeleteCustomerProfile" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
-        <a asp-action="Index" class="btn btn-primary">Back to List</a>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-lg-12">
-        @foreach (var i in Model.ApplicationUser.AppUserPlans)
+        @if (Model.ApplicationUser.AppUserPlans.Count() > 0)
         {
-            <div class="list-group-item col-lg-4">
-                <p>Period: @i.StartDate - @i.EndDate</p>
-            </div>
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        @Html.DisplayNameFor(m => m.Id)
+                    </th>
+                    <th>
+                        UserName
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Start date
+                    </th>
+                    <th>
+                        End date
+                    </th>
+                    <th>
+                        OrderTotal
+                    </th>
+                    <th>
+                        Total Items
+                    </th>
+
+                </tr>
+                @foreach (var item in Model.ApplicationUser.AppUserPlans)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ApplicationUser.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.ApplicationUser.Email)
+                        </td>
+
+                        <td>
+                            @item.StartDate.ToString("yyyy MMMM dd")
+                        </td>
+                        <td>
+                            @item.EndDate.ToString("yyyy MMMM dd")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.OrderTotal)
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-success anchorDetail" data-id="@item.Id" data-toggle="modal">
+                                <i class="fa fa-list-alt"></i> Details
+                            </button>
+
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+        }
+        else
+        {
+            <p>No Plan exists...</p>
         }
     </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog-centered modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-light justify-content-center">
+                <h5 class="modal-title">Order Details</h5>
+            </div>
+            <div class="modal-body justify-content-center" id="myModalContent">
 
-    
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" style="width:20%" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        var PostBackURL = '/Order/GetOrderDetails';
+
+        $(function () {
+            $(".anchorDetail").click(function () {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+
+                $.ajax({
+                    type: "GET",
+                    url: PostBackURL,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id },
+                    cache: false,
+                    datatype: "json",
+                    success: function (data) {
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load faile");
+                    }
+                });
+            });
+
+            $('.search-panel .dropdown-menu').find('a').click(function (e) {
+                e.preventDefault();
+                var param = $(this).attr("href").replace("#", "");
+                var concept = $(this).text();
+                $('.search-panel span#search_concept').text(concept);
+                $('.input-group #search_param').val(param);
+            });
+
+
+        })
+    </script>
+}

@@ -34,6 +34,8 @@ namespace ImprovementProjectWebApp.Data
         public DbSet<WeekPlan> WeekPlan { get; set; }
         public DbSet<UserCheckInDate> UserCheckInDate { get; set; }
         public DbSet<PlanPackage> PlanPackage { get; set; }
+        public DbSet<FoodCategory> FoodCategory { get; set; }
+        public DbSet<FoodItem> FoodItem { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
