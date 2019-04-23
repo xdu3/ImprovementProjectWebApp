@@ -156,6 +156,31 @@ namespace ImprovementProjectWebApp.Controllers
 
 
                 await _db.AppUserPlans.AddAsync(appUserPlan);
+
+                if (appUserPlan.StartDate.DayOfWeek == DayOfWeek.Monday)
+                {
+                    int period = ((TimeSpan)(appUserPlan.EndDate - appUserPlan.StartDate)).Days / 7;
+                    DateTime TheDate = appUserPlan.StartDate;
+                    for (int i = 0; i < period; i++)
+                    {
+                        UserCheckInDate userCheckInDate = new UserCheckInDate();
+                        userCheckInDate.AppUserPlanId = appUserPlan.Id;
+                        if (i == 0)
+                        {
+                            userCheckInDate.CheckInDate = TheDate.AddDays(6);
+                            TheDate = TheDate.AddDays(6);
+                        }
+                        else
+                        {
+                            userCheckInDate.CheckInDate = TheDate.AddDays(7);
+                            TheDate = TheDate.AddDays(7);
+                        }
+                        await _db.UserCheckInDate.AddAsync(userCheckInDate);
+                      
+                    }
+                }
+
+
                 await _db.SaveChangesAsync();
 
                 return RedirectToAction(nameof(UserOrderList));
