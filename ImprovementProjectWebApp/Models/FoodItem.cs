@@ -23,7 +23,7 @@ namespace ImprovementProjectWebApp.Models
         [Required]
         public double Calories { get; set; }
         [Required]
-        public bool UserSelect { get; set; }
+        public bool Active { get; set; }
         [Required]
         [Display(Name = "Food Category")]
         public int FoodCategoryId { get; set; }

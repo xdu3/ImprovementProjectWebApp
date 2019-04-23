@@ -57,7 +57,7 @@ namespace ImprovementProjectWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Protein,Carb,Fat,Calories,UserSelect,FoodCategoryId")] FoodItem foodItem)
+        public async Task<IActionResult> Create([Bind("Id,Name,Protein,Carb,Fat,Calories,Active,FoodCategoryId")] FoodItem foodItem)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace ImprovementProjectWebApp.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Protein,Carb,Fat,Calories,UserSelect,FoodCategoryId")] FoodItem foodItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Protein,Carb,Fat,Calories,Active,FoodCategoryId")] FoodItem foodItem)
         {
             if (id != foodItem.Id)
             {

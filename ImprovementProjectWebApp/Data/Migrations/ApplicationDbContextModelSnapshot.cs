@@ -291,6 +291,8 @@ namespace ImprovementProjectWebApp.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("Active");
+
                     b.Property<double>("Calories");
 
                     b.Property<double>("Carb");
@@ -303,8 +305,6 @@ namespace ImprovementProjectWebApp.Data.Migrations
                         .IsRequired();
 
                     b.Property<double>("Protein");
-
-                    b.Property<bool>("UserSelect");
 
                     b.HasKey("Id");
 
@@ -445,6 +445,27 @@ namespace ImprovementProjectWebApp.Data.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("UserCheckInDate");
+                });
+
+            modelBuilder.Entity("ImprovementProjectWebApp.Models.UserFood", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired();
+
+                    b.Property<int?>("FoodCategoryId");
+
+                    b.Property<int>("FoodItemId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("FoodCategoryId");
+
+                    b.ToTable("UserFood");
                 });
 
             modelBuilder.Entity("ImprovementProjectWebApp.Models.WeekPlan", b =>
@@ -719,6 +740,18 @@ namespace ImprovementProjectWebApp.Data.Migrations
                     b.HasOne("ImprovementProjectWebApp.Models.ApplicationUser")
                         .WithMany("UserCheckInDates")
                         .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("ImprovementProjectWebApp.Models.UserFood", b =>
+                {
+                    b.HasOne("ImprovementProjectWebApp.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ImprovementProjectWebApp.Models.FoodItem", "FoodItem")
+                        .WithMany()
+                        .HasForeignKey("FoodCategoryId");
                 });
 
             modelBuilder.Entity("ImprovementProjectWebApp.Models.WeekPlan", b =>
