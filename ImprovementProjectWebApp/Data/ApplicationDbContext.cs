@@ -36,6 +36,7 @@ namespace ImprovementProjectWebApp.Data
         public DbSet<PlanPackage> PlanPackage { get; set; }
         public DbSet<FoodCategory> FoodCategory { get; set; }
         public DbSet<FoodItem> FoodItem { get; set; }
+        public DbSet<UserFood> UserFood { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
