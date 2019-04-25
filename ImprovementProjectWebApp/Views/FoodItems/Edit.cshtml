@@ -5,60 +5,110 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Edit</h2>
 
-<h4>FoodItem</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+
+
+<h2 class="text-info">Edit</h2>
+<br />
+
+
+<form method="post" asp-action="Edit">
+    <div class="border backgroundWhite">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input asp-for="Id" type="hidden" />
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="FoodCategoryId" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
+                <select asp-for="FoodCategoryId" class="form-control" asp-items="ViewBag.FoodCategoryId"></select>
+            </div>
+            <span asp-validation-for="FoodCategoryId" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Name" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
                 <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Protein" class="control-label"></label>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Protein" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
                 <input asp-for="Protein" class="form-control" />
-                <span asp-validation-for="Protein" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Carb" class="control-label"></label>
+            <span asp-validation-for="Protein" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Carb" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
                 <input asp-for="Carb" class="form-control" />
-                <span asp-validation-for="Carb" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Fat" class="control-label"></label>
+            <span asp-validation-for="Carb" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Fat" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
                 <input asp-for="Fat" class="form-control" />
-                <span asp-validation-for="Fat" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Calories" class="control-label"></label>
+            <span asp-validation-for="Fat" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Calories" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
                 <input asp-for="Calories" class="form-control" />
-                <span asp-validation-for="Calories" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <span asp-validation-for="Calories" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Active" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                        <input asp-for="Active" />
                     </label>
                 </div>
             </div>
-            <div class="form-group">
-                <label asp-for="FoodCategoryId" class="control-label"></label>
-                <select asp-for="FoodCategoryId" class="form-control" asp-items="ViewBag.FoodCategoryId"></select>
-                <span asp-validation-for="FoodCategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
-    </div>
-</div>
+            <span asp-validation-for="Active" class="text-danger"></span>
+        </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
+
+        <div class="form-group row">
+            <div class="col-md-2">
+
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="submit" class="btn btn-info form-control" value="Update" />
+                    </div>
+                    <div class="col-md-6">
+                        <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 

@@ -40,10 +40,15 @@
 @if (Model.CheckInQADetails != null)
 {
     <div class="list-group-item col-lg-12">
+
+        @if (Model.IntroQA != null)
+        {
         <div class="list-group-item col-lg-6">
             <p>问题：初始体重</p>
             <p>答案： @Model.IntroQA.Answer</p>
         </div>
+        }
+
         @foreach (var i in Model.CheckInQADetails)
         {
             <div class="list-group-item col-lg-6">

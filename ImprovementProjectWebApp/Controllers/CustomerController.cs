@@ -772,5 +772,6 @@ namespace ImprovementProjectWebApp.Controllers
             feedbacksListVM.FeedBacks = _context.FeedBack.Where(f => f.ApplicationUserId == curUserId).ToList();
             return View(feedbacksListVM);
         }
+
     }
 }

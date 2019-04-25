@@ -5,21 +5,40 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>FoodCategory</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Category)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<h2 class="text-info">Food Category</h2>
+<br />
+
+
+
+<div class="border backgroundWhite">
+    <fieldset disabled>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Category" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
+                <input asp-for="Category" class="form-control" />
+            </div>
+        </div>
+
+        
+
+    </fieldset>
+    <div class="form-group row">
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info form-control">Edit</a>
+                </div>
+                <div class="col-md-6">
+                    <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

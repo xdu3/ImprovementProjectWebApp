@@ -5,57 +5,90 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>FoodItem</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Protein)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Protein)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Carb)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Carb)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Fat)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Fat)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Calories)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Calories)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Active)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.FoodCategory)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FoodCategory.Category)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<h2 class="text-info">Food Details</h2>
+<br />
+
+
+
+<div class="border backgroundWhite">
+    <fieldset disabled>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Name" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
+                <input asp-for="Name" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Protein" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
+                <input asp-for="Protein" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Carb" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
+                <input asp-for="Carb" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Fat" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
+                <input asp-for="Fat" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Calories" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
+                <input asp-for="Calories" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="Active" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
+                <input asp-for="Active" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <label asp-for="FoodCategory" class="col-form-label"></label>
+            </div>
+            <div class="col-md-5">
+                <input asp-for="FoodCategory.Category" class="form-control" />
+            </div>
+        </div>
+
+
+
+
+
+    </fieldset>
+    <div class="form-group row">
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info form-control">Edit</a>
+                </div>
+                <div class="col-md-6">
+                    <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
