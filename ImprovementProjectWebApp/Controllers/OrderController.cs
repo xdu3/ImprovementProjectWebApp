@@ -47,7 +47,7 @@ namespace ImprovementProjectWebApp.Controllers
             List<AppUserPlan> userPlans = await _db.AppUserPlans
                                                    .Include(o => o.ApplicationUser)
                                                    .Include(a => a.PlanPackage)
-                                                   .Where(u => u.ApplicationUserId == claim.Value)
+                                                   .Where(u => u.ApplicationUserId == claim.Value && u.PaymentStatus == SD.PaymentStatusApproved)
                                                    .ToListAsync();
 
             return View(userPlans);

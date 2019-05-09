@@ -1,0 +1,43 @@
+﻿@model ImprovementProjectWebApp.Models.AppUserPlan
+@{
+    ViewData["Title"] = "WeChatPay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div class="backgroundWhite">
+    <div class="row" style="padding-bottom:16px">
+        <div class="col-md-8 col-sm-12">
+            <div class="col-md-2">
+                <img src="~/images/wechat-logo.jpg" width="100%" alt="wechat pay" />
+            </div>
+            <div class="col-md-10">
+                <h4>@Model.PlanPackage.Name</h4>
+                <h5 class="text-muted">支付订单号：@Model.TransactionId</h5>
+                <h5 class="text-muted">请及时完成付款，否则订单将被自动取消</h5>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            支付<span class="text-success" style="font-size:46px">@Model.OrderTotal</span>加元
+        </div>
+
+        <hr style="width:100%" />
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6 col-sm-12 text-center">
+            <img src="~/images/wechat.png" alt="wechat logo" height="60" />
+            @{
+                var base64 = Convert.ToBase64String(Model.QrImage);
+                var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+            }
+            <img src="@imgsrc" width="100%" />
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <img src="~/images/phone.jpg" alt="扫一扫" width="100%" />
+        </div>
+    </div>
+
+
+</div>
+
