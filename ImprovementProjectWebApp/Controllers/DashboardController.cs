@@ -431,7 +431,7 @@ namespace ImprovementProjectWebApp.Controllers
                 //WeekPlan lastWeekPlan = _context.WeekPlan.Where(a => a.AppUserPlanId == appUserPlan.Id).Max(w=>w.WeekPlanEndTime);
                 DateTime lastWeekPlanEndTime = _context.WeekPlan.Where(a => a.AppUserPlanId == appUserPlan.Id).Max(w => w.WeekPlanEndTime);
                 newWeekPlan.WeekPlanStartTime = lastWeekPlanEndTime.AddDays(1);
-                newWeekPlan.WeekPlanEndTime = lastWeekPlanEndTime.AddDays(8);
+                newWeekPlan.WeekPlanEndTime = lastWeekPlanEndTime.AddDays(7);
                 _context.WeekPlan.Add(newWeekPlan);
                 _context.SaveChanges();
                 List<Plan> plans = _context.Plans.Where(p => p.WeekPlanId == weekPlan.Id).ToList();
@@ -722,6 +722,17 @@ namespace ImprovementProjectWebApp.Controllers
             //List<ApplicationUser> applicationUsers = _context.UserCheckInDate.Where(u => u.CheckInDate == TargetDate).Select(u => u.AppUserPlan.ApplicationUser).Include(u => u.CheckInQAs).ThenInclude(u => u.CheckInQADetails).ThenInclude(u => u.CheckInQuestion).Include(u => u.CheckInQAs).ThenInclude(u => u.CheckInImgs).Include(u => u.AppUserPlans).ThenInclude(u => u.WeekPlans).ThenInclude(u => u.MealPlan).Include(u => u.AppUserPlans).ThenInclude(u => u.WeekPlans).ThenInclude(u => u.Plans).Include(u => u.CustomerProfiles).ToList();
             List<ApplicationUser> applicationUsers = _context.AppUserPlans.Where(a=>a.StartDate<=DateTime.Today&& a.EndDate>=DateTime.Today).Select(u => u.ApplicationUser).Include(u => u.CheckInQAs).ThenInclude(u => u.CheckInQADetails).ThenInclude(u => u.CheckInQuestion).Include(u => u.CheckInQAs).ThenInclude(u => u.CheckInImgs).Include(u => u.AppUserPlans).ThenInclude(u => u.WeekPlans).ThenInclude(u => u.MealPlan).Include(u => u.AppUserPlans).ThenInclude(u => u.WeekPlans).ThenInclude(u => u.Plans).Include(u => u.CustomerProfiles).ToList();
             dailyCheckInVM.ApplicationUsers = applicationUsers;
+            return View(dailyCheckInVM);
+        }
+
+        public ActionResult ActiveUserCheckIn(string UserId)
+        {
+            DailyCheckInVM dailyCheckInVM = new DailyCheckInVM();
+            DateTime TargetDate = DateTime.Today;
+            List<ApplicationUser> applicationUsers = _context.AppUserPlans.Where(a => a.StartDate <= DateTime.Today && a.EndDate >= DateTime.Today).Select(u => u.ApplicationUser).Where(u=>u.IfDelete == false).Where(a => a.EmailConfirmed == true).Include(u => u.CheckInQAs).ThenInclude(u => u.CheckInQADetails).ThenInclude(u => u.CheckInQuestion).Include(u => u.CheckInQAs).ThenInclude(u => u.CheckInImgs).Include(u => u.AppUserPlans).ThenInclude(u => u.WeekPlans).ThenInclude(u => u.MealPlan).Include(u => u.AppUserPlans).ThenInclude(u => u.WeekPlans).ThenInclude(u => u.Plans).Include(u => u.CustomerProfiles).ToList();
+            ApplicationUser SelectUser = _context.ApplicationUser.Where(a => a.Id == UserId).Include(u => u.CheckInQAs).ThenInclude(u => u.CheckInQADetails).ThenInclude(u => u.CheckInQuestion).Include(u => u.CheckInQAs).ThenInclude(u => u.CheckInImgs).Include(u => u.AppUserPlans).ThenInclude(u => u.WeekPlans).ThenInclude(u => u.MealPlan).Include(u => u.AppUserPlans).ThenInclude(u => u.WeekPlans).ThenInclude(u => u.Plans).Include(u => u.CustomerProfiles).FirstOrDefault();
+            dailyCheckInVM.ApplicationUsers = applicationUsers;
+            dailyCheckInVM.SelectUser = SelectUser;
             return View(dailyCheckInVM);
         }
 

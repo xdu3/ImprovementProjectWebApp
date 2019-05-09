@@ -1,0 +1,22 @@
+﻿@model ImprovementProjectWebApp.Models.Customer.SelectPaymentTypeVM
+@{
+    ViewData["Title"] = "SelectPaymentType";
+
+}
+
+<h2>选择支付类型</h2>
+<div class="list-group-item col-lg-8">
+    <div class=" col-lg-12">
+        <div class="col-lg-6">
+            <a asp-controller="Cart" asp-action="Summary" asp-route-planId="@Model.PlanId" class="list-group-item"><img src="~/images/visa.png" alt="Alternate Text" width="100%" /></a>
+        </div>
+        <div class="col-lg-6">
+            <a asp-controller="Customer" asp-action="WechatPay" class="list-group-item"><img src="~/images/Wechat.png" alt="Alternate Text" width="100%" /></a>
+        </div>
+
+    </div>
+
+</div>
+<div class="clearfix"> </div>
+
+

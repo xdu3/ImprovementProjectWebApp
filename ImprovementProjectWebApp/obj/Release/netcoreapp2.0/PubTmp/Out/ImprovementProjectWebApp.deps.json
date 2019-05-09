@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "302f89b39aa12bd46a6c128bed8c979555aea3ec"
+    "signature": "9aac5bbf8778d4aae43c0ec92072884d2ab40b9f"
   },
   "compilationOptions": {
     "defines": [
@@ -24,7 +24,8 @@
       "ImprovementProjectWebApp/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.All": "2.0.8",
-          "Microsoft.NETCore.App": "2.0.0"
+          "Microsoft.NETCore.App": "2.0.0",
+          "Stripe.net": "25.4.0"
         },
         "runtime": {
           "ImprovementProjectWebApp.dll": {}
@@ -1389,7 +1390,7 @@
           "System.AppContext": "4.3.0",
           "System.Collections": "4.3.0",
           "System.Collections.Concurrent": "4.3.0",
-          "System.Collections.Immutable": "1.4.0",
+          "System.Collections.Immutable": "1.5.0",
           "System.Console": "4.3.0",
           "System.Diagnostics.Debug": "4.3.0",
           "System.Diagnostics.FileVersionInfo": "4.3.0",
@@ -1576,7 +1577,7 @@
           "Microsoft.Extensions.DependencyInjection": "2.0.0",
           "Microsoft.Extensions.Logging": "2.0.2",
           "Remotion.Linq": "2.1.1",
-          "System.Collections.Immutable": "1.4.0",
+          "System.Collections.Immutable": "1.5.0",
           "System.ComponentModel.Annotations": "4.4.0",
           "System.Diagnostics.DiagnosticSource": "4.4.1",
           "System.Interactive.Async": "3.1.1"
@@ -2647,6 +2648,18 @@
           "lib/netstandard1.5/StackExchange.Redis.StrongName.dll": {}
         }
       },
+      "Stripe.net/25.4.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "10.0.1",
+          "System.Collections.Immutable": "1.5.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Stripe.net.dll": {}
+        },
+        "compile": {
+          "lib/netstandard2.0/Stripe.net.dll": {}
+        }
+      },
       "System.AppContext/4.3.0": {
         "dependencies": {
           "System.Runtime": "4.3.0"
@@ -2674,7 +2687,14 @@
           "System.Threading.Tasks": "4.3.0"
         }
       },
-      "System.Collections.Immutable/1.4.0": {},
+      "System.Collections.Immutable/1.5.0": {
+        "runtime": {
+          "lib/netstandard2.0/System.Collections.Immutable.dll": {}
+        },
+        "compile": {
+          "lib/netstandard2.0/System.Collections.Immutable.dll": {}
+        }
+      },
       "System.Collections.NonGeneric/4.3.0": {
         "dependencies": {
           "System.Diagnostics.Debug": "4.3.0",
@@ -3801,7 +3821,6 @@
           "ref/netcoreapp2.0/System.AppContext.dll": {},
           "ref/netcoreapp2.0/System.Buffers.dll": {},
           "ref/netcoreapp2.0/System.Collections.Concurrent.dll": {},
-          "ref/netcoreapp2.0/System.Collections.Immutable.dll": {},
           "ref/netcoreapp2.0/System.Collections.NonGeneric.dll": {},
           "ref/netcoreapp2.0/System.Collections.Specialized.dll": {},
           "ref/netcoreapp2.0/System.Collections.dll": {},
@@ -5481,6 +5500,13 @@
       "hashPath": "stackexchange.redis.strongname.1.2.4.nupkg.sha512",
       "runtimeStoreManifestName": "aspnetcore-store-2.0.0-linux-x64.xml;aspnetcore-store-2.0.0-osx-x64.xml;aspnetcore-store-2.0.0-win7-x64.xml;aspnetcore-store-2.0.0-win7-x86.xml"
     },
+    "Stripe.net/25.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ARd6cvy47vWashUta0Ln05tlWTSTJtpQcPjgtQTzHw8f2xJEPGd15bSnBl/qGGqJhClQv0EB9N0/P+30ZDjPXw==",
+      "path": "stripe.net/25.4.0",
+      "hashPath": "stripe.net.25.4.0.nupkg.sha512"
+    },
     "System.AppContext/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -5509,12 +5535,12 @@
       "path": "system.collections.concurrent/4.3.0",
       "hashPath": "system.collections.concurrent.4.3.0.nupkg.sha512"
     },
-    "System.Collections.Immutable/1.4.0": {
+    "System.Collections.Immutable/1.5.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-71hw5RUJRu5+q/geUY69gpXD8Upd12cH+F3MwpXV2zle7Bqqkrmc1JblOTuvUcgmdnUtQvBlV5e1d6RH+H2lvA==",
-      "path": "system.collections.immutable/1.4.0",
-      "hashPath": "system.collections.immutable.1.4.0.nupkg.sha512"
+      "sha512": "sha512-RGxi2aQoXgZ5ge0zxrKqI4PU9LrYYoLC+cnEnWXKsSduCOUhE1GEAAoTexUVT8RZOILQyy1B27HC8Xw/XLGzdQ==",
+      "path": "system.collections.immutable/1.5.0",
+      "hashPath": "system.collections.immutable.1.5.0.nupkg.sha512"
     },
     "System.Collections.NonGeneric/4.3.0": {
       "type": "package",

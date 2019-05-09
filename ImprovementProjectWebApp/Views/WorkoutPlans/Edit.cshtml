@@ -1,0 +1,61 @@
+﻿@model ImprovementProjectWebApp.Models.WorkoutPlan
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Edit</h2>
+
+<h4>WorkoutPlan</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Sets" class="control-label"></label>
+                <input asp-for="Sets" class="form-control" />
+                <span asp-validation-for="Sets" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="OtherTypeExercise" /> @Html.DisplayNameFor(model => model.OtherTypeExercise)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Des" class="control-label"></label>
+                <input asp-for="Des" class="form-control" />
+                <span asp-validation-for="Des" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="ProgressiveOverload" /> @Html.DisplayNameFor(model => model.ProgressiveOverload)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExerciseId" class="control-label"></label>
+                <select asp-for="ExerciseId" class="form-control" asp-items="ViewBag.ExerciseId"></select>
+                <span asp-validation-for="ExerciseId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlanId" class="control-label"></label>
+                <select asp-for="PlanId" class="form-control" asp-items="ViewBag.PlanId"></select>
+                <span asp-validation-for="PlanId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

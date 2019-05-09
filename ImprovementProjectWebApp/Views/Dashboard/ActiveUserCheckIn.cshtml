@@ -1,0 +1,209 @@
+﻿@model ImprovementProjectWebApp.Models.DashboardVM.DailyCheckInVM
+@{
+    ViewData["Title"] = "ActiveUserCheckIn";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>ActiveUserCheckIn</h2>
+<div class="col-lg-8">
+<table class="table table-striped border">
+
+    <tr class="table-secondary">
+
+        <th scope="col">User</th>
+
+        <th scope="col">Check In status</th>
+
+        <th scope="col">Last Workout Plan status</th>
+        @*<th scope="col">Last Meal Plan status</th>*@
+
+        <th scope="col">User</th>
+    </tr>
+
+    <tbody>
+        @foreach (var item in Model.ApplicationUsers)
+        {
+
+            <tr>
+
+                <td>
+                    @if (item.CustomerProfiles.Count() != 0)
+                    {
+                        <p>
+                            Name: <strong> @item.CustomerProfiles.FirstOrDefault().Name</strong>
+                        </p>
+                    }
+                    else
+                    {
+                        <p>Null</p>
+                    }
+                    <p>Email: <strong> @item.Email</strong></p>
+
+                </td>
+
+                <td>
+                    @{
+                        var x = item.CheckInQAs.Where(c => c.CreatedDate <= DateTime.Today && c.CreatedDate >= DateTime.Today.AddDays(-7));
+                        if (x != null)
+                        {
+                            foreach (var ii in x)
+                            {
+                                <a asp-controller="Dashboard" asp-action="CheckInDetail" asp-route-CheckInQAId="@ii.Id" target="_blank">@ii.CreatedDate.ToString("yyyy MMMM dd")</a>
+                                <span class="badge badge-pill badge-primary">@ii.CheckInImgs.Where(c => c.ImgURL != null).Count() Pictures</span>
+                                <br />
+                            }
+
+
+                        }
+                        else
+                        {
+                            <i class="fa fa-times-circle"></i>
+
+                        }
+
+                    }
+                </td>
+                <td>
+                    @{
+                        var CurWeekPlan2 = item.AppUserPlans.Select(a => a.WeekPlans.Where(w => w.WeekPlanEndTime <= Model.Date && w.WeekPlanEndTime >= Model.Date)).FirstOrDefault();
+                        var WeekPlan = item.AppUserPlans.Where(a => a.StartDate <= DateTime.Today && a.EndDate >= DateTime.Today).FirstOrDefault().WeekPlans;
+                        if (WeekPlan.Count() != 0)
+                        {
+                            var lastWeekPlanDate = WeekPlan.Max(w => w.WeekPlanEndTime);
+                            if (lastWeekPlanDate != null)
+                            {
+                                if (lastWeekPlanDate < DateTime.Today)
+                                {
+                                    <span style="color:red;">@lastWeekPlanDate.ToString("yyyy MMMM dd") </span><span class="badge badge-pill badge-primary">@WeekPlan.Where(w => w.WeekPlanEndTime == lastWeekPlanDate).FirstOrDefault().Plans.Count() Day Plan</span>
+                                }
+                                else
+                                {
+                                    <span>@lastWeekPlanDate.ToString("yyyy MMMM dd") </span><span class="badge badge-pill badge-primary">@WeekPlan.Where(w => w.WeekPlanEndTime == lastWeekPlanDate).FirstOrDefault().Plans.Count() Day Plan</span>
+                                }
+                            }
+                        }
+
+                    }
+                </td>
+                @*<td>
+                    @{
+                        var CurWeekPlan = WeekPlan;
+                        if (CurWeekPlan != null)
+                        {
+                            if (CurWeekPlan.FirstOrDefault() != null)
+                            {
+                                if (CurWeekPlan.FirstOrDefault().MealPlan.FirstOrDefault() != null)
+                                {
+                                    if (CurWeekPlan.FirstOrDefault().MealPlan.FirstOrDefault().URL != null)
+                                    {
+                                        <i class="fa fa-check-circle"></i>
+                                        <a href="@CurWeekPlan.FirstOrDefault().MealPlan.FirstOrDefault().URL" target="_blank">Meal Plan</a>
+
+                                    }
+                                    else
+                                    {
+
+                                        <i class="fa fa-times-circle"></i>
+                                    }
+                                }
+                                else
+                                {
+                                    <i class="fa fa-times-circle"></i>
+
+                                }
+
+                            }
+                            else
+                            {
+                                <i class="fa fa-times-circle"></i>
+
+                            }
+                        }
+                        else
+                        {
+                            <i class="fa fa-times-circle"></i>
+
+                        }
+
+                    }
+
+                </td>*@
+
+
+                <td>
+
+                  
+                    <a  asp-controller="Dashboard" asp-action="ActiveUserCheckIn" asp-route-UserId="@item.Id"  class="btn btn-primary text-white"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                </td>
+
+            </tr>
+                        }
+    </tbody>
+</table>
+
+</div>
+@if (Model.SelectUser != null)
+{
+    var AppUserPlan = Model.SelectUser.AppUserPlans.Where(a => a.StartDate <= DateTime.Now && a.EndDate >= DateTime.Now).FirstOrDefault();
+<div class="col-lg-4 list-group-item">
+    <div class="list-group-item col-lg-12">
+        <h4>User Name:@Model.SelectUser.UserName</h4>
+        <h4>Email:@Model.SelectUser.Email</h4>
+    </div>
+    <div class="list-group-item col-lg-12">
+        <h4>Current User Plan:</h4>
+        <h5>@AppUserPlan.StartDate.ToString("yyyy MMMM dd") -@AppUserPlan.EndDate.ToString("yyyy MMMM dd") </h5>
+        @*<h5>@Model.SelectUser.AppUserPlans.Where(a => a.StartDate <= DateTime.Now && a.EndDate >= DateTime.Now).FirstOrDefault().PlanPackage.Name </h5>*@
+    </div>
+    <div class="list-group-item col-lg-12">
+        <h4>Check In Detail:</h4>
+        @foreach (var AUP in Model.SelectUser.CheckInQAs.Where(c => c.CreatedDate <= DateTime.Today && c.CreatedDate >= DateTime.Today.AddDays(-30)))
+        {
+            <div class="col-lg-6 ">
+                <a asp-controller="Dashboard" asp-action="CheckInDetail" asp-route-CheckInQAId="@AUP.Id" target="_blank">@AUP.CreatedDate.ToString("yyyy MMMM dd")</a>
+                <span class="badge badge-pill badge-primary">@AUP.CheckInImgs.Where(c => c.ImgURL != null).Count() Pictures</span>
+                <br />
+            </div>
+        }
+        <br />
+        <div class="col-lg-2 col-lg-offset-10">
+            <a asp-controller="Dashboard" asp-action="ViewUserCheckInQA" asp-route-UserId="@Model.SelectUser.Id" target="_blank">More</a>
+        </div>
+
+    </div>
+    <div class="list-group-item col-lg-12">
+        <h4>Workout Statues</h4>
+        @foreach (var WP in AppUserPlan.WeekPlans)
+        {
+            <div class="col-lg-12 row">
+                <div class="col-lg-12 row">
+                    @WP.WeekPlanStartTime.ToString("yyyy MMMM dd") - @WP.WeekPlanEndTime.ToString("yyyy MMMM dd")
+                    <span class="badge badge-pill badge-primary">@WP.Plans.Count() Day Plan</span>
+                    @if (WP.MealPlan.FirstOrDefault() != null)
+                    {
+                        if (WP.MealPlan.FirstOrDefault().URL != null)
+                        {
+                            <i class="fa fa-check-circle"></i>
+                            <a href="@WP.MealPlan.FirstOrDefault().URL" target="_blank">Meal Plan</a>
+
+                        }
+                    }
+                </div>
+
+            </div>
+        }
+        <br />
+        <div class="col-lg-2 col-lg-offset-10">
+            <a asp-controller="Dashboard" asp-action="ViewPlan" asp-route-id="@Model.SelectUser.Id" target="_blank">More</a>
+        </div>
+
+    </div>
+    <div class="list-group-item col-lg-12">
+        <div style="text-align: right;">
+            <a asp-controller="Dashboard" asp-action="ViewPlan" asp-route-id="@Model.SelectUser.Id" target="_blank" class="btn btn-primary text-white"><i class="fa fa-edit"></i></a>
+            <a asp-controller="Dashboard" asp-action="ViewCustomer" asp-route-id="@Model.SelectUser.Id" target="_blank" class="btn btn-success text-white"><i class="fa fa-list-alt"></i></a>
+            <a asp-controller="Dashboard" asp-action="GiveFeedback" asp-route-id="@Model.SelectUser.Id" target="_blank" class="btn btn-success text-white"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+        </div>
+    </div>
+</div>
+}

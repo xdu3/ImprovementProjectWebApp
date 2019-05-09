@@ -67,7 +67,11 @@ namespace ImprovementProjectWebApp.Controllers
                     }
 
                 }
+                if (CurApplicationUser.Birthday.AddYears(22) >= DateTime.Today)
+                {
+                    auser.IfBelow22 = true;
 
+                }
                 return View(auser);
             }
             else
@@ -772,6 +776,29 @@ namespace ImprovementProjectWebApp.Controllers
             feedbacksListVM.FeedBacks = _context.FeedBack.Where(f => f.ApplicationUserId == curUserId).ToList();
             return View(feedbacksListVM);
         }
+        public ActionResult BuyPlan()
+        {
+            string curUserId = _userManager.GetUserId(HttpContext.User);
+            ApplicationUser applicationUser = _context.ApplicationUser.Where(a => a.Id == curUserId).FirstOrDefault();
+            BuyPlanVM buyPlanVM = new BuyPlanVM();
+            if (applicationUser.Birthday.AddYears(22) >= DateTime.Today)
+            {
+                buyPlanVM.IfBelow22 = true;
+                
+            }
 
+            return View(buyPlanVM);
+        }
+        public ActionResult SelectPaymentType(int planId)
+        {
+            SelectPaymentTypeVM selectPaymentTypeVM = new SelectPaymentTypeVM();
+            selectPaymentTypeVM.PlanId = planId;
+            return View(selectPaymentTypeVM);
+        }
+        public ActionResult WechatPay()
+        {
+           
+            return View();
+        }
     }
 }

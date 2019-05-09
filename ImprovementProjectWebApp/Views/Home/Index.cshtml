@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@model ImprovementProjectWebApp.Models.Customer.BuyPlanVM
 @{
     ViewData["Title"] = "Home Page";
     Layout = null;
@@ -68,27 +69,27 @@
                                     <li><a asp-controller="Customer" asp-action="index" class="scroll" data-hover="Home">主页</a></li>
                                     <li><a href="#about" class="scroll" data-hover="About">关于我们</a></li>
                                     @*<li>
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#testimonials" class="scroll" data-hover="Testimonials">Testimonials</a></li>
-                <li><a href="#pricing" class="scroll" data-hover="Pricing tables">Pricing tables</a></li>
-            </ul>
-        </li>*@
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#testimonials" class="scroll" data-hover="Testimonials">Testimonials</a></li>
+                                                <li><a href="#pricing" class="scroll" data-hover="Pricing tables">Pricing tables</a></li>
+                                            </ul>
+                                        </li>*@
                                     <li><a href="#coaches" class="scroll" data-hover="Coaches">教练</a></li>
                                     @if (SignInManager.IsSignedIn(User))
                                     {
                                         <li><a asp-action="Index" asp-controller="Customer" class="scroll">用户</a></li>
 
                                         @*<li>
-            <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
-                        <button asp-action="Logout" asp-controller="Account" class="scroll" type="submit">登出</button>
-            </form>
-                    </li>*@
+                                            <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
+                                                        <button asp-action="Logout" asp-controller="Account" class="scroll" type="submit">登出</button>
+                                            </form>
+                                                    </li>*@
                                         <li>
 
-                        <a asp-action="AtagLogout" asp-controller="Account" class="scroll" type="submit">登出</a>
+                                            <a asp-action="AtagLogout" asp-controller="Account" class="scroll" type="submit">登出</a>
 
-                    </li>
+                                        </li>
 
                                     }
                                     else
@@ -334,50 +335,104 @@
         </section>*@
     <!-- //Our Classes -->
     <!-- stats -->
-    <section class="stats" id="stats">
+    @*<section class="stats" id="stats">
+            <div class="wthree-different-dot1">
+                <div class="container">
+                    <h3 class="heading">春节 <span>特惠</span></h3>
+                    <div class="agileits_stats_grids">
+                        <div class="col-md-3 col-xs-4 agileinfo_stats">
+                            <div class="agileinfo_stats_grid">
+                                <p class="counter">1000</p>
+                                <h3>元</h3>
+                                <h3>4周计划</h3>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-4 agileinfo_stats mid-w3l-stat">
+                            <div class="agileinfo_stats_grid">
+                                <p class="counter">2700</p>
+                                <h3>元</h3>
+                                <h3>12周计划</h3>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-4 agileinfo_stats mid-w3l-stat">
+                            <div class="agileinfo_stats_grid">
+                                <p class="counter">800</p>
+                                <h3>元</h3>
+                                <h3>4周学生计划</h3>
+                                <h6 style="color:white;">（22岁或以下）</h6>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-4 agileinfo_stats mid-w3l-stat">
+                            <div class="agileinfo_stats_grid">
+                                <p class="counter">2200</p>
+                                <h3>元</h3>
+                                <h3>12周学生计划</h3>
+                                <h6 style="color:white;">（22岁或以下）</h6>
+
+                            </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
+            </div>
+        </section>*@
+    <section class="clients-main" id="testimonials">
         <div class="wthree-different-dot1">
             <div class="container">
-                <h3 class="heading">春节 <span>特惠</span></h3>
-                <div class="agileits_stats_grids">
-                    <div class="col-md-3 col-xs-4 agileinfo_stats">
-                        <div class="agileinfo_stats_grid">
-                            <p class="counter">1000</p>
-                            <h3>元</h3>
-                            <h3>4周计划</h3>
-                            
+                <!-- Owl-Carousel -->
+                <h3 class="heading">健身<span>格言</span> </h3>
+                <div class="cli-ent">
+                    <section class="slider">
+                        <div class="flexslider">
+                            <ul class="slides">
+                                <li>
+                                    <div class="item g1">
+                                        <div class="agile-dish-caption">
+                                            <img class="lazyOwl" src="~/t1/images/s1.jpg" alt="" />
+                                            <h5>陈桦业</h5>
+                                            <h4>Find something you love and let it kill you</h4>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                        @*<p class="para-w3-agile"><span class="fa fa-quote-left" aria-hidden="true"></span> Phasellus iaculis sapien in tellus gravida, a placerat lacus elementum. Nulla vitae lacus nec elit mollis pretium. Sed sed nunc lectus. Integer vehicula elit eget dignissim congue. Aliquam sed ultricies tortor. Curabitur ut odio vestibulum consectetur adipisthn</p>*@
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item g1">
+                                        <div class="agile-dish-caption">
+                                            <img class="lazyOwl" src="~/t1/images/s2.jpg" alt="" />
+                                            <h5>杜鑫</h5>
+                                            <h4>No pain no gain</h4>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                        @*<p class="para-w3-agile"><span class="fa fa-quote-left" aria-hidden="true"></span> Phasellus iaculis sapien in tellus gravida, a placerat lacus elementum. Nulla vitae lacus nec elit mollis pretium. Sed sed nunc lectus. Integer vehicula elit eget dignissim congue. Aliquam sed ultricies tortor. Curabitur ut odio vestibulum consectetur adipisthn</p>*@
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="item g1">
+                                        <div class="agile-dish-caption">
+                                            <img class="lazyOwl" src="~/t1/images/s4.jpg" alt="" />
+                                            <h5>张博炜</h5>
+                                            <h4>Be consistent. </h4>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                        @*<p class="para-w3-agile"><span class="fa fa-quote-left" aria-hidden="true"></span> Phasellus iaculis sapien in tellus gravida, a placerat lacus elementum. Nulla vitae lacus nec elit mollis pretium. Sed sed nunc lectus. Integer vehicula elit eget dignissim congue. Aliquam sed ultricies tortor. Curabitur ut odio vestibulum consectetur adipisthn</p>*@
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                    </div>
-                    <div class="col-md-3 col-xs-4 agileinfo_stats mid-w3l-stat">
-                        <div class="agileinfo_stats_grid">
-                            <p class="counter">2700</p>
-                            <h3>元</h3>
-                            <h3>12周计划</h3>
-              
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-xs-4 agileinfo_stats mid-w3l-stat">
-                        <div class="agileinfo_stats_grid">
-                            <p class="counter">800</p>
-                            <h3>元</h3>
-                            <h3>4周学生计划</h3>
-                            <h6 style="color:white;">（22岁或以下）</h6>
-                   
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-xs-4 agileinfo_stats mid-w3l-stat">
-                        <div class="agileinfo_stats_grid">
-                            <p class="counter">2200</p>
-                            <h3>元</h3>
-                            <h3>12周学生计划</h3>
-                            <h6 style="color:white;">（22岁或以下）</h6>
-             
-                        </div>
-                    </div>
-                    <div class="clearfix"> </div>
+                    </section>
                 </div>
+                <!--// Owl-Carousel -->
             </div>
         </div>
     </section>
+
     <!-- //stats -->
     <!-- agents section -->
     <section class="demo" id="coaches">
@@ -538,59 +593,59 @@
     </section>
     <!-- //agents section -->
     <!-- Clients -->
-    <section class="clients-main" id="testimonials">
-        <div class="wthree-different-dot1">
-            <div class="container">
-                <!-- Owl-Carousel -->
-                <h3 class="heading">健身<span>格言</span> </h3>
-                <div class="cli-ent">
-                    <section class="slider">
-                        <div class="flexslider">
-                            <ul class="slides">
-                                <li>
-                                    <div class="item g1">
-                                        <div class="agile-dish-caption">
-                                            <img class="lazyOwl" src="~/t1/images/s1.jpg" alt="" />
-                                            <h5>陈桦业</h5>
-                                            <h4>Find something you love and let it kill you</h4>
-                                        </div>
+    @*<section class="clients-main" id="testimonials">
+            <div class="wthree-different-dot1">
+                <div class="container">
+                    <!-- Owl-Carousel -->
+                    <h3 class="heading">健身<span>格言</span> </h3>
+                    <div class="cli-ent">
+                        <section class="slider">
+                            <div class="flexslider">
+                                <ul class="slides">
+                                    <li>
+                                        <div class="item g1">
+                                            <div class="agile-dish-caption">
+                                                <img class="lazyOwl" src="~/t1/images/s1.jpg" alt="" />
+                                                <h5>陈桦业</h5>
+                                                <h4>Find something you love and let it kill you</h4>
+                                            </div>
 
-                                        <div class="clearfix"></div>
-                                        @*<p class="para-w3-agile"><span class="fa fa-quote-left" aria-hidden="true"></span> Phasellus iaculis sapien in tellus gravida, a placerat lacus elementum. Nulla vitae lacus nec elit mollis pretium. Sed sed nunc lectus. Integer vehicula elit eget dignissim congue. Aliquam sed ultricies tortor. Curabitur ut odio vestibulum consectetur adipisthn</p>*@
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="item g1">
-                                        <div class="agile-dish-caption">
-                                            <img class="lazyOwl" src="~/t1/images/s2.jpg" alt="" />
-                                            <h5>杜鑫</h5>
-                                            <h4>No pain no gain</h4>
-                                        </div>
+                                            <div class="clearfix"></div>
 
-                                        <div class="clearfix"></div>
-                                        @*<p class="para-w3-agile"><span class="fa fa-quote-left" aria-hidden="true"></span> Phasellus iaculis sapien in tellus gravida, a placerat lacus elementum. Nulla vitae lacus nec elit mollis pretium. Sed sed nunc lectus. Integer vehicula elit eget dignissim congue. Aliquam sed ultricies tortor. Curabitur ut odio vestibulum consectetur adipisthn</p>*@
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="item g1">
-                                        <div class="agile-dish-caption">
-                                            <img class="lazyOwl" src="~/t1/images/s4.jpg" alt="" />
-                                            <h5>张博炜</h5>
-                                            <h4>Be consistent. </h4>
                                         </div>
+                                    </li>
+                                    <li>
+                                        <div class="item g1">
+                                            <div class="agile-dish-caption">
+                                                <img class="lazyOwl" src="~/t1/images/s2.jpg" alt="" />
+                                                <h5>杜鑫</h5>
+                                                <h4>No pain no gain</h4>
+                                            </div>
 
-                                        <div class="clearfix"></div>
-                                        @*<p class="para-w3-agile"><span class="fa fa-quote-left" aria-hidden="true"></span> Phasellus iaculis sapien in tellus gravida, a placerat lacus elementum. Nulla vitae lacus nec elit mollis pretium. Sed sed nunc lectus. Integer vehicula elit eget dignissim congue. Aliquam sed ultricies tortor. Curabitur ut odio vestibulum consectetur adipisthn</p>*@
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </section>
+                                            <div class="clearfix"></div>
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="item g1">
+                                            <div class="agile-dish-caption">
+                                                <img class="lazyOwl" src="~/t1/images/s4.jpg" alt="" />
+                                                <h5>张博炜</h5>
+                                                <h4>Be consistent. </h4>
+                                            </div>
+
+                                            <div class="clearfix"></div>
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+                    <!--// Owl-Carousel -->
                 </div>
-                <!--// Owl-Carousel -->
             </div>
-        </div>
-    </section>
+        </section>*@
     <!--// Clients -->
     <!-- pricing plans -->
     <section class="pricing" id="pricing">
@@ -613,9 +668,9 @@
                                 <p><span class="fa fa-times"></span><span>线下 </span> 指导</p>
 
                             </div>
-                            <div class="buy-button">
-                                    <a asp-controller="Cart" asp-action="Summary" asp-route-planId="1" >购买</a>
-                                </div>
+                            @*<div class="buy-button">
+                                <a asp-controller="Customer" asp-action="SelectPaymentType" asp-route-planId="1">购买</a>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -634,9 +689,9 @@
                                 <p><span class="fa fa-check"></span><span>在线 </span> 指导</p>
                                 <p><span class="fa fa-times"></span><span>线下 </span> 指导</p>
                             </div>
-                            <div class="buy-button">
-                                <a asp-controller="Cart" asp-action="Summary" asp-route-planId="2" >购买</a>
-                                </div>
+                            @*<div class="buy-button">
+                                <a asp-controller="Customer" asp-action="SelectPaymentType" asp-route-planId="2">购买</a>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -656,10 +711,13 @@
                                 <p><span class="fa fa-check"></span><span>在线 </span> 指导</p>
                                 <p><span class="fa fa-times"></span><span>线下 </span> 指导</p>
                             </div>
-                            <div class="buy-button">
-                                <a asp-controller="Cart" asp-action="Summary" asp-route-planId="3" >购买</a>
-                                </div>
-                        </div>
+
+
+                                @*<div class="buy-button">
+                                    <a asp-controller="Customer" asp-action="SelectPaymentType" asp-route-planId="3">购买</a>
+                                </div>*@
+
+                            </div>
                     </div>
                 </div>
 
@@ -678,10 +736,13 @@
                                 <p><span class="fa fa-check"></span><span>在线 </span> 指导</p>
                                 <p><span class="fa fa-times"></span><span>线下 </span> 指导</p>
                             </div>
-                            <div class="buy-button">
-                                <a asp-controller="Cart" asp-action="Summary" asp-route-planId="4" >购买</a>
-                                </div>
-                        </div>
+
+
+                                @*<div class="buy-button">
+                                    <a asp-controller="Customer" asp-action="SelectPaymentType" asp-route-planId="4">购买</a>
+                                </div>*@
+
+                            </div>
                     </div>
                 </div>
                 <div class="clearfix"> </div>

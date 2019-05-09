@@ -1,0 +1,341 @@
+﻿@model ImprovementProjectWebApp.Models.Customer.BuyPlanVM
+@{
+    ViewData["Title"] = "BuyPlan";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+<link href="~/t1/css/easy-responsive-tabs.css" rel='stylesheet' type='text/css' />
+<!-- //for Coaches css -->
+<!-- testimonials css -->
+<link rel="stylesheet" href="~/t1/css/flexslider.css" type="text/css" media="screen" property="" /><!-- flexslider css -->
+<!-- //testimonials css -->
+<!-- default css files -->
+<link rel="stylesheet" href="~/t1/css/bootstrap.css" type="text/css" media="all">
+
+<link rel="stylesheet" href="~/t1/css/font-awesome.min.css" />
+
+<style>
+    /*-- pricing --*/
+    .pricing {
+        padding: 5em 0;
+    }
+
+    h3.heading {
+        font-size: 45px;
+        font-weight: 400;
+        letter-spacing: 0;
+        margin-bottom: 1em;
+        text-transform: capitalize;
+    }
+
+        h3.heading span {
+            font-weight: 400;
+            color: #00BCD4;
+            border-bottom: 2px solid #00BCD4;
+        }
+
+    .agileits-pricing-grid {
+        float: left;
+        width: 24%;
+        transition: 0.5s all;
+        -webkit-transition: 0.5s all;
+        -moz-transition: 0.5s all;
+        -o-transition: 0.5s all;
+    }
+
+        .agileits-pricing-grid:hover {
+            transform: scale(1.06);
+            -webkit-transform: scale(1.06);
+            -moz-transform: scale(1.06);
+            -o-transform: scale(1.06);
+            -ms-transform: scale(1.06);
+            z-index: 1;
+        }
+
+        .agileits-pricing-grid:nth-child(2) {
+            margin: 0 1em;
+        }
+
+        .agileits-pricing-grid:nth-child(3) {
+            margin-right: 1em;
+        }
+
+    .pricing-top {
+        padding: 2em 0 0;
+        background: #e04646;
+        text-align: center;
+    }
+
+    .blue-top {
+        background: #fb8a2e !important;
+    }
+
+    .green-top {
+        background: #0091cd !important;
+    }
+
+    .yellow-top {
+        background: #00ad45 !important;
+    }
+
+    .pricing-top h3 {
+        color: #FFF;
+        font-size: 1.5em;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .wthree-pricing-info {
+        padding: 0em 0 1em;
+        background: #e04646;
+    }
+
+        .wthree-pricing-info p {
+            color: #FFFFFF;
+            font-size: 1em;
+            margin: 0;
+            text-align: center;
+        }
+
+            .wthree-pricing-info p span {
+                font-size: 4em;
+                font-weight: 600;
+            }
+
+    .pricing-bottom {
+        background: #FFF;
+        padding: 0em 0 2em 0em;
+        border-bottom-left-radius: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        -moz-border-bottom-left-radius: 5px;
+        -ms-border-bottom-left-radius: 5px;
+        -o-border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        -webkit-border-bottom-right-radius: 5px;
+        -moz-border-bottom-right-radius: 5px;
+        -ms-border-bottom-right-radius: 5px;
+        -o-border-bottom-right-radius: 5px;
+    }
+
+    .pricing-bottom-top {
+        padding: 1em 0;
+        background: #fd5c63;
+    }
+
+        .pricing-bottom-top p {
+            color: #212121;
+            margin: 0;
+            font-size: .9em;
+            line-height: 1.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+    .pricing-bottom-bottom {
+        padding: 3em 2em 3em 2em;
+        border: 1px solid #dcdcdc;
+    }
+
+        .pricing-bottom-bottom p {
+            color: #333;
+            font-size: 15px;
+            margin: 0 0 1em 0;
+            font-family: 'PT Sans Caption', sans-serif;
+        }
+
+    .buy-button {
+        margin-top: 7px;
+        text-align: center;
+    }
+
+    .pricing-bottom-bottom p span {
+        font-weight: 700;
+        color: #333;
+        letter-spacing: 1px;
+    }
+
+        .pricing-bottom-bottom p span.fa {
+            width: 25px;
+            color: #999;
+        }
+
+    p.text {
+        margin-bottom: 0;
+    }
+
+    .buy-button a {
+        background: #00ad45;
+        padding: .5em 1.5em;
+        border: solid 1px #00ad45;
+        color: #fff;
+        letter-spacing: 1px;
+        font-family: 'PT Sans Caption', sans-serif;
+    }
+
+        .buy-button a:hover {
+            background: none;
+            border: solid 1px #00ad45;
+            color: #00ad45;
+            transition: 0.5s all;
+            -webkit-transition: 0.5s all;
+            -moz-transition: 0.5s all;
+            -o-transition: 0.5s all;
+            -ms-transition: 0.5s all;
+            text-decoration: none;
+        }
+
+    .first .buy-button a {
+        background: #c73a40;
+        border: solid 1px #c73a40;
+    }
+
+        .first .buy-button a:hover {
+            background: none;
+            border: solid 1px #c73a40;
+            color: #c73a40;
+        }
+
+    .second .buy-button a {
+        background: #fb8a2e;
+        border: solid 1px #fb8a2e;
+    }
+
+        .second .buy-button a:hover {
+            background: none;
+            border: solid 1px #fb8a2e;
+            color: #fb8a2e;
+        }
+
+    .third .buy-button a {
+        background: #0091cd;
+        border: solid 1px #0091cd;
+    }
+
+        .third .buy-button a:hover {
+            background: none;
+            border: solid 1px #0091cd;
+            color: #0091cd;
+        }
+
+    .blue-pricing-bottom-top {
+    }
+
+        .blue-pricing-bottom-top:nth-child(2) {
+            border-top: solid 1px #1085bf;
+        }
+
+    .green-pricing-bottom-top {
+    }
+
+        .green-pricing-bottom-top:nth-child(2) {
+            border-top: solid 1px #609835;
+        }
+    /*-- //pricing --*/
+</style>
+
+<section class="pricing" id="pricing">
+    <div class="container">
+        <h3 class="heading">收费 <span>标准</span></h3>
+        <div class="w3l-pricing-grids">
+            @if (Model.IfBelow22 != true)
+            {
+                <div class="agileits-pricing-grid first">
+
+                    <div class="pricing_grid">
+                        <div class="pricing-top">
+                            <h3>4周计划</h3>
+                        </div>
+                        <div class="wthree-pricing-info">
+                            <p><span>1500</span>元</p>
+                        </div>
+                        <div class="pricing-bottom">
+                            <div class="pricing-bottom-bottom">
+                                <p><span class="fa fa-check"></span><span>健身</span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>饮食 </span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>在线 </span> 指导</p>
+                                <p><span class="fa fa-times"></span><span>线下 </span> 指导</p>
+
+                            </div>
+                            <br />
+                            <div class="buy-button">
+                                <a asp-controller="Customer" asp-action="SelectPaymentType" asp-route-planId="1">购买</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="agileits-pricing-grid second">
+                    <div class="pricing_grid">
+                        <div class="pricing-top blue-top">
+                            <h3>12周计划</h3>
+                        </div>
+                        <div class="wthree-pricing-info blue-top">
+                            <p><span>4000</span>元</p>
+                        </div>
+                        <div class="pricing-bottom">
+                            <div class="pricing-bottom-bottom blue-pricing-bottom-top">
+                                <p><span class="fa fa-check"></span><span>健身</span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>饮食 </span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>在线 </span> 指导</p>
+                                <p><span class="fa fa-times"></span><span>线下 </span> 指导</p>
+                            </div>
+                            <br />
+                            <div class="buy-button">
+                                <a asp-controller="Customer" asp-action="SelectPaymentType" asp-route-planId="2">购买</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="agileits-pricing-grid third">
+                    <div class="pricing_grid">
+                        <div class="pricing-top green-top">
+                            <h3>4周学生计划 <span class="badge badge-pill badge-info">(22岁或以下)</span></h3>
+
+                        </div>
+                        <div class="wthree-pricing-info green-top">
+                            <p><span>1300</span>元</p>
+                        </div>
+                        <div class="pricing-bottom">
+                            <div class="pricing-bottom-bottom green-pricing-bottom-top">
+                                <p><span class="fa fa-check"></span><span>健身</span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>饮食 </span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>在线 </span> 指导</p>
+                                <p><span class="fa fa-times"></span><span>线下 </span> 指导</p>
+                            </div>
+                            <br />
+                            <div class="buy-button">
+                                <a asp-controller="Customer" asp-action="SelectPaymentType" asp-route-planId="3">购买</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="agileits-pricing-grid fourth">
+                    <div class="pricing_grid">
+                        <div class="pricing-top yellow-top">
+                            <h3>12周学生计划<span class="badge badge-pill badge-info">(22岁或以下)</span></h3>
+                        </div>
+                        <div class="wthree-pricing-info yellow-top">
+                            <p><span>3400</span>元</p>
+                        </div>
+                        <div class="pricing-bottom">
+                            <div class="pricing-bottom-bottom yellow-pricing-bottom-top">
+                                <p><span class="fa fa-check"></span><span>健身</span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>饮食 </span> 计划</p>
+                                <p><span class="fa fa-check"></span><span>在线 </span> 指导</p>
+                                <p><span class="fa fa-times"></span><span>线下 </span> 指导</p>
+                            </div>
+                            <br />
+                            <div class="buy-button">
+                                <a asp-controller="Customer" asp-action="SelectPaymentType" asp-route-planId="4">购买</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</section>

@@ -15,5 +15,6 @@ namespace ImprovementProjectWebApp.Models.Customer
         public bool IfUploadImg { get; set; }
         public bool IfUserDelete { get; set; }
         public bool IfUserEmailConfirmed { get; set; }
+        public bool IfBelow22 { get; set; }
     }
 }
