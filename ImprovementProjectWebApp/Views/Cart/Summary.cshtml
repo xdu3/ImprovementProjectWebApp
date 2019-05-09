@@ -5,14 +5,15 @@
     ViewData["Title"] = "Summary";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<form method="post">
+<div class="backgroundWhiteBorder">
     @if (Model != null)
     {
-        <br />
-        <input asp-for="@Model.ApplicationUserId" hidden />
-        <input asp-for="@Model.PlanPackageId" hidden />
-        <div class="backgroundWhiteBorder">
+        <form method="post">
+
+            <br />
+            <input asp-for="@Model.ApplicationUserId" hidden />
+            <input asp-for="@Model.PlanPackageId" hidden />
+
 
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -129,8 +130,8 @@
                 </div>
                 <div class="panel-footer">
                     <div class="row">
-                        <div class="col-md-8"></div>
-                        <div class="col-sm-12 col-md-4">
+                        <div class="col-md-10"></div>
+                        <div class="col-sm-12 col-md-2">
                             @{
                                 var OrderTotalForStrip = Model.PlanPackage.Price * 100;
                             }
@@ -148,20 +149,50 @@
                             <script>
                                 document.getElementsByClassName('stripe-button-el')[0].style.display = 'none';
                             </script>
-                            <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place Order" class="btn btn-success form-control">Place Order</button>
+                            <button type="submit" id="btnPlaceOrder" onclick="return validateInput()" class="btn btn-info form-control" name="payMethod" value="credit"><i class="fas fa-credit-card"></i> 信用卡支付</button>
+
                         </div>
+                        
                     </div>
                 </div>
             </div>
 
-        </div>
+
+
+        </form>
+
+        <form method="post">
+            <input asp-for="@Model.ApplicationUserId" hidden />
+            <input asp-for="@Model.PlanPackageId" hidden />
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-6">
+                            其它支付方式
+                        </div>
+                        <div class="col-md-6 text-right">
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-body">
+                    <div class="container rounded p-2">
+                        <input type="hidden" asp-for="@Model.StartDate" id="sDate" />
+                        <input type="hidden" asp-for="@Model.EndDate" id="eDate" />
+                        <input type="hidden" asp-for="@Model.UserName" />
+                        <input type="hidden" asp-for="@Model.Phone" />
+                        <button type="submit" id="btnWechat" onclick="return validateInput()" class="btn btn-success" name="payMethod" value="wechat"><i class="fab fa-weixin"></i>&nbsp;微信支付</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     }
     else
     {
         <div class="backgroundWhiteBorder">No items added to the shopping cart...</div>
     }
-</form>
-
+</div>
 @section Scripts{
     <script>
         $(function () {
@@ -171,6 +202,12 @@
 
             $('#datepicker').datepicker({
                 minDate: minDt, beforeShowDay: function (date) { return [(date.getDay() == 1), ""]; } });
+
+            var startDate = document.getElementById("datepicker").value;
+            var sd = new Date(startDate);
+            var endDate = document.getElementById("endDate").value;
+            var ed = new Date(endDate);
+            $('#eDate').datepicker().datepicker('setDate', ed);
 
         })
 
@@ -187,12 +224,14 @@
         function setEndDate() {
             var dateSelected = document.getElementById("datepicker").value;
             var dt = new Date(dateSelected);
-
-            console.log(dt);
+            $('#sDate').datepicker().datepicker('setDate', dt);
+            //console.log(dt);
             var dates = @(Model.PlanPackage.Term * 7);
             dt.setDate(dt.getDate() + dates - 1); 
       
             $('#endDate').datepicker().datepicker('setDate', dt);
+            $('#eDate').datepicker().datepicker('setDate', dt);
+            
 
         }
 

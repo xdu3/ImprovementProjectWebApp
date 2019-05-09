@@ -12,8 +12,8 @@ namespace ImprovementProjectWebApp.Utility
         public const string StatusCompleted = "Completed";
         public const string StatusCancelled = "Cancelled";
 
-        public const string PaymentStatusPending = "Pending";
-        public const string PaymentStatusApproved = "Approved";
-        public const string PaymentStatusRejected = "Rejected";
+        public const string PaymentStatusPending = "未付款";
+        public const string PaymentStatusApproved = "已付款";
+        public const string PaymentStatusRejected = "付款未成功";
     }
 }

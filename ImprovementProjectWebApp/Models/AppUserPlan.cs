@@ -27,6 +27,7 @@ namespace ImprovementProjectWebApp.Models
         [Display(Name = "Price")]
         public double OrderTotal { get; set; }
         public string Status { get; set; }
+        [Display(Name = "Payment Status")]
         public string PaymentStatus { get; set; }
         public string TransactionId { get; set; }
 
@@ -41,6 +42,7 @@ namespace ImprovementProjectWebApp.Models
         [ForeignKey("ApplicationUserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
         public IEnumerable<WeekPlan> WeekPlans { get; set; }
-        
+        [NotMapped]
+        public byte[] QrImage { get; set; }
     }
 }
